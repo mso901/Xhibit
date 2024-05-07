@@ -37,7 +37,7 @@ function getUsers() {
         `
         <div class="user_card">
         <div>
-            <img src="../../../public/images/img-profile01.png" alt="profile_img" class="profile_img">
+            <img src="../public/images/img-profile01.png" alt="profile_img" class="profile_img">
         </div>
         <div class="user_card-intro">
             <p class="card-name">${name}</p>
