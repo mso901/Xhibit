@@ -4,17 +4,17 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 const passport = require("passport");
-const passportConfig = require("./passport");
+const passportConfig = require("./src/passport");
 const cors = require("cors"); // cors 설정을 편안하게 하는 패키지
 
-const viewsRouter = require("./routes/views");
-const userRouter = require("./routes/user");
-const authRouter = require("./routes/auth");
-const mainRouter = require("./routes/main");
-const eduRouter = require("./routes/education");
-const awardRouter = require("./routes/award");
-const certificateRouter = require("./routes/certificate");
-const projectRouter = require("./routes/project");
+const viewsRouter = require("./src/routes/views");
+const userRouter = require("./src/routes/user");
+const authRouter = require("./src/routes/auth");
+const mainRouter = require("./src/routes/main");
+const eduRouter = require("./src/routes/education");
+const awardRouter = require("./src/routes/award");
+const certificateRouter = require("./src/routes/certificate");
+const projectRouter = require("./src/routes/project");
 
 const app = express();
 const url = "mongodb://localhost:27017";
@@ -59,13 +59,13 @@ app.post("/saveData", async (req, res) => {
   }
 });
 
-app.use("/user", userRouter);
-app.use("/auth", authRouter);
-app.use("/main", mainRouter);
-app.use("/education", eduRouter);
-app.use("/award", awardRouter);
-app.use("/certificate", certificateRouter);
-app.use("/project", projectRouter);
+app.use("/api", userRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/main", mainRouter);
+app.use("/api/education", eduRouter);
+app.use("/api/award", awardRouter);
+app.use("/api/certificate", certificateRouter);
+app.use("/api/project", projectRouter);
 
 app.listen(8080);
 

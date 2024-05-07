@@ -119,13 +119,13 @@ async function onLoginSubmit(e) {
     baseURL: BASE_URL, // 기본 URL 설정
   });
 
-  const response = await baseInstance.post("/user/signup", {
+  const response = await baseInstance.post("/api/signup", {
     name: inputName.value,
     email: inputEmail.value,
     password: inputPassword.value,
   });
   console.log(response); // response가 잘 들어왔는지 확인
-  window.location.href = "./welcomePage.html";
+  window.location.href = "/welcomepage";
 
   // response.default.headers.common["jwt"] = response.data.data.token;
 }

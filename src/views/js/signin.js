@@ -22,7 +22,7 @@ async function onLoginSubmit(e) {
 
   // 로그인 요청
   const response = await baseInstance.post(
-    `${BASE_URL}/user/signin`,
+    `${BASE_URL}/api/signin`,
     {
       email: inputEmail.value,
       password: inputPassword.value,
@@ -34,6 +34,6 @@ async function onLoginSubmit(e) {
     //성공 시
     // axios.defaults.headers.common["authorization"] = `Bearer ${accessToken}`;
   }
-  window.location.href = "./main.html";
+  window.location.href = "/main";
 }
 form.addEventListener("submit", onLoginSubmit);
