@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인</title>
+    <link href="./css/common.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script defer src="./js/signin.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <!-- navbar -->
+      <div class="navbar">
+        <div class="navbar-logo">
+          <img src="../../public/images/logo2.png" />
+        </div>
+        <div class="navbar-menu">
+          <a href="">서비스소개</a>
+          <a href="signIn.html">로그인</a>
+          <a href="signUp.html">회원가입</a>
+          <a href="myPage.html">마이페이지</a>
+        </div>
+      </div>
+      <!-- login form -->
+      <div class="sign-container">
+        <div class="logo-div">
+          <img class="logo" src="../../public/images/logo2.png" />
+        </div>
+        <div class="form-container">
+          <span class="form-title">로그인</span>
+          <form action="main.html">
+            <br />
+            <div class="form-group">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control-input"
+                placeholder="이메일"
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-control-input"
+                placeholder="비밀번호"
+              />
+            </div>
+            <div class="form-group password-and-signup">
+              <span><a href="">비밀번호 찾기</a></span>
+              <span><a href="">회원가입</a></span>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="form-control-submit-button">
+                <img src="../../public/images/shape.png" />
+                로그인
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </header>
+  </body>
+</html>
