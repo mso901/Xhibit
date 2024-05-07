@@ -27,7 +27,7 @@ function getUsers() {
   const baseInstance = axios.create({
     baseURL: BASE_URL, // 기본 URL 설정
   });
-  baseInstance.get("/api/main").then((res) => {
+  baseInstance.get("/api").then((res) => {
     const users = res.data;
     console.log(users);
     users.forEach(async (user) => {
@@ -48,7 +48,7 @@ function getUsers() {
             <p></p>
         </div>
         <div class="user_card-bottom">
-            <a href = "/otherspage/${_id}">자세히보기 ></a>
+            <a href = /otherspage?user_id=${_id}">자세히보기 ></a>
         </div>
     </div>
         `

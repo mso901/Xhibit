@@ -19,7 +19,7 @@ router.post(
 
 // // 발급된 토큰은 token1에 넣어서 검증하면됨
 // const token1 =
-//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzUxZmVjZmZjMmViYWYxZjBlZjM3OSIsIm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNzE0NzYyODMyLCJleHAiOjE3MTQ4NDkyMzJ9.7DNYMEMw19NMa32xecja7rKjJ8uYVvA8Z_QKzRHx8v0";
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM4ODQ2N2JiZjBiOGQ2YTAwMzU1ZWMiLCJuYW1lIjoidGVzdCIsImlhdCI6MTcxNTA2ODk0NywiZXhwIjoxNzE1MTU1MzQ3fQ.CYSOt1DFliv6nxSb4ThcftHzOBxdS4VUM1e2yvunIMg";
 
 // jwt.verify(token1, "elice", (err, decoded) => {
 //   console.log(decoded);

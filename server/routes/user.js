@@ -2,13 +2,24 @@ const express = require("express");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { User } = require("../models");
+const { User, Education, Award, Certificate, Project } = require("../models");
+const ObjectId = require("mongoose").Types.ObjectId;
 
 const router = express.Router();
-/* GET users listing. */
-// router.get("/", function (req, res, next) {
-//   res.send("respond with a resource");
-// });
+
+router.get("/", async (req, res, next) => {
+  try {
+    const user = await User.find(
+      {},
+      { email: 1, name: 1, introduce: 1 }
+    ).lean();
+    console.log(user);
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 
 router.post("/signin", async (req, res, next) => {
   try {
@@ -69,6 +80,27 @@ router.post("/signup", async (req, res, next) => {
       password: hashedPassword,
     });
     res.json(user);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// 유저 상세 포트폴리오
+router.get("/:user_id", async (req, res, next) => {
+  try {
+    const { user_id } = req.params;
+    console.log(user_id);
+    const objectUserId = new ObjectId(user_id); // find 하기 위해서 objectId 형식으로 변경해야됨
+    const user = await User.find(
+      { _id: objectUserId },
+      { email: 1, name: 1, introduce: 1 }
+    );
+    const education = await Education.find({ user: objectUserId }).lean();
+    const award = await Award.find({ user: objectUserId }).lean();
+    const certificate = await Certificate.find({ user: objectUserId }).lean();
+    const project = await Project.find({ user: objectUserId }).lean();
+    res.json([user, education, award, certificate, project]);
   } catch (error) {
     console.error(error);
     next(error);

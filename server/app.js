@@ -4,20 +4,20 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 const passport = require("passport");
-const passportConfig = require("./src/passport");
+const passportConfig = require("./passport");
 const cors = require("cors"); // cors 설정을 편안하게 하는 패키지
 
-const viewsRouter = require("./src/routes/views");
-const userRouter = require("./src/routes/user");
-const authRouter = require("./src/routes/auth");
-const mainRouter = require("./src/routes/main");
-const eduRouter = require("./src/routes/education");
-const awardRouter = require("./src/routes/award");
-const certificateRouter = require("./src/routes/certificate");
-const projectRouter = require("./src/routes/project");
+const viewsRouter = require("./routes/views");
+const userRouter = require("./routes/user");
+const authRouter = require("./routes/auth");
+const eduRouter = require("./routes/education");
+const awardRouter = require("./routes/award");
+const certificateRouter = require("./routes/certificate");
+const projectRouter = require("./routes/project");
 
 const app = express();
-const url = "mongodb://localhost:27017";
+const url =
+  "mongodb+srv://myname:jM7DA5XYx1tyqNer@cluster0.3jc98iw.mongodb.net/";
 const dbName = "portfolio_user";
 
 let corsOptions = {
@@ -26,7 +26,9 @@ let corsOptions = {
 };
 app.use(cors(corsOptions)); // cors 적용
 
-mongoose.connect("mongodb://localhost:27017");
+mongoose.connect(
+  "mongodb+srv://myname:jM7DA5XYx1tyqNer@cluster0.3jc98iw.mongodb.net/"
+);
 mongoose.set("strictQuery", false);
 
 app.use(logger("dev"));
@@ -34,9 +36,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, "public")));
-// app.use(express.static("public"));
+app.use(express.static("public"));
 app.use(viewsRouter);
+// app.use(express.static(path.join(__dirname, "public")));
 // const resourcePath = path.join(__dirname, "public");
 // console.log(resourcePath);
 
@@ -64,12 +66,11 @@ app.post("/saveData", async (req, res) => {
 
 app.use("/api", userRouter);
 app.use("/api/auth", authRouter);
-app.use("/api/main", mainRouter);
 app.use("/api/education", eduRouter);
 app.use("/api/award", awardRouter);
 app.use("/api/certificate", certificateRouter);
 app.use("/api/project", projectRouter);
 
-app.listen(8080);
+app.listen(3000);
 
 module.exports = app;
