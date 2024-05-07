@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const { User, Award } = require("../models");
 const ObjectId = require("mongoose").Types.ObjectId;
-
 const router = Router();
 
 // 상 조회

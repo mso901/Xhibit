@@ -4,10 +4,11 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { User, Education, Award, Certificate, Project } = require("../models");
 const ObjectId = require("mongoose").Types.ObjectId;
+const loginRequired = require("../middleware/login-required");
 
 const router = express.Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/", loginRequired, async (req, res, next) => {
   try {
     const user = await User.find(
       {},
@@ -54,7 +55,7 @@ router.post("/signin", async (req, res, next) => {
           maxAge: 60 * 60 * 1000, // 쿠키 유효기간 이 경우는 1시간
         }); // 쿠키 전송
 
-        // res.status(200).json({ token });
+        res.status(200).json({ token });
         res.status(200).end();
       });
     })(req, res);
@@ -74,6 +75,18 @@ router.post("/signup", async (req, res, next) => {
       return res.status(400).end();
     }
 
+    // 이미 존재하는 이메일인지 확인
+    const existingUser = await User.findOne({ email });
+
+    console.log(existingUser);
+
+    // 이미 존재하는 이메일이면 에러 응답을 보냄
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: "해당 이메일은 이미 사용 중입니다." });
+    }
+
     const user = await User.create({
       email,
       name,
@@ -87,7 +100,7 @@ router.post("/signup", async (req, res, next) => {
 });
 
 // 유저 상세 포트폴리오
-router.get("/:user_id", async (req, res, next) => {
+router.get("/:user_id", loginRequired, async (req, res, next) => {
   try {
     const { user_id } = req.params;
     console.log(user_id);
@@ -101,6 +114,41 @@ router.get("/:user_id", async (req, res, next) => {
     const certificate = await Certificate.find({ user: objectUserId }).lean();
     const project = await Project.find({ user: objectUserId }).lean();
     res.json([user, education, award, certificate, project]);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// 비밀번호 변경
+router.patch("/changepassword/:userId", async (req, res, next) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const { userId } = req.params;
+    const user = await User.findById(userId).lean(); // lean() 사용시 간략하게 출력, findById는 _id 받아올 때 사용
+    console.log("유저", user);
+
+    // 현재 비밀번호가 맞는지 확인
+    const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+    console.log("비번 확인", passwordMatch);
+    if (!passwordMatch) {
+      return res
+        .status(400)
+        .json({ message: "현재 비밀번호가 일치하지 않습니다." });
+    }
+
+    // 새 비밀번호로 변경
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          password: hashedNewPassword,
+        },
+      }
+    );
+
+    res.status(200).json({ message: "비밀번호가 성공적으로 변경되었습니다." });
   } catch (error) {
     console.error(error);
     next(error);

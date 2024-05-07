@@ -6,8 +6,10 @@ const logger = require("morgan");
 const passport = require("passport");
 const passportConfig = require("./passport");
 const cors = require("cors"); // cors 설정을 편안하게 하는 패키지
+const loginRequired = require("./middleware/login-required");
 
 const viewsRouter = require("./routes/views");
+const auth = require("./middleware/auth");
 const userRouter = require("./routes/user");
 const authRouter = require("./routes/auth");
 const eduRouter = require("./routes/education");
@@ -23,6 +25,7 @@ const dbName = "portfolio_user";
 let corsOptions = {
   origin: true, // 출처 허용 옵션
   credentials: true, // 사용자 인증이 필요한 리소스(쿠키 ..등) 접근
+  exposedHeaders: ["set-cookie"], // 이 기능은 브라우저에서 노출시킬 헤더 목록을 만드는 것인데, set-cookie를 추가해주지 않으면 헤더의 set-cookie 부분이 노출 X
 };
 app.use(cors(corsOptions)); // cors 적용
 
@@ -66,10 +69,11 @@ app.post("/saveData", async (req, res) => {
 
 app.use("/api", userRouter);
 app.use("/api/auth", authRouter);
-app.use("/api/education", eduRouter);
-app.use("/api/award", awardRouter);
-app.use("/api/certificate", certificateRouter);
-app.use("/api/project", projectRouter);
+app.use("/api/education", loginRequired, eduRouter);
+app.use("/api/award", loginRequired, awardRouter);
+app.use("/api/certificate", loginRequired, certificateRouter);
+app.use("/api/project", loginRequired, projectRouter);
+app.use("/api/auth", auth);
 
 app.listen(3000);
 
