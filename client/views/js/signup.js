@@ -113,7 +113,7 @@ const form = document.getElementsByTagName("form")[0];
 async function onLoginSubmit(e) {
   e.preventDefault();
   console.log(inputName, inputEmail, inputPassword);
-  const BASE_URL = "http://localhost:8080";
+  const BASE_URL = "http://localhost:3000";
 
   const baseInstance = await axios.create({
     baseURL: BASE_URL, // 기본 URL 설정
@@ -125,7 +125,7 @@ async function onLoginSubmit(e) {
     password: inputPassword.value,
   });
   console.log(response); // response가 잘 들어왔는지 확인
-  window.location.href = "/welcomepage";
+  window.location.href = "/welcomePage.html";
 
   // response.default.headers.common["jwt"] = response.data.data.token;
 }

@@ -13,7 +13,7 @@ async function onLoginSubmit(e) {
   e.preventDefault();
   // console.log(inputEmail.value, inputPassword.value);
 
-  const BASE_URL = "http://localhost:8080";
+  const BASE_URL = "http://localhost:3000";
 
   const baseInstance = await axios.create({
     // withCredentials: true,
@@ -34,6 +34,6 @@ async function onLoginSubmit(e) {
     //성공 시
     // axios.defaults.headers.common["authorization"] = `Bearer ${accessToken}`;
   }
-  window.location.href = "/main";
+  window.location.href = "/main.html";
 }
 form.addEventListener("submit", onLoginSubmit);

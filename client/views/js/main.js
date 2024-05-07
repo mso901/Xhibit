@@ -22,7 +22,7 @@
 
 function getUsers() {
   const userCardList = document.querySelector(".user_card-list");
-  const BASE_URL = "http://localhost:8080";
+  const BASE_URL = "http://localhost:3000";
 
   const baseInstance = axios.create({
     baseURL: BASE_URL, // 기본 URL 설정
@@ -48,7 +48,7 @@ function getUsers() {
             <p></p>
         </div>
         <div class="user_card-bottom">
-            <a href = /otherspage?user_id=${_id}">자세히보기 ></a>
+            <a href = /otherspage.html?user_id=${_id}">자세히보기 ></a>
         </div>
     </div>
         `
