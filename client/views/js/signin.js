@@ -32,8 +32,10 @@ async function onLoginSubmit(e) {
       },
       { withCredentials: true }
     )
-    .then(() => {
-      window.location.href = "/main";
+    .then((res) => {
+      const userId = res.data.user._id;
+      console.log(userId);
+      window.location.href = `/main?userId=${userId}`;
     })
     .catch(() => {
       loginErrorMessage.classList.remove("hide"); // 실패 메시지 보임
