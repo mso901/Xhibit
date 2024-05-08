@@ -9,9 +9,7 @@ const cors = require("cors"); // cors 설정을 편안하게 하는 패키지
 const loginRequired = require("./middleware/login-required");
 
 const viewsRouter = require("./routes/views");
-const auth = require("./middleware/auth");
 const userRouter = require("./routes/user");
-const authRouter = require("./routes/auth");
 const eduRouter = require("./routes/education");
 const awardRouter = require("./routes/award");
 const certificateRouter = require("./routes/certificate");
@@ -68,12 +66,10 @@ app.post("/saveData", async (req, res) => {
 });
 
 app.use("/api", userRouter);
-// app.use("/api/auth", authRouter);
 app.use("/api/education", loginRequired, eduRouter);
 app.use("/api/award", loginRequired, awardRouter);
 app.use("/api/certificate", loginRequired, certificateRouter);
 app.use("/api/project", loginRequired, projectRouter);
-// app.use("/api/auth", auth);
 
 app.listen(3000);
 

@@ -8,6 +8,22 @@ const loginRequired = require("../middleware/login-required");
 
 const router = express.Router();
 
+router.get("/logout", loginRequired, (req, res) => {
+  try {
+    res.clearCookie("jwt", {
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    // Redirect to the signin page
+    res.redirect("/signin");
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 router.get("/", loginRequired, async (req, res, next) => {
   try {
     const user = await User.find(
