@@ -7,9 +7,11 @@ const inputEmail = document.querySelector("#email");
 const inputPassword = document.querySelector("#password"); // input#password
 // 2. 비밀번호 확인 입력창 정보 가져오기
 const inputPasswordRetype = document.querySelector("#password-retype"); // input#password-retype
-// 3. 실패 메시지 정보 가져오기 (비밀번호 불일치)
+// 3. 실패 메시지 정보 가져오기 (중복 이메일)
+const emailDuplicationMessage = document.querySelector('.emailDuplication-message')
+// 4. 실패 메시지 정보 가져오기 (비밀번호 불일치)
 const mismatchMessage = document.querySelector(".mismatch-message"); // div.mismatch-message.hide
-// 4. 실패 메시지 정보 가져오기 (8글자 이상, 영문, 숫자, 특수문자 미사용)
+// 5. 실패 메시지 정보 가져오기 (8글자 이상, 영문, 숫자, 특수문자 미사용)
 const strongPasswordMessage = document.querySelector(".strongPassword-message"); // div.strongPassword-message.hide
 
 const submitButton = document.querySelector(".form-control-submit-button");
@@ -123,9 +125,15 @@ async function onLoginSubmit(e) {
     name: inputName.value,
     email: inputEmail.value,
     password: inputPassword.value,
-  });
+  })
+    .then(() => {
+      window.location.href = "/welcomePage.html";
+    })
+    .catch(() => {
+      emailDuplicationMessage.classList.remove("hide"); // 실패 메시지 보임
+      console.log("login error");
+    });
   console.log(response.data.data); // response가 잘 들어왔는지 확인
-  window.location.href = "/welcomePage.html";
 }
 
 form.addEventListener("submit", onLoginSubmit);

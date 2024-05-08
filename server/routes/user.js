@@ -42,17 +42,20 @@ router.post("/signin", async (req, res, next) => {
   try {
     // 아까 local로 등록한 인증과정 실행
     passport.authenticate("local", (passportError, user, info) => {
+
       // 인증이 실패했거나 유저 데이터가 없다면 에러 발생
       if (passportError || !user) {
         res.status(400).json({ message: info.reason });
         return;
       }
+
       // user데이터를 통해 로그인 진행
       req.login(user, { session: false }, (loginError) => {
         if (loginError) {
           res.send(loginError);
           return;
         }
+
         // 클라이언트에게 JWT생성 후 반환
         const token = jwt.sign(
           { _id: user.id, name: user.name }, //맞는지 확인할려고 name까지 넣음 , elice시크릿 키 같은 경우 .dev 사용해야될듯
@@ -74,8 +77,11 @@ router.post("/signin", async (req, res, next) => {
         res.status(200).json({ token, user });
         // res.status(200).end();
       });
+
     })(req, res);
+
   } catch (error) {
+
     console.error(error);
     next(error);
   }
