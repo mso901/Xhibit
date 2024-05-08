@@ -1,0 +1,246 @@
+@media (max-width: 480px){
+    .navbar{
+        display: none;
+    }
+    
+    .sign-container{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .logo-div{
+        margin-left: 0;
+        margin-bottom: 5vw;
+    }
+    
+    .logo-div img{
+        width: 50vw;
+    }
+    
+    .form-title{
+        font-size: 7vw;
+    }
+
+    .form-container{
+        width: 100%;
+        padding: 5.5vw 5vw;
+    }
+
+    .form-control-input{
+        height: auto;
+        padding: 4vw;
+        margin-bottom: 4vw;
+    }
+
+    .password-and-signup{
+        margin-right: 1vw;
+        font-size: 3.5vw;
+    }
+
+    .form-control-submit-button{
+        margin-top: 8vw;
+        height: auto;
+        padding: 3vw;
+        font-size: 5vw;
+    }
+
+    .form-group i{
+        left: 72vw;
+        bottom: 7.9vw;
+    }
+
+    .portfolio{
+        flex-direction: column;
+        align-items: center;
+        margin: 0 5vw;    
+    }
+
+    h2{
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        margin: 8vw 0;
+        font-size: 8vw;
+    }
+
+    .container{
+        margin: 0 5vw;
+    }
+
+    .main-title{
+        margin: 5vw;
+        text-align: center;
+        font-size: 5vw;
+    }
+
+    .main-title .title{
+        margin: 2vw;
+        text-align: center;
+        font-size: 9vw;
+    }
+    
+    .main-title .content{
+        width: 68vw;
+    }
+
+    .user_card-list{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .user_card{
+        width: 100%;
+        height: auto;
+        grid-template-rows: 0.8fr 1.5fr 0.1fr;
+        margin-bottom: 5vw;
+    }
+
+    .user_card .profile_img{
+        width: 25vw;
+        height: 25vw;
+        margin: 3vw 2vw 3vw 5vw;
+        border-radius: 50vw;
+    }
+
+    .user_card-intro{
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    .user_card-intro p{
+        margin-top: 3.5vw;
+    }
+
+    .card-name{
+        font-size: 7vw;
+        letter-spacing: 1vw;
+    }
+
+    .card-email{
+        font-size: 3vw;        
+        margin-top: 10vw;
+    }
+
+    .user_card-content{
+        margin: 0 4vw;
+        height: 80%;
+        font-size: 4.5vw;
+        padding: 5vw;
+    }
+
+    .user_card-content p{
+        line-height: normal;
+    }
+
+    .user_card-bottom a{
+        font-size: 4vw;
+        margin: 1.2vw 3.8vw 2vw 0;
+    }
+
+    .my-card{
+        width: 100%;
+        height: auto;
+        margin-bottom: 5vw;
+        margin-left: 0;
+    }
+    
+    .my-card-intro{
+        margin-left: 5vw;
+        justify-content: center;
+    }
+
+    .my-card .profile_img{
+        width: 25vw;
+        height: 25vw;
+        margin: 3vw 2vw 3vw 5vw;
+        border-radius: 50vw;
+    }
+
+    .my-card-content{
+        margin: 0 4vw;
+        height: 80%;
+        padding: 5vw;
+    }
+
+    .my-card-intro p{
+        margin: 1vw;
+    }
+
+    .my-card-content textarea{
+        font-size: 4.5vw;
+        height: 30vw;
+    }
+
+    .word-limit{
+        font-size: 3vw;
+    }
+
+    .modified-button{
+        margin: 4vw;
+        height: 9vw;
+        font-size: 4.5vw;
+    }
+
+    .portfolio-info{
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .portfolio-section .input-info{
+
+    }
+
+    .portfolio-info .section{
+        width: 100%;
+        padding: 0;
+    }
+
+    .portfolio .resume-content{
+        width: 100%;
+    }
+
+    .portfolio-info .title-bar{
+        padding: 7vw 2vw 4vw;
+    }
+
+    .portfolio-info .title-bar h3{
+        font-size: 7vw;
+    }
+
+    .portfolio-info .title-bar button{
+        font-size: 4.5vw;
+    }
+
+    .portfolio-section .item{
+        font-size: 4.5vw;
+    }
+
+    .portfolio-section .date{
+        font-size: 4.5vw;
+    }
+
+    .portfolio-section .date input{
+        max-width: none;
+    }
+
+    .portfolio-section .date input[name="startYear"], .date input[name="endYear"]{
+        font-size: 4.5vw;
+        max-width: none;
+    }
+
+    .portfolio-section .date input[name="endYear"]{
+        font-size: 4.5vw;
+        max-width: none;
+    }
+}
+
+@media (max-width: 768px){
+    
+}
+
+
+@media (max-width: 1280px){
+    
+}
