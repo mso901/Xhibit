@@ -301,7 +301,9 @@ async function handleSubmit(event, form, buttons) {
 	// 유저 아이디 가져오기
 	const params = new URLSearchParams(window.location.search);
 	// params.get("userId") 하면 null이 나옴
-	const userId = params.get("userId ");
+	const userId = params.get("userId");
+	console.log("공백 x:", params.get("userId"));
+	console.log("공백: ", params.get("userId "));
 	console.log(userId);
 
 	if (section === "education") {
