@@ -40,6 +40,9 @@ async function getUserPortfolio() {
   const portfolioSectionEducation = document.querySelector(
     ".portfolio-section.education"
   );
+  if (education.length === 0) {
+    portfolioSectionEducation.innerHTML = `<div class="nothing-info">정보가 없습니다.</div>`;
+  }
   education.forEach((item) => {
     const { school, major, periodStart, periodEnd } = item;
     console.log(item);
@@ -59,6 +62,9 @@ async function getUserPortfolio() {
   const portfolioSectionAward = document.querySelector(
     ".portfolio-section.award"
   );
+  if (award.length === 0) {
+    portfolioSectionAward.innerHTML = `<div class="nothing-info">정보가 없습니다.</div>`;
+  }
   award.forEach((item) => {
     const { name, agency, awardDate } = item;
     console.log(item);
@@ -77,6 +83,10 @@ async function getUserPortfolio() {
   const portfolioSectionCertificate = document.querySelector(
     ".portfolio-section.certificate"
   );
+
+  if (certificate.length === 0) {
+    portfolioSectionCertificate.innerHTML = `<div class="nothing-info">정보가 없습니다.</div>`;
+  }
   certificate.forEach((item) => {
     const { name, agency, licenseDate } = item;
     console.log(item);
@@ -95,6 +105,9 @@ async function getUserPortfolio() {
   const portfolioSectionProject = document.querySelector(
     ".portfolio-section.project"
   );
+  if (project.length === 0) {
+    portfolioSectionProject.innerHTML = `<div class="nothing-info">정보가 없습니다.</div>`;
+  }
   project.forEach((item) => {
     const {
       name,
