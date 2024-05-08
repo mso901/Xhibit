@@ -444,37 +444,78 @@ textarea.addEventListener("input", function () {
 	wordLimit.innerText = `${currLength}/100`;
 });
 
-//자기소개 수정 (not working)
-function getIntroduce() {
-  console.log(textarea)
-  const BASE_URL = "http://localhost:3000";
+async function getUserPortfolio() {
+	let query = window.location.search;
+	let idParams = new URLSearchParams(query);
+	let userId = idParams.get("userId");
+  
+	const BASE_URL = "http://localhost:3000";
+  
+	const baseInstance = axios.create({
+	  baseURL: BASE_URL, // 기본 URL 설정
+	});
+	const response = await baseInstance.get(`/api/${userId}`);
+	// 유저 상세 정보 전부 선언
+	const { user, education, award, certificate, project } = response.data;
+	console.log(user);
+  
+	const myCardDiv = document.querySelector(".my-card");
+	// 유저 카드 정보 선언
+	const { name, email, introduce } = user[0];
+	// 유저 카드 출력
+	myCardDiv.innerHTML = `<div class="my-card-header">
+	<img
+	  src="../../public/images/img-profile01.png"
+	  alt="profile_img"
+	  class="profile_img"
+	/>
+	<div class="my-card-intro">
+	  <p class="card-name">${name}</p>
+	  <p class="card-email">${email}</p>
+	</div>
+  </div>
+  
+  <div class="my-card-content">
+	${introduce}
+  </div>
+  <button class="modified-button">확인</button>
+  `;
+  }
+  
+  getUserPortfolio();
 
-  const baseInstance = axios.create({
-    baseURL: BASE_URL,
-  });
-  baseInstance
-    .get("/api", {})
-    .then((res) => {
-      const user=res.data;
-      console.log(user);
-      async (user) => {
-        const { _id, name, email, introduce } = user;
-        textarea.insertAdjacentHTML(
-          "beforeend",
-        `
-        <div class="my-card-content">
-        <textarea id="profile-text" maxlength="80">${introduce}</textarea>
-      </div>
-        `); 
-      }
-    })
-    .catch((error) => {
-      // Handle error
-      console.log(error);
-    });
-}
+//수정 버튼 누르면 자기소개 axios.patch
+const userIntroduceModifyButton = document.querySelector(".modified-button");
+userIntroduceModifyButton.addEventListener("click", async function patchIntroduction(){
+	userIntroduceModifyButton.innerHTML = '수정';
+	try{
+		let query = window.location.search;
+		let idParams = new URLSearchParams(query);
+		let userId = idParams.get("userId");
 
-getIntroduce();
+		const BASE_URL = "http://localhost:3000";
+
+		const baseInstance = axios.create({
+			baseURL: BASE_URL, // 기본 URL 설정
+		});
+		const response = await baseInstance.patch(`/api/changeIntroduce/${userId}`);
+		const { user } = response.data;
+		console.log(user);
+		const textarea = document.querySelector(".my-card-content");
+		console.log(textarea);
+		const { name, email, introduce } = user[0];
+		textarea.innerHTML=`
+		<<div class="my-card-content">
+		${introduce}
+		</div>
+		`;
+	}
+	catch(error){
+		console.log(error);
+	}
+	
+});
+
 
 updatePortfolioSections();
 
@@ -507,24 +548,24 @@ async function callChip() {
 	});
 }
 
-async function loadSectionInfo() {
-	const params = new URLSearchParams(window.location.search);
-	const userId = params.get("userId");
-	try {
-		const sectionName = "education";
-		const educationSection = document.querySelector(".section.education");
-		const getEducation = await formAPI.getFormInfo(userId, "education");
-		console.log(getEducation);
-		if (getEducation) {
-			getEducation.forEach((educationData) => {
-				const newEdu = createSectionForm(sectionName, educationData);
-				// const newEdu = createSectionForm(sectionName);
-				educationSection.appendChild(newEdu);
-			});
-		}
-	} catch (err) {
-		console.log("학력 가져오는데 오류", err);
-	}
-}
+// async function loadSectionInfo() {
+// 	const params = new URLSearchParams(window.location.search);
+// 	const userId = params.get("userId");
+// 	try {
+// 		const sectionName = "education";
+// 		const educationSection = document.querySelector(".section.education");
+// 		const getEducation = await formAPI.getFormInfo(userId, "education");
+// 		console.log(getEducation);
+// 		if (getEducation) {
+// 			getEducation.forEach((educationData) => {
+// 				const newEdu = createSectionForm(sectionName, educationData);
+// 				// const newEdu = createSectionForm(sectionName);
+// 				educationSection.appendChild(newEdu);
+// 			});
+// 		}
+// 	} catch (err) {
+// 		console.log("학력 가져오는데 오류", err);
+// 	}
+// }
 
-loadSectionInfo();
+// loadSectionInfo();
