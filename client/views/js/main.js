@@ -1,23 +1,3 @@
-{
-  /* <div class="user_card-list">
-    <div class="user_card">
-        <div>
-            <img src="../../../public/images/img-profile01.png" alt="profile_img" class="profile_img">
-        </div>
-        <div class="user_card-intro">
-            <p class="card-name">김철수</p>
-            <p class="card-email">test@test.com</p>
-        </div>
-        <div class="user_card-content">
-            안녕하세요! 프론트엔드 개발자를 지망하는 김철수라고 합니다!
-            <p></p>
-        </div>
-        <div class="user_card-bottom">
-            <a>자세히보기 ></a>
-        </div>
-    </div>
-</div> */
-}
 // 리스트 시작
 
 function getUsers() {
@@ -51,7 +31,7 @@ function getUsers() {
               <p></p>
           </div>
           <div class="user_card-bottom">
-              <a href = /otherspage.html?user_id=${_id}">자세히보기 ></a>
+              <a href = /otherspage.html?userId=${_id}>자세히보기 ></a>
           </div>
       </div>
           `
