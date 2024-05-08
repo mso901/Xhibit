@@ -8,6 +8,7 @@ const loginRequired = require("../middleware/login-required");
 
 const router = express.Router();
 
+// 유저 로그아웃
 router.get("/logout", loginRequired, (req, res) => {
   try {
     res.clearCookie("jwt", {
@@ -24,6 +25,7 @@ router.get("/logout", loginRequired, (req, res) => {
   }
 });
 
+// 메인 페이지 유저 리스트
 router.get("/", loginRequired, async (req, res, next) => {
   try {
     const user = await User.find(
@@ -38,6 +40,7 @@ router.get("/", loginRequired, async (req, res, next) => {
   }
 });
 
+// 유저 로그인
 router.post("/signin", async (req, res, next) => {
   try {
     // 아까 local로 등록한 인증과정 실행
@@ -63,11 +66,15 @@ router.post("/signin", async (req, res, next) => {
         );
         console.log("토큰", token);
         res.cookie("jwt", token, {
-          path: "/", // 쿠키가 적용되는 경로 지정, 기본값 '/'이며 모든 경로에 쿠키 사용 가능
-          httpOnly: true, // 기본값 false, true인경우 클라이언트에서 document.cookie로 접근 X (보안 관련)
-          secure: true, // 기본값 false, true인경우 HTTPS에서만 쿠키를 사용가능하게 만든다.
+          path: "/",
+          // 쿠키가 적용되는 경로 지정, 기본값 '/'이며 모든 경로에 쿠키 사용 가능
+          httpOnly: true,
+          // 기본값 false, true인경우 클라이언트에서 document.cookie로 접근 X (보안 관련)
+          secure: true,
+          // 기본값 false, true인경우 HTTPS에서만 쿠키를 사용가능하게 만든다.
           sameSite: "none",
-          // strict는 동일 출처에서만, lax는 쿠키가 일부 상황에서 다른 출처로 전송 가능, none는 모든 경우 허용(sameSite)
+          // strict는 동일 출처에서만, lax는 쿠키가 일부 상황에서 다른 출처로 전송 가능,
+          // none는 모든 경우 허용(sameSite)
           maxAge: 60 * 60 * 1000, // 쿠키 유효기간 이 경우는 1시간
         }); // 쿠키 전송
 
@@ -81,7 +88,7 @@ router.post("/signin", async (req, res, next) => {
   }
 });
 
-// 회원가입
+// 유저 회원가입
 router.post("/signup", async (req, res, next) => {
   try {
     const { email, name, password } = req.body;
@@ -116,11 +123,11 @@ router.post("/signup", async (req, res, next) => {
 });
 
 // 유저 상세 포트폴리오
-router.get("/:user_id", loginRequired, async (req, res, next) => {
+router.get("/:userId", loginRequired, async (req, res, next) => {
   try {
-    const { user_id } = req.params;
-    console.log(user_id);
-    const objectUserId = new ObjectId(user_id); // find 하기 위해서 objectId 형식으로 변경해야됨
+    const { userId } = req.params;
+    console.log(userId);
+    const objectUserId = new ObjectId(userId); // find 하기 위해서 objectId 형식으로 변경해야됨
     const user = await User.find(
       { _id: objectUserId },
       { email: 1, name: 1, introduce: 1 }

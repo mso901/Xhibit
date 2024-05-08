@@ -5,11 +5,11 @@ const ObjectId = require("mongoose").Types.ObjectId;
 const router = Router();
 
 // 학력 조회
-router.get("/:user_id", async (req, res, next) => {
+router.get("/:userId", async (req, res, next) => {
   try {
-    const { user_id } = req.params; // 유저 아이디 받아온다.
-    // console.log(user_id);
-    const objectUserId = new ObjectId(user_id); // find 하기 위해서 objectId 형식으로 변경해야됨
+    const { userId } = req.params; // 유저 아이디 받아온다.
+    // console.log(userId);
+    const objectUserId = new ObjectId(userId); // find 하기 위해서 objectId 형식으로 변경해야됨
     // console.log(objectUserId);
     const get_education = await Education.find({ user: objectUserId }).lean(); // lean() 사용시 간략하게 출력
     res.json(get_education);
@@ -20,12 +20,12 @@ router.get("/:user_id", async (req, res, next) => {
 });
 
 // 학력 추가
-router.post("/:user_id", async (req, res, next) => {
+router.post("/:userId", async (req, res, next) => {
   try {
-    const { user_id } = req.params; // 유저 아이디 받아온다.
+    const { userId } = req.params; // 유저 아이디 받아온다.
     const { school, major, periodStart, periodEnd } = req.body; // 프론트에서 받아온 데이터
-    // console.log(user_id);
-    const user = await User.findById(user_id).lean(); // lean() 사용시 간략하게 출력, findById는 _id 받아올 때 사용
+    // console.log(userId);
+    const user = await User.findById(userId).lean(); // lean() 사용시 간략하게 출력, findById는 _id 받아올 때 사용
     // console.log(user);
     const add_education = await Education.create({
       user: user._id,
@@ -42,12 +42,12 @@ router.post("/:user_id", async (req, res, next) => {
 });
 
 // 학력 수정
-router.patch("/:education_id", async (req, res, next) => {
+router.patch("/:educationId", async (req, res, next) => {
   try {
-    const { education_id } = req.params; // 학력 아이디 받아온다.
+    const { educationId } = req.params; // 학력 아이디 받아온다.
     const { school, major, periodStart, periodEnd } = req.body; // 프론트에서 받아온 데이터
 
-    const education = await Education.findById(education_id).lean(); // lean() 사용시 간략하게 출력, findById는 _id 받아올 때 사용
+    const education = await Education.findById(educationId).lean(); // lean() 사용시 간략하게 출력, findById는 _id 받아올 때 사용
     console.log(education);
     const update_education = await Education.updateOne(
       { _id: education._id }, // 학력 아이디를 찾아서
@@ -69,11 +69,11 @@ router.patch("/:education_id", async (req, res, next) => {
 });
 
 // 학력 삭제
-router.delete("/:education_id", async (req, res, next) => {
+router.delete("/:educationId", async (req, res, next) => {
   try {
-    const { education_id } = req.params; // 학력 아이디 받아온다.
+    const { educationId } = req.params; // 학력 아이디 받아온다.
 
-    const education = await Education.findById(education_id).lean(); // lean() 사용시 간략하게 출력, findById는 _id 받아올 때 사용
+    const education = await Education.findById(educationId).lean(); // lean() 사용시 간략하게 출력, findById는 _id 받아올 때 사용
     console.log(education);
     const delete_education = await Education.deleteOne({
       _id: education._id,
