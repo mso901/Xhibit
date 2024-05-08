@@ -45,7 +45,6 @@ router.post("/signin", async (req, res, next) => {
   try {
     // 아까 local로 등록한 인증과정 실행
     passport.authenticate("local", (passportError, user, info) => {
-
       // 인증이 실패했거나 유저 데이터가 없다면 에러 발생
       if (passportError || !user) {
         res.status(400).json({ message: info.reason });
@@ -84,11 +83,8 @@ router.post("/signin", async (req, res, next) => {
         res.status(200).json({ token, user });
         // res.status(200).end();
       });
-
     })(req, res);
-
   } catch (error) {
-
     console.error(error);
     next(error);
   }
@@ -142,7 +138,7 @@ router.get("/:userId", loginRequired, async (req, res, next) => {
     const award = await Award.find({ user: objectUserId }).lean();
     const certificate = await Certificate.find({ user: objectUserId }).lean();
     const project = await Project.find({ user: objectUserId }).lean();
-    res.json([user, education, award, certificate, project]);
+    res.json({ user, education, award, certificate, project });
   } catch (error) {
     console.error(error);
     next(error);
