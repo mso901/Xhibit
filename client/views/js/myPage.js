@@ -1,4 +1,4 @@
-import * as educationAPI from "./educationAPI.js";
+import * as formAPI from "./formAPI.js";
 
 // 포폴 섹션 - 학력, 수상이력, 자격증, 플젝
 const portfolioSection = [
@@ -220,7 +220,7 @@ const createSectionForm = (section) => {
 	} else if (section === "projects") {
 		const projName = createInput("proj-name", "프로젝트명");
 
-		const link = createInput("proj-link", "https://example.com");
+		const link = createInput("proj-link", "https://example.com (선택)");
 
 		const details = document.createElement("textarea");
 		details.placeholder = "프로젝트 소개";
@@ -296,14 +296,10 @@ async function handleSubmit(event, form, buttons) {
 
 	const formattedDate = getFormattedDate(section, dateInputs);
 
-	// const BASE_URL = "http://localhost:3000";
-
 	// 유저 아이디 가져오기
 	const params = new URLSearchParams(window.location.search);
 	// params.get("userId") 하면 null이 나옴
 	const userId = params.get("userId");
-	console.log("공백 x:", params.get("userId"));
-	console.log("공백: ", params.get("userId "));
 	console.log(userId);
 
 	if (section === "education") {
