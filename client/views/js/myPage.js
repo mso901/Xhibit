@@ -444,6 +444,38 @@ textarea.addEventListener("input", function () {
 	wordLimit.innerText = `${currLength}/100`;
 });
 
+//자기소개 수정 (not working)
+function getIntroduce() {
+  console.log(textarea)
+  const BASE_URL = "http://localhost:3000";
+
+  const baseInstance = axios.create({
+    baseURL: BASE_URL,
+  });
+  baseInstance
+    .get("/api", {})
+    .then((res) => {
+      const user=res.data;
+      console.log(user);
+      async (user) => {
+        const { _id, name, email, introduce } = user;
+        textarea.insertAdjacentHTML(
+          "beforeend",
+        `
+        <div class="my-card-content">
+        <textarea id="profile-text" maxlength="80">${introduce}</textarea>
+      </div>
+        `); 
+      }
+    })
+    .catch((error) => {
+      // Handle error
+      console.log(error);
+    });
+}
+
+getIntroduce();
+
 updatePortfolioSections();
 
 // 스킬 부분 칩 설정
