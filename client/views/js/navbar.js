@@ -25,12 +25,14 @@ window.addEventListener('DOMContentLoaded', function() {
     function updateLoginText() {
         const loginLink = document.querySelector('.navbar-menu a[href="/signin"]');
         const myPageLink = document.querySelector('.navbar-menu a[href="/mypage"]');
+        const signUpLink = document.querySelector('.navbar-menu a[href="/signup"]');
         const userId = getUserIdFromUrl();
 
         if (userId) {
             loginLink.textContent = "로그아웃";
             loginLink.setAttribute("href", "/logout");
             myPageLink.setAttribute("href", `/myPage.html?user_id=${userId}`);
+            signUpLink.style.display = "none";
         } else {
             loginLink.textContent = "로그인";
             loginLink.setAttribute("href", "/signIn");
