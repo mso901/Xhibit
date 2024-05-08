@@ -10,27 +10,29 @@ const portfolioSection = [
 
 // 수정 버튼 누를때만 수정이 가능하게 만들도록 제어하는 함수
 const toggleInputs = (form, disable) => {
+	console.log("disabling inputs...");
 	const inputs = form.querySelectorAll("input");
+	// console.log(inputs);
 	inputs.forEach((input) => (input.disabled = disable));
 	const textareas = form.querySelectorAll("textarea");
 	textareas.forEach((input) => (input.disabled = disable));
 };
 
 // delete 버튼 만들어 주는 함수
-const createBtns = (form) => {
+const createBtns = (form, edit = false) => {
 	const btnContainer = document.createElement("div");
 	btnContainer.className = "buttons";
 
 	// 확인 버튼 (submit)
 	const submitBtn = document.createElement("button");
-	submitBtn.className = "btn save";
+	submitBtn.className = edit ? "btn save hide" : "btn save";
 	submitBtn.innerText = `확인`;
 	submitBtn.setAttribute("type", "submit");
 	btnContainer.appendChild(submitBtn);
 
 	// 수정 버튼
 	const editBtn = document.createElement("div");
-	editBtn.className = "btn edit hide";
+	editBtn.className = edit ? "btn edit" : "btn edit hide";
 	editBtn.innerText = `수정`;
 	btnContainer.appendChild(editBtn);
 
@@ -84,7 +86,14 @@ const createDivider = () => {
 };
 
 // 인풋 타입 만들어주는 함수
-const createInput = (name, placeholder, maxLength = 80, isDate = false) => {
+const createInput = (
+	name,
+	placeholder,
+	isSaved = false,
+	value = null,
+	maxLength = 100,
+	isDate = false
+) => {
 	const input = document.createElement("input");
 	input.name = name;
 	if (isDate) {
@@ -118,6 +127,10 @@ const createInput = (name, placeholder, maxLength = 80, isDate = false) => {
 		input.className = name;
 	}
 	input.placeholder = placeholder;
+	if (isSaved) {
+		input.value = value;
+	}
+
 	if (name === "proj-link") {
 		input.type = "url";
 		input.required = true;
@@ -128,14 +141,27 @@ const createInput = (name, placeholder, maxLength = 80, isDate = false) => {
 };
 
 // 날짜 입력 받는 html 만드는 인풋 합수
-function createDateInput(section) {
+function createDateInput(section, startDate = null, endDate = null) {
 	const dateInput = document.createElement("div");
 	dateInput.className = "date";
 
-	const startYear = createInput("startYear", "YYYY", 4, true);
-	const startMonth = createInput("startMonth", "MM", 2, true);
-	const endYear = createInput("endYear", "YYYY", 4, true);
-	const endMonth = createInput("endMonth", "MM", 2, true);
+	let startYear, startMonth, endYear, endMonth;
+
+	if (!startDate) {
+		startYear = createInput("startYear", "YYYY", false, false, 4, true);
+		startMonth = createInput("startMonth", "MM", false, false, 2, true);
+		endYear = createInput("endYear", "YYYY", false, false, 4, true);
+		endMonth = createInput("endMonth", "MM", false, false, 2, true);
+	} else {
+		const [startY, startM] = startDate.split(".");
+		startYear = createInput("startYear", "YYYY", true, startY, 4, true);
+		startMonth = createInput("startMonth", "MM", true, startM, 2, true);
+		if (endDate) {
+			const [endY, endM] = endDate.split(".");
+			endYear = createInput("endYear", "YYYY", true, endY, 4, true);
+			endMonth = createInput("endMonth", "YYYY", true, endM, 2, true);
+		}
+	}
 
 	const divider1 = createDivider();
 	const divider2 = createDivider();
@@ -191,7 +217,7 @@ function getFormattedDate(section, dateInputs) {
 }
 
 // 학력, 상, 자격증, 플젝 - 각 섹션의 인풋 폼을 만들어 주는 함수
-const createSectionForm = (section) => {
+const createSectionForm = (section, data = null) => {
 	const sectionContainer = document.createElement("div");
 	sectionContainer.className = `portfolio-section ${section}`;
 
@@ -202,21 +228,42 @@ const createSectionForm = (section) => {
 	inputInfo.className = "input-info";
 	sectionInput.appendChild(inputInfo);
 
-	const btnContainer = createBtns(sectionInput);
+	const btnContainer = !data
+		? createBtns(sectionInput)
+		: createBtns(sectionInput, true);
 	sectionInput.appendChild(btnContainer);
 
-	let date = createDateInput(section);
+	let date;
+	if (!data) {
+		date = createDateInput(section);
+	} else {
+		if (section === "education" || section === "projects") {
+			date = createDateInput(section, data.periodStart, data.periodEnd);
+		} else {
+			date = createDateInput(section, data.periodStart);
+		}
+	}
 
 	// 순서대로
 	// 학력: 학교명, 전공 및 학위, 날짜
 	// 수상이력, 자격증은 구조가 같음 - 날짜, 이름 + 기관
 	// 프로젝트는 이름,날짜, 링크, 플젝 소개
 	if (section === "education") {
-		const schoolName = createInput("school-name", "학교명");
-		const major = createInput("major", "전공 및 학위 (ex. 경영학과 학사)");
+		let schoolName = !data
+			? createInput("school-name", "학교명")
+			: createInput("school-name", "학교명", true, data.school);
+		const major = !data
+			? createInput("major", "전공 및 학위 (ex. 경영학과 학사)")
+			: createInput(
+					"major",
+					"전공 및 학위 (ex. 경영학과 학사)",
+					true,
+					data.major
+			  );
 		inputInfo.appendChild(schoolName);
 		inputInfo.appendChild(major);
 		inputInfo.appendChild(date);
+		if (data) toggleInputs(inputInfo, true);
 	} else if (section === "projects") {
 		const projName = createInput("proj-name", "프로젝트명");
 
@@ -261,12 +308,12 @@ const createSectionForm = (section) => {
 	sectionContainer.appendChild(sectionInput);
 
 	sectionInput.addEventListener("submit", (event) =>
-		handleSubmit(event, sectionInput, btnContainer)
+		handleSubmit(event, sectionInput, btnContainer, section)
 	);
 	return sectionContainer;
 };
 
-async function handleSubmit(event, form, buttons) {
+async function handleSubmit(event, form, buttons, section) {
 	event.preventDefault();
 
 	// 사용자가 폼에 필요한 정보를 다 입력했는지 확인
@@ -283,9 +330,6 @@ async function handleSubmit(event, form, buttons) {
 	toggleInputs(form, true);
 
 	const sectionInput = event.target;
-	const section = sectionInput.classList.contains("education")
-		? "education"
-		: "other";
 
 	const dateInputs = {
 		startYear: sectionInput.querySelector('input[name="startYear"]'),
@@ -298,7 +342,6 @@ async function handleSubmit(event, form, buttons) {
 
 	// 유저 아이디 가져오기
 	const params = new URLSearchParams(window.location.search);
-	// params.get("userId") 하면 null이 나옴
 	const userId = params.get("userId");
 	console.log(userId);
 
@@ -398,7 +441,7 @@ textarea.addEventListener("input", function () {
 	const wordLimit = document.querySelector(".word-limit");
 
 	const currLength = textarea.value.length;
-	wordLimit.innerText = `${currLength}/80`;
+	wordLimit.innerText = `${currLength}/100`;
 });
 
 updatePortfolioSections();
@@ -431,3 +474,25 @@ async function callChip() {
 		}
 	});
 }
+
+async function loadSectionInfo() {
+	const params = new URLSearchParams(window.location.search);
+	const userId = params.get("userId");
+	try {
+		const sectionName = "education";
+		const educationSection = document.querySelector(".section.education");
+		const getEducation = await formAPI.getFormInfo(userId, "education");
+		console.log(getEducation);
+		if (getEducation) {
+			getEducation.forEach((educationData) => {
+				const newEdu = createSectionForm(sectionName, educationData);
+				// const newEdu = createSectionForm(sectionName);
+				educationSection.appendChild(newEdu);
+			});
+		}
+	} catch (err) {
+		console.log("학력 가져오는데 오류", err);
+	}
+}
+
+loadSectionInfo();
