@@ -68,12 +68,12 @@ app.post("/saveData", async (req, res) => {
 });
 
 app.use("/api", userRouter);
-app.use("/api/auth", authRouter);
+// app.use("/api/auth", authRouter);
 app.use("/api/education", loginRequired, eduRouter);
 app.use("/api/award", loginRequired, awardRouter);
 app.use("/api/certificate", loginRequired, certificateRouter);
 app.use("/api/project", loginRequired, projectRouter);
-app.use("/api/auth", auth);
+// app.use("/api/auth", auth);
 
 app.listen(3000);
 

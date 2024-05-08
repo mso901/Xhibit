@@ -55,8 +55,8 @@ router.post("/signin", async (req, res, next) => {
           maxAge: 60 * 60 * 1000, // 쿠키 유효기간 이 경우는 1시간
         }); // 쿠키 전송
 
-        res.status(200).json({ token });
-        res.status(200).end();
+        res.status(200).json({ token, user });
+        // res.status(200).end();
       });
     })(req, res);
   } catch (error) {

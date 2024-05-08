@@ -124,10 +124,8 @@ async function onLoginSubmit(e) {
     email: inputEmail.value,
     password: inputPassword.value,
   });
-  console.log(response); // response가 잘 들어왔는지 확인
+  console.log(response.data.data); // response가 잘 들어왔는지 확인
   window.location.href = "/welcomePage.html";
-
-  // response.default.headers.common["jwt"] = response.data.data.token;
 }
 
 form.addEventListener("submit", onLoginSubmit);
