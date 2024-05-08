@@ -171,4 +171,29 @@ router.patch("/changepassword/:userId", async (req, res, next) => {
   }
 });
 
+// 자기소개 변경
+router.patch("/changeIntroduce/:userId", async (req, res, next) => {
+  try {
+    const { newIntroduce } = req.body;
+    const { userId } = req.params;
+    const user = await User.findById(userId).lean(); // lean() 사용시 간략하게 출력, findById는 _id 받아올 때 사용
+    console.log("유저", user);
+
+    // 자기소개 문구 변경
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          introduce: newIntroduce,
+        },
+      }
+    );
+
+    res.status(200).json({ message: "자기소개가 성공적으로 변경되었습니다." });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 module.exports = router;
