@@ -296,10 +296,21 @@ async function handleSubmit(event, form, buttons) {
 
 	const formattedDate = getFormattedDate(section, dateInputs);
 
+	// const BASE_URL = "http://localhost:3000";
+
 	// 유저 아이디 가져오기
-	const userId = new URLSearchParams(window.location.search).get("user_id");
+	const params = new URLSearchParams(window.location.search);
+	// params.get("userId") 하면 null이 나옴
+	const userId = params.get("userId ");
+	console.log(userId);
 
 	if (section === "education") {
+		const BASE_URL = "http://localhost:3000";
+
+		const baseInstance = await axios.create({
+			baseURL: BASE_URL, // 기본 URL 설정
+		});
+
 		const schoolName = sectionInput.querySelector(
 			'input[name="school-name"]'
 		).value;
@@ -313,11 +324,11 @@ async function handleSubmit(event, form, buttons) {
 		};
 		console.log("학력 데이터:", educationData);
 
-		const newEducation = await educationAPI.createEducation(
-			userId,
-			educationData
-		);
-		console.log("학력 생성", newEducation);
+		const response = await baseInstance
+			.post(`${BASE_URL}/api/education/${userId}`, educationData)
+			.catch((err) => {
+				console.log("error", err);
+			});
 	}
 }
 
