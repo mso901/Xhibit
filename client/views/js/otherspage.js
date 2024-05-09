@@ -21,13 +21,13 @@ async function getUserPortfolio() {
   const userPortfolioName = document.querySelector(".user-portfolio-name");
   userPortfolioName.innerHTML = `<h2>${name}님의 포트폴리오</h2>`;
   // 유저 카드 출력
-  myCardDiv.innerHTML = `<div class="my-card-header">
+  myCardDiv.innerHTML = `<div class="other-card-header">
   <img
     src="/images/img-profile01.png"
     alt="profile_img"
     class="profile_img"
   />
-  <div class="my-card-intro">
+  <div class="other-card-intro">
     <p class="card-name">${name}</p>
     <p class="card-email">${email}</p>
   </div>
