@@ -627,7 +627,6 @@ function updateProfileTxt() {
 
 	profileContainer.addEventListener("submit", (event) => {
 		event.preventDefault();
-		console.log("profile intro changing...");
 		const textContent = textBox.value;
 
 		console.log(textContent);
@@ -640,19 +639,31 @@ function updateProfileTxt() {
 	});
 }
 
-// function getUserInfo() {
-// 	const params = new URLSearchParams(window.location.search);
-// 	const userId = params.get("userId");
-// 	console.log(params);
-// 	console.log(userId);
-// 	console.log(window.location.params);
+async function getUserInfo() {
+	const params = new URLSearchParams(window.location.search);
+	const userId = params.get("userId");
 
-// 	try {
-// 		const userData = formAPI.getUserInfo(userId);
-// 		console.log(userData);
-// 	} catch (err) {
-// 		console.log("err", err);
-// 	}
-// }
+	const BASE_URL = "http://localhost:3000";
+
+	const baseInstance = axios.create({
+		baseURL: BASE_URL, // 기본 URL 설정
+	});
+	const response = await baseInstance.get(`/api/${userId}`);
+
+	// 유저 상세 정보 가져오기
+	const { user, education, award, certificate, project } = response.data;
+	console.log(user[0]);
+	const { email, introduce, name } = user[0];
+
+	const thisPersonsName = document.querySelector(".card-name");
+	thisPersonsName.innerText = name;
+
+	const thisPersonEmail = document.querySelector(".card-email");
+	thisPersonEmail.innerText = email;
+
+	const thisPersonIntroduction = document.querySelector("#profile-text");
+	thisPersonIntroduction.value = introduce;
+}
 loadSections();
 updateProfileTxt();
+getUserInfo();
