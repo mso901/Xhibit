@@ -24,6 +24,7 @@ let corsOptions = {
   credentials: true, // 사용자 인증이 필요한 리소스(쿠키 ..등) 접근
   exposedHeaders: ["set-cookie"], // 이 기능은 브라우저에서 노출시킬 헤더 목록을 만드는 것인데, set-cookie를 추가해주지 않으면 헤더의 set-cookie 부분이 노출 X
 };
+
 app.use(cors(corsOptions)); // cors 적용
 
 mongoose.connect(
