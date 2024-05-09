@@ -47,7 +47,7 @@ window.addEventListener("DOMContentLoaded", function () {
       loginLink.textContent = "로그아웃";
       loginLink.setAttribute("href", "./signin.html");
       loginLink.addEventListener("click", logout);
-      myPageLink.setAttribute("href", `./myPage.html?user_id=${userId}`);
+      myPageLink.setAttribute("href", `./myPage.html?userId=${userId}`);
       signUpLink.style.display = "none";
     } else {
       loginLink.textContent = "로그인";
