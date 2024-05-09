@@ -168,14 +168,14 @@ p {
   margin-top: 0.5vw;
 }
 
-.card-name {
+.user_card .card-name {
   width: 8vw;
   font-size: calc(0.1rem + 1.3vw);
   font-weight: 600;
   letter-spacing: 0.4vw;
 }
 
-.card-email {
+.user_card .card-email {
   font-size: calc(0.1rem + 0.55vw);
   letter-spacing: 0.1vw;
 }
@@ -253,20 +253,20 @@ h2 {
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  margin: 2.5vw 0 2vw 1vw;
+  margin: 1.8vw 0 2vw 1vw;
 }
 
 .my-card-intro p {
   margin: 0vw;
 }
 
-.my-card .card-name {
-  width: 8vw;
+.my-card-intro .card-name {
+  width: 10vw;
   font-size: calc(0.1rem + 1.8vw);
   letter-spacing: 0.4vw;
 }
 
-.my-card .card-email {
+.my-card-intro .card-email {
   font-size: calc(0.1rem + 0.8vw);
   letter-spacing: 0.1vw;
 }
