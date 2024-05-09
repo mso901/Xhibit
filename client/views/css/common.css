@@ -627,6 +627,13 @@ input::-ms-clear {
 	display: none;
 }
 
+.loginError-message{
+	display: flex;
+	justify-content: center;
+	color: #D31919;
+	font-size: 1.05vw;
+}
+
 /* ------signup------ */
 .hide {
 	display: none;

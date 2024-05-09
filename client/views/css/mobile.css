@@ -1,4 +1,9 @@
 @media (max-width: 480px){
+    .loginError-message{
+        margin-top: 8vw;
+        font-size: 3.7vw;
+    }
+    
     .navbar{
         display: none;
     }
@@ -229,6 +234,13 @@
     .portfolio-section .date input[name="endYear"]{
         font-size: 4.5vw;
         max-width: none;
+    }
+
+    .footer {
+        height: 15vw;
+    }
+    .footer-logo img{
+        width: 30vw;
     }
 }
 
