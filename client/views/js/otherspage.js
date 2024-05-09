@@ -52,15 +52,14 @@ async function getUserPortfolio() {
       <div class="portfolio-section-item">
         <div class= "name">${school}</div>
         <div class= "major">${major}</div>
-        <div class= "period-start">${periodStart}</div>
-        <div class= "period-start">${periodEnd}</div>
+        <div class= "period-start">${periodStart}</div> ~ <div class= "period-start">${periodEnd}</div>
       </div>
       `
     );
   });
   // 수상이력
   const portfolioSectionAward = document.querySelector(
-    ".portfolio-section.award"
+    ".portfolio-section.awards"
   );
   if (award.length === 0) {
     portfolioSectionAward.innerHTML = `<div class="nothing-info">정보가 없습니다.</div>`;
@@ -121,13 +120,13 @@ async function getUserPortfolio() {
 
     function detailList(contentDetail) {
       let list = contentDetail?.map((item) => {
-        return `<li>${item}</li>`;
+        return `<li class = "contentDetail">${item}</li>`;
       });
       return list.join(" "); //중간중간 쉼표 존재해서 조인 쉼표를 공백으로 제거하고 배열 벗겨서 리턴
     }
     function techStackList(techStack) {
       let list = techStack?.map((item) => {
-        return `<div>${item}</div>`;
+        return `<div class = "techStack">${item}</div>`;
       });
       return list.join(" "); //중간중간 쉼표 존재해서 조인 쉼표를 공백으로 제거하고 배열 벗겨서 리턴
     }
@@ -137,10 +136,9 @@ async function getUserPortfolio() {
       `
       <div class="portfolio-section-item">
         <div class = "name">${name}</div>
-        <div class = "period-start">${periodStart}</div>
-        <div class = "period-start">${periodEnd}</div>
+        <div class = "period-start">${periodStart}</div> ~ <div class = "period-end">${periodEnd}</div>
         <a class = "link" href="${link}">${link}</a>
-        <ul class = "content-title">${contentTitle}</div>
+        <ul class = "content-title">${contentTitle}</ul>
         ${
           contentDetail !== ""
             ? detailList(contentDetail)

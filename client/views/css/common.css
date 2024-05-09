@@ -207,7 +207,7 @@ p {
 }
 
 h2 {
-	padding-left: 36vw;
+	padding-left: 37vw;
 	padding-top: 3vw;
 	padding-bottom: 2vw;
 	font-size: 2.5vw;
@@ -494,13 +494,45 @@ h2 {
   .portfolio-section-item{
     margin: 0.5vw;
     padding: 1vw 0;
-    line-height: 2vw;
+    line-height: 2.3vw;
     border-top: 1px solid #422613;
   }
+
+  .portfolio-section-item a{
+    display: flex;
+  }
+
+  .portfolio-section-item a:hover{
+    color: #d8b21b;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .portfolio-section-item ul{
+    margin: 0;
+    padding: 0;
+  }
+
   .portfolio-section-item:first-child {
     border-top: none;
   }
 
+  .portfolio-section-item:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .portfolio-section-item .period-start, .period-end {
+    display: inline-block;
+  }
+
+  .portfolio-section-item .techStack {
+    display: inline-block;
+    margin-right: 0.3vw;
+    padding: 0.7vw 1vw;
+    background-color: #fff9e3;
+    border-radius: 0.5vw;  
+  }
 }
 
 /* 모달 스타일 */
