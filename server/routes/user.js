@@ -8,42 +8,11 @@ const loginRequired = require("../middleware/login-required");
 
 const router = express.Router();
 
-// 유저 로그아웃
-router.get("/logout", loginRequired, (req, res) => {
-  try {
-    res.clearCookie("jwt", {
-      path: "/",
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-    });
-
-    // Redirect to the signin page
-    res.redirect("/signin");
-  } catch (error) {
-    console.error(error);
-  }
-});
-
-// 메인 페이지 유저 리스트
-router.get("/", loginRequired, async (req, res, next) => {
-  try {
-    const user = await User.find(
-      {},
-      { email: 1, name: 1, introduce: 1 }
-    ).lean();
-    console.log(user);
-    res.json(user);
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
-
 // 유저 로그인
 router.post("/signin", async (req, res, next) => {
   try {
-    // 아까 local로 등록한 인증과정 실행
+
+    // local로 등록한 인증과정 실행
     passport.authenticate("local", (passportError, user, info) => {
 
       // 인증이 실패했거나 유저 데이터가 없다면 에러 발생
@@ -61,7 +30,7 @@ router.post("/signin", async (req, res, next) => {
 
         // 클라이언트에게 JWT생성 후 반환
         const token = jwt.sign(
-          { _id: user.id, name: user.name }, //맞는지 확인할려고 name까지 넣음 , elice시크릿 키 같은 경우 .dev 사용해야될듯
+          { _id: user.id, name: user.name },
           "elice",
           {
             expiresIn: "24h",
@@ -82,7 +51,6 @@ router.post("/signin", async (req, res, next) => {
         }); // 쿠키 전송
 
         res.status(200).json({ token, user });
-        // res.status(200).end();
       });
 
     })(req, res);
@@ -100,16 +68,13 @@ router.post("/signup", async (req, res, next) => {
     const { email, name, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // 공백 입력시 에러 발생
     if (!email || !name || !password) {
       return res.status(400).end();
     }
 
-    // 이미 존재하는 이메일인지 확인
+    // 이메일 중복 확인
     const existingUser = await User.findOne({ email });
-
-    console.log(existingUser);
-
-    // 이미 존재하는 이메일이면 에러 응답을 보냄
     if (existingUser) {
       return res
         .status(400)
@@ -122,6 +87,24 @@ router.post("/signup", async (req, res, next) => {
       password: hashedPassword,
     });
     res.json(user);
+
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// 메인 페이지 유저 리스트
+router.get("/", loginRequired, async (req, res, next) => {
+  try {
+    const user = await User.find(
+      {},
+      { email: 1, name: 1, introduce: 1 }
+    ).lean();
+
+    console.log(user);
+    res.json(user);
+
   } catch (error) {
     console.error(error);
     next(error);
@@ -132,20 +115,40 @@ router.post("/signup", async (req, res, next) => {
 router.get("/:userId", loginRequired, async (req, res, next) => {
   try {
     const { userId } = req.params;
-    console.log(userId);
-    const objectUserId = new ObjectId(userId); // find 하기 위해서 objectId 형식으로 변경해야됨
+    const objectUserId = new ObjectId(userId);
+
     const user = await User.find(
       { _id: objectUserId },
       { email: 1, name: 1, introduce: 1 }
     );
+
     const education = await Education.find({ user: objectUserId }).lean();
     const award = await Award.find({ user: objectUserId }).lean();
     const certificate = await Certificate.find({ user: objectUserId }).lean();
     const project = await Project.find({ user: objectUserId }).lean();
     res.json([user, education, award, certificate, project]);
+
   } catch (error) {
     console.error(error);
     next(error);
+  }
+});
+
+// 유저 로그아웃
+router.get("/logout", (req, res) => {
+  try {
+    res.clearCookie("jwt", {
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    // Redirect to the signin page
+    res.redirect("/signin");
+
+  } catch (error) {
+    console.error(error);
   }
 });
 
@@ -154,7 +157,8 @@ router.patch("/changepassword/:userId", async (req, res, next) => {
   try {
     const { currentPassword, newPassword } = req.body;
     const { userId } = req.params;
-    const user = await User.findById(userId).lean(); // lean() 사용시 간략하게 출력, findById는 _id 받아올 때 사용
+
+    const user = await User.findById(userId);
     console.log("유저", user);
 
     // 현재 비밀번호가 맞는지 확인
@@ -178,6 +182,7 @@ router.patch("/changepassword/:userId", async (req, res, next) => {
     );
 
     res.status(200).json({ message: "비밀번호가 성공적으로 변경되었습니다." });
+
   } catch (error) {
     console.error(error);
     next(error);
@@ -189,7 +194,7 @@ router.patch("/changeIntroduce/:userId", async (req, res, next) => {
   try {
     const { newIntroduce } = req.body;
     const { userId } = req.params;
-    const user = await User.findById(userId).lean(); // lean() 사용시 간략하게 출력, findById는 _id 받아올 때 사용
+    const user = await User.findById(userId);
     console.log("유저", user);
 
     // 자기소개 문구 변경
