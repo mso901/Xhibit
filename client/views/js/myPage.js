@@ -3,14 +3,13 @@ import * as formAPI from "./formAPI.js";
 // 포폴 섹션 - 학력, 수상이력, 자격증, 플젝
 const portfolioSection = [
 	{ className: "education", title: "학력" },
-	{ className: "awards", title: "수상이력" },
+	{ className: "award", title: "수상이력" },
 	{ className: "certificate", title: "자격증" },
-	{ className: "projects", title: "프로젝트" },
+	{ className: "project", title: "프로젝트" },
 ];
 
 // 수정 버튼 누를때만 수정이 가능하게 만들도록 제어하는 함수
 const toggleInputs = (form, disable) => {
-	console.log("disabling inputs...");
 	const inputs = form.querySelectorAll("input");
 	// console.log(inputs);
 	inputs.forEach((input) => (input.disabled = disable));
@@ -19,7 +18,11 @@ const toggleInputs = (form, disable) => {
 };
 
 // delete 버튼 만들어 주는 함수
-const createBtns = (form, edit = false) => {
+const createBtns = (form, section, edit = false) => {
+	const params = new URLSearchParams(window.location.search);
+	const userId = params.get("userId");
+	const formId = form.getAttribute("formid");
+
 	const btnContainer = document.createElement("div");
 	btnContainer.className = "buttons";
 
@@ -28,6 +31,7 @@ const createBtns = (form, edit = false) => {
 	submitBtn.className = edit ? "btn save hide" : "btn save";
 	submitBtn.innerText = `확인`;
 	submitBtn.setAttribute("type", "submit");
+	submitBtn.setAttribute("update", false);
 	btnContainer.appendChild(submitBtn);
 
 	// 수정 버튼
@@ -58,6 +62,11 @@ const createBtns = (form, edit = false) => {
 				console.log("폼을 삭제합니다");
 				const form = deleteBtn.closest(".portfolio-section");
 				form.remove();
+				try {
+					const del = formAPI.deleteForm(section, formId);
+				} catch (err) {
+					console.log("err", err);
+				}
 				modal.hide();
 			},
 			{ once: true }
@@ -133,9 +142,10 @@ const createInput = (
 
 	if (name === "proj-link") {
 		input.type = "url";
-		input.required = true;
 	} else {
-		input.required = true;
+		if (name !== "skills") {
+			input.required = true;
+		}
 	}
 	return input;
 };
@@ -168,7 +178,7 @@ function createDateInput(section, startDate = null, endDate = null) {
 
 	const dash = document.createElement("span");
 	dash.innerText = "~";
-	if (section === "education" || section === "projects") {
+	if (section === "education" || section === "project") {
 		dateInput.append(
 			startYear,
 			divider1,
@@ -209,7 +219,7 @@ function getFormattedDate(section, dateInputs) {
 
 	const start = `${startYear.value}.${startMonth.value}`;
 
-	if (section === "awards" || section === "certificate") {
+	if (section === "award" || section === "certificate") {
 		return start;
 	}
 	const end = `${endYear.value}.${endMonth.value}`;
@@ -228,21 +238,24 @@ const createSectionForm = (section, data = null) => {
 	inputInfo.className = "input-info";
 	sectionInput.appendChild(inputInfo);
 
-	const btnContainer = !data
-		? createBtns(sectionInput)
-		: createBtns(sectionInput, true);
-	sectionInput.appendChild(btnContainer);
-
 	let date;
 	if (!data) {
 		date = createDateInput(section);
 	} else {
-		if (section === "education" || section === "projects") {
+		if (section === "education" || section === "project") {
 			date = createDateInput(section, data.periodStart, data.periodEnd);
+		} else if (section === "award") {
+			date = createDateInput(section, data.awardDate);
 		} else {
-			date = createDateInput(section, data.periodStart);
+			date = createDateInput(section, data.licenseDate);
 		}
+		sectionInput.setAttribute("formId", data._id);
 	}
+
+	const btnContainer = !data
+		? createBtns(sectionInput, section)
+		: createBtns(sectionInput, section, true);
+	sectionInput.appendChild(btnContainer);
 
 	// 순서대로
 	// 학력: 학교명, 전공 및 학위, 날짜
@@ -264,13 +277,18 @@ const createSectionForm = (section, data = null) => {
 		inputInfo.appendChild(major);
 		inputInfo.appendChild(date);
 		if (data) toggleInputs(inputInfo, true);
-	} else if (section === "projects") {
-		const projName = createInput("proj-name", "프로젝트명");
+	} else if (section === "project") {
+		const projName = !data
+			? createInput("proj-name", "프로젝트명")
+			: createInput("proj-name", "프로젝트명", true, data.contentTitle);
 
-		const link = createInput("proj-link", "https://example.com (선택)");
+		const link = !data
+			? createInput("proj-link", "https://example.com (선택)")
+			: createInput("proj-link", "프로젝트명", true, data.link);
 
 		const details = document.createElement("textarea");
 		details.placeholder = "프로젝트 소개";
+		if (data) details.value = data.contentDetail;
 		// 사용자가 쓰는 만큼 textarea가 늘어나거나 줄어들게 하는 함수
 		details.addEventListener("input", function () {
 			details.style.height = "auto";
@@ -282,6 +300,15 @@ const createSectionForm = (section, data = null) => {
 		const chipset = document.createElement("md-chip-set");
 		chipset.className = "chipset";
 		const skills = createSkills(chipset);
+		if (data && data.techStack.length !== 0) {
+			data.techStack.forEach((s) => {
+				const skill = document.createElement("md-input-chip");
+				skill.className = "skill";
+				skill.label = s;
+				chipset.appendChild(skill);
+				callChip();
+			});
+		}
 
 		inputInfo.appendChild(projName);
 		inputInfo.appendChild(date);
@@ -289,20 +316,26 @@ const createSectionForm = (section, data = null) => {
 		inputInfo.appendChild(details);
 		inputInfo.appendChild(skills);
 		inputInfo.appendChild(chipset);
+		if (data) toggleInputs(inputInfo, true);
 	} else {
 		inputInfo.appendChild(date);
 
 		const details = document.createElement("div");
 		details.className = `details ${section}`;
 
-		const placeholder = section === "awards" ? "수상명" : "자격명";
-		const name = createInput("name", placeholder);
+		const placeholder = section === "award" ? "수상명" : "자격명";
+		const name = !data
+			? createInput("name", placeholder)
+			: createInput("name", placeholder, true, data.name);
 		details.appendChild(name);
 
-		const institution = createInput("institution-name", "발급 기관");
+		const institution = !data
+			? createInput("institution-name", "발급 기관")
+			: createInput("institution-name", "발급 기관", true, data.agency);
 		details.appendChild(institution);
 
 		inputInfo.appendChild(details);
+		if (data) toggleInputs(inputInfo, true);
 	}
 
 	sectionContainer.appendChild(sectionInput);
@@ -315,6 +348,8 @@ const createSectionForm = (section, data = null) => {
 
 async function handleSubmit(event, form, buttons, section) {
 	event.preventDefault();
+	const params = new URLSearchParams(window.location.search);
+	const userId = params.get("userId");
 
 	// 사용자가 폼에 필요한 정보를 다 입력했는지 확인
 	if (!form.checkValidity()) {
@@ -325,6 +360,9 @@ async function handleSubmit(event, form, buttons, section) {
 	// 필요한 정보를 다 입력했으면 submit 버튼을 눌렀을때
 	// 확인 버튼을 숨기고 편집 버튼 보여주기
 	const [submitBtn, editBtn] = buttons.children;
+	if (!submitBtn.update) {
+		submitBtn.update = true;
+	}
 	editBtn.classList.toggle("hide");
 	submitBtn.classList.toggle("hide");
 	toggleInputs(form, true);
@@ -339,37 +377,58 @@ async function handleSubmit(event, form, buttons, section) {
 	};
 
 	const formattedDate = getFormattedDate(section, dateInputs);
-
-	// 유저 아이디 가져오기
-	const params = new URLSearchParams(window.location.search);
-	const userId = params.get("userId");
-	console.log(userId);
-
+	let data = null;
 	if (section === "education") {
-		const BASE_URL = "http://localhost:3000";
-
-		const baseInstance = await axios.create({
-			baseURL: BASE_URL, // 기본 URL 설정
-		});
-
 		const schoolName = sectionInput.querySelector(
 			'input[name="school-name"]'
 		).value;
 		const major = sectionInput.querySelector('input[name="major"]').value;
 
-		const educationData = {
+		data = {
 			school: schoolName,
 			major,
 			periodStart: formattedDate.split(" - ")[0],
 			periodEnd: formattedDate.split(" - ")[1],
 		};
-		console.log("학력 데이터:", educationData);
+		console.log("학력 데이터:", data);
+	} else if (section === "certificate") {
+		const name = sectionInput.querySelector('input[name="name"]').value;
+		const agency = sectionInput.querySelector(
+			'input[name="institution-name"]'
+		).value;
+		data = {
+			name,
+			agency,
+			licenseDate: formattedDate,
+		};
+		console.log("자격증 데이터:", data);
+	} else if (section === "award") {
+		const name = sectionInput.querySelector('input[name="name"]').value;
+		const agency = sectionInput.querySelector(
+			'input[name="institution-name"]'
+		).value;
+		data = {
+			name,
+			agency,
+			awardDate: formattedDate,
+		};
+		console.log("수상 데이터:", data);
+	}
 
-		const response = await baseInstance
-			.post(`${BASE_URL}/api/education/${userId}`, educationData)
-			.catch((err) => {
-				console.log("error", err);
-			});
+	console.log(submitBtn.update);
+	if (submitBtn.update == false) {
+		try {
+			const res = formAPI.createNewForm(userId, section, data);
+		} catch (err) {
+			console.log("err:", err);
+		}
+	} else {
+		let formId = form.getAttribute("formid");
+		try {
+			const res = formAPI.updateForm(section, formId, data);
+		} catch (err) {
+			console.log("err:", err);
+		}
 	}
 }
 
@@ -414,9 +473,6 @@ const createSection = (sectionData) => {
 	header.appendChild(addNewItemBtn);
 	section.appendChild(header);
 
-	const sectionForm = createSectionForm(sectionData.className);
-	section.appendChild(sectionForm);
-
 	return section;
 };
 
@@ -443,79 +499,6 @@ textarea.addEventListener("input", function () {
 	const currLength = textarea.value.length;
 	wordLimit.innerText = `${currLength}/100`;
 });
-
-async function getUserPortfolio() {
-	let query = window.location.search;
-	let idParams = new URLSearchParams(query);
-	let userId = idParams.get("userId");
-  
-	const BASE_URL = "http://localhost:3000";
-  
-	const baseInstance = axios.create({
-	  baseURL: BASE_URL, // 기본 URL 설정
-	});
-	const response = await baseInstance.get(`/api/${userId}`);
-	// 유저 상세 정보 전부 선언
-	const { user, education, award, certificate, project } = response.data;
-	console.log(user);
-  
-	const myCardDiv = document.querySelector(".my-card");
-	// 유저 카드 정보 선언
-	const { name, email, introduce } = user[0];
-	// 유저 카드 출력
-	myCardDiv.innerHTML = `<div class="my-card-header">
-	<img
-	  src="../../public/images/img-profile01.png"
-	  alt="profile_img"
-	  class="profile_img"
-	/>
-	<div class="my-card-intro">
-	  <p class="card-name">${name}</p>
-	  <p class="card-email">${email}</p>
-	</div>
-  </div>
-  
-  <div class="my-card-content">
-	${introduce}
-  </div>
-  <button class="modified-button">확인</button>
-  `;
-  }
-  
-  getUserPortfolio();
-
-//수정 버튼 누르면 자기소개 axios.patch
-const userIntroduceModifyButton = document.querySelector(".modified-button");
-userIntroduceModifyButton.addEventListener("click", async function patchIntroduction(){
-	userIntroduceModifyButton.innerHTML = '수정';
-	try{
-		let query = window.location.search;
-		let idParams = new URLSearchParams(query);
-		let userId = idParams.get("userId");
-
-		const BASE_URL = "http://localhost:3000";
-
-		const baseInstance = axios.create({
-			baseURL: BASE_URL, // 기본 URL 설정
-		});
-		const response = await baseInstance.patch(`/api/changeIntroduce/${userId}`);
-		const { user } = response.data;
-		console.log(user);
-		const textarea = document.querySelector(".my-card-content");
-		console.log(textarea);
-		const { name, email, introduce } = user[0];
-		textarea.innerHTML=`
-		<<div class="my-card-content">
-		${introduce}
-		</div>
-		`;
-	}
-	catch(error){
-		console.log(error);
-	}
-	
-});
-
 
 updatePortfolioSections();
 
@@ -548,24 +531,33 @@ async function callChip() {
 	});
 }
 
-// async function loadSectionInfo() {
-// 	const params = new URLSearchParams(window.location.search);
-// 	const userId = params.get("userId");
-// 	try {
-// 		const sectionName = "education";
-// 		const educationSection = document.querySelector(".section.education");
-// 		const getEducation = await formAPI.getFormInfo(userId, "education");
-// 		console.log(getEducation);
-// 		if (getEducation) {
-// 			getEducation.forEach((educationData) => {
-// 				const newEdu = createSectionForm(sectionName, educationData);
-// 				// const newEdu = createSectionForm(sectionName);
-// 				educationSection.appendChild(newEdu);
-// 			});
-// 		}
-// 	} catch (err) {
-// 		console.log("학력 가져오는데 오류", err);
-// 	}
-// }
+async function loadEachSecInfo(section, update = false) {
+	const params = new URLSearchParams(window.location.search);
+	const userId = params.get("userId");
+	const sectionName = section;
+	const sectionContainer = document.querySelector(`.section.${section}`);
+	const getSectionInfo = await formAPI.getFormInfo(userId, section);
+	console.log(section, getSectionInfo);
+	try {
+		if (getSectionInfo) {
+			getSectionInfo.reverse();
+			getSectionInfo.forEach((educationData) => {
+				const newEdu = createSectionForm(sectionName, educationData);
+				sectionContainer.appendChild(newEdu);
+			});
+		} else {
+			const sectionForm = createSectionForm(section);
+			sectionContainer.appendChild(sectionForm);
+		}
+	} catch (err) {
+		console.log(`${section} 가져오는데 오류`, err);
+	}
+}
 
-// loadSectionInfo();
+async function loadSections() {
+	portfolioSection.forEach(
+		async (section) => await loadEachSecInfo(section.className)
+	);
+}
+
+loadSections();

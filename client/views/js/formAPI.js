@@ -13,32 +13,32 @@ export const getFormInfo = async (userId, section) => {
 		);
 		return response.data;
 	} catch (err) {
-		console.error("학력 가져오는데 실패", err);
+		console.error(`${section} 가져오는데 실패`, err);
 		throw err;
 	}
 };
 
 // 학력 업데이트
-export const updateForm = async (userId, educationData) => {
+export const updateForm = async (section, formId, formData) => {
 	try {
-		const response = await axios.put(
-			`${API_BASE_URL}/${userId}`,
-			educationData
+		const response = await axios.patch(
+			`${BASE_URL}/api/${section}/${formId}`,
+			formData
 		);
 		return response.data;
 	} catch (err) {
-		console.error("학력 업데이트 실패:", err);
+		console.error("업데이트 실패:", err);
 		throw err;
 	}
 };
 
 // 학력 지우기
-export const deleteForm = async (educationId) => {
+export const deleteForm = async (section, formId) => {
 	try {
-		const response = await axios.delete(`${BASE_URL}/api/${section}/${userId}`);
+		const response = await axios.delete(`${BASE_URL}/api/${section}/${formId}`);
 		return response.data;
 	} catch (err) {
-		console.error("학력 삭제 실패:", err);
+		console.error(`${section} 삭제 실패:`, err);
 		throw err;
 	}
 };
@@ -52,7 +52,7 @@ export const createNewForm = async (userId, section, newData) => {
 		);
 		return response.data;
 	} catch (error) {
-		console.error(`Error creating ${section}:`, error);
+		console.error(`${section} 생성 실패:`, error);
 		throw error;
 	}
 };
