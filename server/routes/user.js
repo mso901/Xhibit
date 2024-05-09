@@ -8,23 +8,6 @@ const loginRequired = require("../middleware/login-required");
 
 const router = express.Router();
 
-// 유저 로그아웃
-router.get("/logout", loginRequired, (req, res) => {
-  try {
-    res.clearCookie("jwt", {
-      path: "/",
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-    });
-
-    // Redirect to the signin page
-    res.redirect("/signin");
-  } catch (error) {
-    console.error(error);
-  }
-});
-
 // 메인 페이지 유저 리스트
 router.get("/", async (req, res, next) => {
   try {
@@ -123,9 +106,23 @@ router.post("/signup", async (req, res, next) => {
     next(error);
   }
 });
+//유저 로그아웃
+router.post("/logout", (req, res) => {
+  try {
+    res.clearCookie("jwt", {
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+    res.send("success");
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 // 유저 상세 포트폴리오
-router.get("/:userId", async (req, res, next) => {
+router.get("/:userId", loginRequired, async (req, res, next) => {
   try {
     const { userId } = req.params;
     console.log(userId);

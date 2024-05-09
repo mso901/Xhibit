@@ -139,7 +139,7 @@ async function getUserPortfolio() {
         <div class = "name">${name}</div>
         <div class = "period-start">${periodStart}</div>
         <div class = "period-start">${periodEnd}</div>
-        <div class = "link">${link}</div>
+        <a class = "link" href="${link}">${link}</a>
         <ul class = "content-title">${contentTitle}</div>
         ${
           contentDetail !== ""

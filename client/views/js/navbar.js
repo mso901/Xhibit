@@ -1,47 +1,65 @@
-window.addEventListener('DOMContentLoaded', function() {
-    const body = document.getElementsByTagName("body")[0];
-    const navbar = document.createElement("div");
-    
-    navbar.className = "navbar";
-    navbar.innerHTML = `
+window.addEventListener("DOMContentLoaded", function () {
+  const body = document.getElementsByTagName("body")[0];
+  const navbar = document.createElement("div");
+
+  navbar.className = "navbar";
+  navbar.innerHTML = `
     <div class="navbar-logo">
         <img src="../public/images/logo2.png" />
     </div>
     <div class="navbar-menu">
         <a href="">서비스소개</a>
-        <a href="/signin">로그인</a>
-        <a href="/signup">회원가입</a>
-        <a href="/mypage">마이페이지</a>
+        <a href="./signin.html">로그인</a>
+        <a href="./signup.html">회원가입</a>
+        <a href="./mypage.html">마이페이지</a>
     </div>
     `;
 
-    body.insertBefore(navbar, body.firstChild);
-    
-    function getUserIdFromUrl() {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get("userId");
+  body.insertBefore(navbar, body.firstChild);
+  const loginLink = document.querySelector(
+    '.navbar-menu a[href="./signin.html"]'
+  );
+  const myPageLink = document.querySelector(
+    '.navbar-menu a[href="./mypage.html"]'
+  );
+  const signUpLink = document.querySelector(
+    '.navbar-menu a[href="./signup.html"]'
+  );
+
+  function getUserIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("userId");
+  }
+
+  function updateLoginText() {
+    const userId = getUserIdFromUrl();
+
+    if (userId) {
+      loginLink.textContent = "로그아웃";
+      loginLink.setAttribute("href", "./signin.html");
+      myPageLink.setAttribute("href", `./myPage.html?user_id=${userId}`);
+      signUpLink.style.display = "none";
+    } else {
+      loginLink.textContent = "로그인";
+      loginLink.setAttribute("href", "./signIn.html");
+      myPageLink.style.display = "none";
     }
-    
-    function updateLoginText() {
-        const loginLink = document.querySelector('.navbar-menu a[href="/signin"]');
-        const myPageLink = document.querySelector('.navbar-menu a[href="/mypage"]');
-        const signUpLink = document.querySelector('.navbar-menu a[href="/signup"]');
-        const userId = getUserIdFromUrl();
+  }
+  updateLoginText();
 
-        if (userId) {
-            loginLink.textContent = "로그아웃";
-            loginLink.setAttribute("href", "/logout");
-            myPageLink.setAttribute("href", `/myPage.html?user_id=${userId}`);
-            signUpLink.style.display = "none";
-        } else {
-            loginLink.textContent = "로그인";
-            loginLink.setAttribute("href", "/signIn");
-            myPageLink.style.display = "none";
-        }
+  const logoutLink = document.querySelector(
+    '.navbar-menu a[href="./signin.html"]'
+  );
+  console.log(logoutLink);
+  function logout() {
+    const BASE_URL = "http://localhost:3000";
 
-    }
-    updateLoginText();
+    const baseInstance = axios.create({
+      baseURL: BASE_URL, // 기본 URL 설정
+    });
+    baseInstance.post("/api/logout");
+  }
+  logoutLink.addEventListener("click", logout());
 
-    window.addEventListener("load", updateLoginText);
+  window.addEventListener("load", updateLoginText);
 });
-
