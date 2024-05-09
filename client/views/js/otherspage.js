@@ -33,7 +33,7 @@ async function getUserPortfolio() {
   </div>
 </div>
 
-<div class="my-card-content">
+<div class="my-card-content others-content">
   ${introduce}
 </div>`;
   // 학력 섹션
