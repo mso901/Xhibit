@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const { User, Certificate } = require("../models");
 const ObjectId = require("mongoose").Types.ObjectId;
-
+const loginRequired = require("../middleware/login-required");
 const router = Router();
 
 // 자격증 조회
@@ -22,7 +22,7 @@ router.get("/:userId", async (req, res, next) => {
 });
 
 // 자격증 추가
-router.post("/:userId", async (req, res, next) => {
+router.post("/:userId", loginRequired, async (req, res, next) => {
   try {
     const { userId } = req.params;
     const { name, agency, licenseDate } = req.body;
@@ -43,7 +43,7 @@ router.post("/:userId", async (req, res, next) => {
 });
 
 // 자격증 수정
-router.patch("/:certificateId", async (req, res, next) => {
+router.patch("/:certificateId", loginRequired, async (req, res, next) => {
   try {
     const { certificateId } = req.params;
     const { name, agency, licenseDate } = req.body;
@@ -69,7 +69,7 @@ router.patch("/:certificateId", async (req, res, next) => {
 });
 
 // 자격증 삭제
-router.delete("/:certificateId", async (req, res, next) => {
+router.delete("/:certificateId", loginRequired, async (req, res, next) => {
   try {
     const { certificateId } = req.params;
 

@@ -8,48 +8,24 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" href="./css/mobile.css" />
     <title>Others Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./js/footer.js"></script>
+    <script src="./js/navbar.js"></script>
+    <script defer src="./js/otherspage.js"></script>
   </head>
 
   <body>
-    <div class="navbar">
-      <div class="navbar-logo">
-        <a href="main.html">
-          <img src="../public/images/logo2.png" />
-        </a>
-      </div>
-      <div class="navbar-menu">
-        <a href="">서비스소개</a>
-        <a href="/logout">로그아웃</a>
-        <a href="/mypage">마이페이지</a>
-      </div>
-    </div>
-    <h2>내 포트폴리오</h2>
+    <div class="user-portfolio-name"></div>
     <div class="portfolio">
       <div class="my-card">
-        <div class="my-card-header">
-          <img
-            src="../public/images/img-profile01.png"
-            alt="profile_img"
-            class="profile_img"
-          />
-          <div class="my-card-intro">
-            <p class="card-name">김철수</p>
-            <p class="card-email">test@test.com</p>
-          </div>
-        </div>
-
-        <div class="my-card-content">
-          안녕하세요! 프론트엔드 개발자를 지망하는 김철수라고 합니다!
-          <button class="modified-button">수정</button>
-        </div>
+        <div class="my-card-header"></div>
       </div>
 
       <div class="portfolio-info">
         <div class="resume-content"></div>
       </div>
     </div>
-
-    <script src="./js/otherspage.js"></script>
   </body>
 </html>

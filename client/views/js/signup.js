@@ -8,7 +8,9 @@ const inputPassword = document.querySelector("#password"); // input#password
 // 2. 비밀번호 확인 입력창 정보 가져오기
 const inputPasswordRetype = document.querySelector("#password-retype"); // input#password-retype
 // 3. 실패 메시지 정보 가져오기 (중복 이메일)
-const emailDuplicationMessage = document.querySelector('.emailDuplication-message')
+const emailDuplicationMessage = document.querySelector(
+  ".emailDuplication-message"
+);
 // 4. 실패 메시지 정보 가져오기 (비밀번호 불일치)
 const mismatchMessage = document.querySelector(".mismatch-message"); // div.mismatch-message.hide
 // 5. 실패 메시지 정보 가져오기 (8글자 이상, 영문, 숫자, 특수문자 미사용)
@@ -121,13 +123,14 @@ async function onLoginSubmit(e) {
     baseURL: BASE_URL, // 기본 URL 설정
   });
 
-  const response = await baseInstance.post("/api/signup", {
-    name: inputName.value,
-    email: inputEmail.value,
-    password: inputPassword.value,
-  })
+  const response = await baseInstance
+    .post("/api/signup", {
+      name: inputName.value,
+      email: inputEmail.value,
+      password: inputPassword.value,
+    })
     .then(() => {
-      window.location.href = "/welcomePage.html";
+      window.location.href = "/welcomePage";
     })
     .catch(() => {
       emailDuplicationMessage.classList.remove("hide"); // 실패 메시지 보임

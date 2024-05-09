@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const { User, Education } = require("../models");
 const ObjectId = require("mongoose").Types.ObjectId;
-
+const loginRequired = require("../middleware/login-required");
 const router = Router();
 
 // 학력 조회
@@ -20,7 +20,7 @@ router.get("/:userId", async (req, res, next) => {
 });
 
 // 학력 추가
-router.post("/:userId", async (req, res, next) => {
+router.post("/:userId", loginRequired, async (req, res, next) => {
   try {
     const { userId } = req.params;
     const { school, major, periodStart, periodEnd } = req.body;
@@ -43,7 +43,7 @@ router.post("/:userId", async (req, res, next) => {
 });
 
 // 학력 수정
-router.patch("/:educationId", async (req, res, next) => {
+router.patch("/:educationId", loginRequired, async (req, res, next) => {
   try {
     const { educationId } = req.params;
     const { school, major, periodStart, periodEnd } = req.body;
@@ -70,7 +70,7 @@ router.patch("/:educationId", async (req, res, next) => {
 });
 
 // 학력 삭제
-router.delete("/:educationId", async (req, res, next) => {
+router.delete("/:educationId", loginRequired, async (req, res, next) => {
   try {
     const { educationId } = req.params;
 

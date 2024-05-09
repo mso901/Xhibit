@@ -14,7 +14,6 @@ router.post("/signin", async (req, res, next) => {
 
     // local로 등록한 인증과정 실행
     passport.authenticate("local", (passportError, user, info) => {
-
       // 인증이 실패했거나 유저 데이터가 없다면 에러 발생
       if (passportError || !user) {
         res.status(400).json({ message: info.reason });
@@ -52,11 +51,8 @@ router.post("/signin", async (req, res, next) => {
 
         res.status(200).json({ token, user });
       });
-
     })(req, res);
-
   } catch (error) {
-
     console.error(error);
     next(error);
   }
@@ -94,6 +90,21 @@ router.post("/signup", async (req, res, next) => {
   }
 });
 
+//유저 로그아웃
+router.post("/logout", (req, res) => {
+  try {
+    res.clearCookie("jwt", {
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+    res.send("success");
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 // 메인 페이지 유저 리스트
 router.get("/", loginRequired, async (req, res, next) => {
   try {
@@ -112,7 +123,7 @@ router.get("/", loginRequired, async (req, res, next) => {
 });
 
 // 유저 상세 포트폴리오
-router.get("/:userId", loginRequired, async (req, res, next) => {
+router.get("/:userId", async (req, res, next) => {
   try {
     const { userId } = req.params;
     const objectUserId = new ObjectId(userId);
@@ -126,29 +137,12 @@ router.get("/:userId", loginRequired, async (req, res, next) => {
     const award = await Award.find({ user: objectUserId }).lean();
     const certificate = await Certificate.find({ user: objectUserId }).lean();
     const project = await Project.find({ user: objectUserId }).lean();
-    res.json([user, education, award, certificate, project]);
+
+    res.json({ user, education, award, certificate, project });
 
   } catch (error) {
     console.error(error);
     next(error);
-  }
-});
-
-// 유저 로그아웃
-router.get("/logout", (req, res) => {
-  try {
-    res.clearCookie("jwt", {
-      path: "/",
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-    });
-
-    // Redirect to the signin page
-    res.redirect("/signin");
-
-  } catch (error) {
-    console.error(error);
   }
 });
 
