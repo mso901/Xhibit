@@ -16,7 +16,7 @@ async function onLoginSubmit(e) {
   e.preventDefault();
   // console.log(inputEmail.value, inputPassword.value);
 
-  const BASE_URL = "http://localhost:3000";
+  const BASE_URL = "http://kdt-ai-10-team04.elicecoding.com/";
 
   const baseInstance = await axios.create({
     baseURL: BASE_URL, // 기본 URL 설정
