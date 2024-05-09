@@ -31,6 +31,13 @@ mongoose.connect(
 );
 mongoose.set("strictQuery", false);
 
+//.env 내용 출력하기
+require("dotenv").config({ path: "../.env" })
+
+console.log("mongoDB url: ",process.env.MONGODB_URL);	// mongoose.connect url
+console.log("running port: ",process.env.PORT);	// 3000
+console.log("authorized secret: ",process.env.JWT_SECRET_KEY);	//shouldn't be accessed by unauthorized
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
