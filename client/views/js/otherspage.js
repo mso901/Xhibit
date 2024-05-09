@@ -59,7 +59,7 @@ async function getUserPortfolio() {
   });
   // 수상이력
   const portfolioSectionAward = document.querySelector(
-    ".portfolio-section.awards"
+    ".portfolio-section.award"
   );
   if (award.length === 0) {
     portfolioSectionAward.innerHTML = `<div class="nothing-info">정보가 없습니다.</div>`;
