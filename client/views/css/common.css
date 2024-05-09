@@ -204,7 +204,7 @@ p {
 }
 
 h2 {
-	padding-left: 36vw;
+	padding-left: 37vw;
 	padding-top: 3vw;
 	padding-bottom: 2vw;
 	font-size: 2.5vw;
@@ -256,7 +256,7 @@ h2 {
 }
 
 .card-email {
-	font-size: 0.9vw;
+	font-size: 0.68vw;
 	letter-spacing: 0.1vw;
 }
 
@@ -389,7 +389,7 @@ h2 {
 
 	.input-info {
 		flex-grow: 2;
-		padding: 0 0.5vw;
+		margin-right: 1.5vw;
 	}
 
 	.item input {
@@ -449,10 +449,13 @@ h2 {
 		padding: 0.5vw;
 	}
 
-	.buttons,
-	.btn {
+	.buttons{
 		margin: 0.25vw 0;
-		font-size: 1.25vw;
+		background: none;
+	}
+
+	.btn {
+		font-size: 1vw;
 		background: none;
 	}
 
@@ -721,7 +724,7 @@ input::-ms-clear {
 /* footer */
 
 .footer {
-	height: 6vw;
+	height: 7.8vw;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
