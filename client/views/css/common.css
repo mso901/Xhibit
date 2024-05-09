@@ -297,7 +297,14 @@ h2 {
 }
 
 .other-card-intro .card-name{
-  width: auto;
+  width: 10vw;
+  font-size: calc(0.1rem + 1.8vw);
+  letter-spacing: 0.4vw;
+}
+
+.other-card-intro .card-email {
+  font-size: calc(0.1rem + 0.8vw);
+  letter-spacing: 0.1vw;
 }
 
 .my-card-content {
