@@ -141,6 +141,7 @@ p {
   height: 6vw;
   border-radius: 10vw;
   margin: 1.2vw;
+  margin-left: 1.8vw;
   border: 3px solid #422613;
 }
 
@@ -160,13 +161,14 @@ p {
 }
 
 .card-name {
+  width: 8vw;
   font-size: calc(0.1rem + 1.3vw);
   font-weight: 600;
   letter-spacing: 0.4vw;
 }
 
 .card-email {
-  font-size: calc(0.1rem + 0.9vw);
+  font-size: calc(0.1rem + 0.55vw);
   letter-spacing: 0.1vw;
 }
 
@@ -255,16 +257,11 @@ h2 {
   letter-spacing: 0.3vw;
 }
 
-.card-email {
-	font-size: 0.9vw;
-	letter-spacing: 0.1vw;
-}
-
 .word-limit {
-  /* font-family: "Pretendard"; */
-  /* font-weight: 500; */
   font-size: 0.85vw;
   text-align: right;
+  margin-bottom: 0.5vw;
+  margin-right: 0.3vw;
 }
 
 .my-card-content {
@@ -389,7 +386,7 @@ h2 {
 
 	.input-info {
 		flex-grow: 2;
-		padding: 0 0.5vw;
+    margin-right: 1.5vw;
 	}
 
   .item input {
@@ -449,10 +446,14 @@ h2 {
     padding: 0.5vw;
   }
 
-	.buttons,
-	.btn {
+	.buttons{
 		margin: 0.25vw 0;
-		font-size: 1.25vw;
+		background: none;
+	}
+
+
+	.btn {
+		font-size: 1vw;
 		background: none;
 	}
 
