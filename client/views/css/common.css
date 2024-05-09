@@ -697,7 +697,7 @@ button:disabled {
   background-color: #cecece;
 }
 
-.mismatch-message,
+.emailDuplication-message, .mismatch-message,
 .strongPassword-message {
   color: rgb(236, 18, 18);
   font-size: calc(0.5rem + 0.3vw);
