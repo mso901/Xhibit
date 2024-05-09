@@ -31,12 +31,22 @@ window.addEventListener("DOMContentLoaded", function () {
     return urlParams.get("userId");
   }
 
+  async function logout() {
+    const BASE_URL = "http://localhost:3000";
+
+    const baseInstance = await axios.create({
+      baseURL: BASE_URL, // 기본 URL 설정
+    });
+    await baseInstance.post("/api/logout");
+  }
+
   function updateLoginText() {
     const userId = getUserIdFromUrl();
 
     if (userId) {
       loginLink.textContent = "로그아웃";
       loginLink.setAttribute("href", "./signin.html");
+      loginLink.addEventListener("click", logout);
       myPageLink.setAttribute("href", `./myPage.html?user_id=${userId}`);
       signUpLink.style.display = "none";
     } else {
@@ -46,20 +56,5 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   }
   updateLoginText();
-
-  const logoutLink = document.querySelector(
-    '.navbar-menu a[href="./signin.html"]'
-  );
-  console.log(logoutLink);
-  function logout() {
-    const BASE_URL = "http://localhost:3000";
-
-    const baseInstance = axios.create({
-      baseURL: BASE_URL, // 기본 URL 설정
-    });
-    baseInstance.post("/api/logout");
-  }
-  logoutLink.addEventListener("click", logout());
-
   window.addEventListener("load", updateLoginText);
 });
