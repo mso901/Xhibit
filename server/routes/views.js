@@ -12,10 +12,10 @@ router.use("/mypage", serveStatic("myPage"));
 router.use("/welcomePage", serveStatic("welcomePage"));
 
 function serveStatic(resource) {
-  const resourcePath = path.join(__dirname, `../../client/views`);
-  const option = { index: `${resource}.html` };
+	const resourcePath = path.join(__dirname, `../../client/views`);
+	const option = { index: `${resource}.html` };
 
-  return express.static(resourcePath, option);
+	return express.static(resourcePath, option);
 }
 
 module.exports = router;

@@ -143,78 +143,63 @@ router.get("/:userId", async (req, res, next) => {
 });
 
 // 비밀번호 변경
-router.patch(
-  "/changepassword/:userId",
-  loginRequired,
-  async (req, res, next) => {
-    try {
-      const { currentPassword, newPassword } = req.body;
-      const { userId } = req.params;
-      const user = await User.findById(userId).lean(); // lean() 사용시 간략하게 출력, findById는 _id 받아올 때 사용
-      console.log("유저", user);
+router.patch("/changepassword/:userId", async (req, res, next) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const { userId } = req.params;
+    const user = await User.findById(userId).lean(); // lean() 사용시 간략하게 출력, findById는 _id 받아올 때 사용
+    console.log("유저", user);
 
-      // 현재 비밀번호가 맞는지 확인
-      const passwordMatch = await bcrypt.compare(
-        currentPassword,
-        user.password
-      );
-      console.log("비번 확인", passwordMatch);
-      if (!passwordMatch) {
-        return res
-          .status(400)
-          .json({ message: "현재 비밀번호가 일치하지 않습니다." });
-      }
-
-      // 새 비밀번호로 변경
-      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-      await User.updateOne(
-        { _id: user._id },
-        {
-          $set: {
-            password: hashedNewPassword,
-          },
-        }
-      );
-
-      res
-        .status(200)
-        .json({ message: "비밀번호가 성공적으로 변경되었습니다." });
-    } catch (error) {
-      console.error(error);
-      next(error);
+    // 현재 비밀번호가 맞는지 확인
+    const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+    console.log("비번 확인", passwordMatch);
+    if (!passwordMatch) {
+      return res
+        .status(400)
+        .json({ message: "현재 비밀번호가 일치하지 않습니다." });
     }
+
+    // 새 비밀번호로 변경
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          password: hashedNewPassword,
+        },
+      }
+    );
+
+    res.status(200).json({ message: "비밀번호가 성공적으로 변경되었습니다." });
+  } catch (error) {
+    console.error(error);
+    next(error);
   }
-);
+});
 
 // 자기소개 변경
-router.patch(
-  "/changeIntroduce/:userId",
-  loginRequired,
-  async (req, res, next) => {
-    try {
-      const { newIntroduce } = req.body;
-      const { userId } = req.params;
-      const user = await User.findById(userId).lean(); // lean() 사용시 간략하게 출력, findById는 _id 받아올 때 사용
-      console.log("유저", user);
+router.patch("/changeIntroduce/:userId", async (req, res, next) => {
+  try {
+    const { newIntroduce } = req.body;
+    const { userId } = req.params;
+    const user = await User.findById(userId).lean(); // lean() 사용시 간략하게 출력, findById는 _id 받아올 때 사용
+    console.log("유저", user);
 
-      // 자기소개 문구 변경
-      await User.updateOne(
-        { _id: user._id },
-        {
-          $set: {
-            introduce: newIntroduce,
-          },
-        }
-      );
+    // 자기소개 문구 변경
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          introduce: newIntroduce,
+        },
+      }
+    );
 
-      res
-        .status(200)
-        .json({ message: "자기소개가 성공적으로 변경되었습니다." });
-    } catch (error) {
-      console.error(error);
-      next(error);
-    }
+    res.status(200).json({ message: "자기소개가 성공적으로 변경되었습니다." });
+  } catch (error) {
+    console.error(error);
+    next(error);
   }
-);
+});
 
 module.exports = router;
