@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { User, Project } = require("../models");
 const ObjectId = require("mongoose").Types.ObjectId;
+const loginRequired = require("../middleware/login-required");
 
 const router = Router();
 
@@ -20,7 +21,7 @@ router.get("/:userId", async (req, res, next) => {
 });
 
 // 프로젝트 추가
-router.post("/:userId", async (req, res, next) => {
+router.post("/:userId", loginRequired, async (req, res, next) => {
   try {
     const { userId } = req.params; // 유저 아이디 받아온다.
     const {
@@ -53,7 +54,7 @@ router.post("/:userId", async (req, res, next) => {
 });
 
 // 프로젝트 수정
-router.patch("/:projectId", async (req, res, next) => {
+router.patch("/:projectId", loginRequired, async (req, res, next) => {
   try {
     const { projectId } = req.params; // 프로젝트 아이디 받아온다.
     const {
@@ -91,7 +92,7 @@ router.patch("/:projectId", async (req, res, next) => {
 });
 
 // 학력 삭제
-router.delete("/:projectId", async (req, res, next) => {
+router.delete("/:projectId", loginRequired, async (req, res, next) => {
   try {
     const { projectId } = req.params; // 학력 아이디 받아온다.
 

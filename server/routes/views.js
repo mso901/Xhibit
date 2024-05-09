@@ -3,7 +3,7 @@ const path = require("path");
 
 const router = express.Router();
 
-router.use("/", serveStatic("main"));
+router.use("/", serveStatic("signIn"));
 router.use("/signup", serveStatic("signUp"));
 router.use("/signin", serveStatic("signIn"));
 router.use("/main", serveStatic("main"));

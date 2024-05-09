@@ -130,7 +130,7 @@ async function onLoginSubmit(e) {
       password: inputPassword.value,
     })
     .then(() => {
-      window.location.href = "./welcomePage.html";
+      window.location.href = "/welcomePage";
     })
     .catch(() => {
       emailDuplicationMessage.classList.remove("hide"); // 실패 메시지 보임

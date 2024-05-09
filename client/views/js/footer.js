@@ -1,13 +1,13 @@
-window.addEventListener('DOMContentLoaded', function() {
-    const body = document.getElementsByTagName("body")[0];
-    const footer = document.createElement("div");
-    footer.className = "footer";
+window.addEventListener("DOMContentLoaded", function () {
+  const body = document.getElementsByTagName("body")[0];
+  const footer = document.createElement("div");
+  footer.className = "footer";
 
-    footer.innerHTML = `
+  footer.innerHTML = `
     <div class="footer-logo">
-      <img src="../public/images/logo4.png" />
+      <img src="/images/logo4.png" />
     </div>
     <div class="copywright">@2024 CRAFTERS CORP. All Rights Reserved</div>
   `;
-  body.insertAdjacentElement('beforeend', footer);
+  body.insertAdjacentElement("beforeend", footer);
 });

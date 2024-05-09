@@ -12,7 +12,7 @@ function getUsers() {
     .get("/api", {})
     .then((res) => {
       const users = res.data;
-      console.log(users);
+      // console.log(users);
       users.forEach(async (user) => {
         const { _id, name, email, introduce } = user;
         userCardList.insertAdjacentHTML(
@@ -20,7 +20,7 @@ function getUsers() {
           `
           <div class="user_card">
           <div>
-              <img src="../public/images/img-profile01.png" alt="profile_img" class="profile_img">
+              <img src="/images/img-profile01.png" alt="profile_img" class="profile_img">
           </div>
           <div class="user_card-intro">
               <p class="card-name">${name}</p>
@@ -31,7 +31,7 @@ function getUsers() {
               <p></p>
           </div>
           <div class="user_card-bottom">
-              <a href = ./otherspage.html?userId=${_id}>자세히보기 ></a>
+              <a href = /otherspage?userId=${_id}>자세히보기 ></a>
           </div>
       </div>
           `
@@ -39,7 +39,7 @@ function getUsers() {
       });
     })
     .catch(() => {
-      window.location.href = "./signin.html";
+      window.location.href = "/signin";
     });
 }
 
