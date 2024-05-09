@@ -50,9 +50,9 @@ async function getUserPortfolio() {
       "beforeend",
       `
       <div class="portfolio-section-item">
+        <div class= "period-start">${periodStart}</div> ~ <div class= "period-start">${periodEnd}</div>
         <div class= "name">${school}</div>
         <div class= "major">${major}</div>
-        <div class= "period-start">${periodStart}</div> ~ <div class= "period-start">${periodEnd}</div>
       </div>
       `
     );
@@ -71,9 +71,9 @@ async function getUserPortfolio() {
       "beforeend",
       `
       <div class="portfolio-section-item">
+        <div class= "awardDate">${awardDate}</div>
         <div class= "name">${name}</div>
         <div class= "agency">${agency}</div>
-        <div class= "awardDate">${awardDate}</div>
       </div>
       `
     );
@@ -93,9 +93,9 @@ async function getUserPortfolio() {
       "beforeend",
       `
       <div class="portfolio-section-item">
+        <div class= "period-start">${licenseDate}</div>
         <div class= "name">${name}</div>
         <div class= "major">${agency}</div>
-        <div class= "period-start">${licenseDate}</div>
       </div>
       `
     );

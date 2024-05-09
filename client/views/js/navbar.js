@@ -1,5 +1,5 @@
 window.addEventListener("DOMContentLoaded", function () {
-  const body = document.getElementsByTagName("body")[0];
+  const wrapper = document.getElementById("wrap");
   const navbar = document.createElement("div");
 
   navbar.className = "navbar";
@@ -15,7 +15,7 @@ window.addEventListener("DOMContentLoaded", function () {
     </div>
     `;
 
-  body.insertBefore(navbar, body.firstChild);
+    wrapper.insertBefore(navbar, wrapper.firstChild);
   const loginLink = document.querySelector('.navbar-menu a[href="/signin"]');
   const myPageLink = document.querySelector('.navbar-menu a[href="/mypage"]');
   const signUpLink = document.querySelector('.navbar-menu a[href="/signup"]');

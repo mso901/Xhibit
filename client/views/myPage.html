@@ -37,59 +37,61 @@
   </head>
 
   <body>
-    <h2>내 포트폴리오</h2>
-    <div class="portfolio">
-      <div class="my-card">
-        <div class="my-card-header">
-          <img
-            src="/images/img-profile01.png"
-            alt="profile_img"
-            class="profile_img"
-          />
-          <div class="my-card-intro">
-            <p class="card-name">김철수</p>
-            <p class="card-email">test@test.com</p>
+    <div id = "wrap">
+      <h2>내 포트폴리오</h2>
+      <div class="portfolio">
+        <div class="my-card">
+          <div class="my-card-header">
+            <img
+              src="/images/img-profile01.png"
+              alt="profile_img"
+              class="profile_img"
+            />
+            <div class="my-card-intro">
+              <p class="card-name">김철수</p>
+              <p class="card-email">test@test.com</p>
+            </div>
           </div>
+          <form class="my-card-content">
+            <textarea
+              id="profile-text"
+              placeholder="자기소개를 입력해주세요."
+              maxlength="99"
+            ></textarea>
+            <div class="word-limit">0/100</div>
+            <button class="modified-button" type="submit">확인</button>
+          </form>
         </div>
-        <form class="my-card-content">
-          <textarea
-            id="profile-text"
-            placeholder="자기소개를 입력해주세요."
-            maxlength="99"
-          ></textarea>
-          <div class="word-limit">0/100</div>
-          <button class="modified-button" type="submit">확인</button>
-        </form>
+  
+        <!-- 포폴 정보 -->
+        <div class="portfolio-info">
+          <div class="resume-content"></div>
+        </div>
       </div>
-
-      <!-- 포폴 정보 -->
-      <div class="portfolio-info">
-        <div class="resume-content"></div>
-      </div>
-    </div>
-
-    <!-- 폼 삭제할때 뜨는 모달창 -->
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-body">
-            <p>삭제하시겠습니까?</p>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              닫기
-            </button>
-            <button type="button" class="btn btn-primary">확인</button>
+  
+      <!-- 폼 삭제할때 뜨는 모달창 -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-body">
+              <p>삭제하시겠습니까?</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                닫기
+              </button>
+              <button type="button" class="btn btn-primary">확인</button>
+            </div>
           </div>
         </div>
       </div>

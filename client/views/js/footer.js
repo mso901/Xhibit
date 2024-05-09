@@ -1,5 +1,5 @@
 window.addEventListener("DOMContentLoaded", function () {
-  const body = document.getElementsByTagName("body")[0];
+  const wrapper = document.getElementById("wrap");
   const footer = document.createElement("div");
   footer.className = "footer";
 
@@ -9,5 +9,5 @@ window.addEventListener("DOMContentLoaded", function () {
     </div>
     <div class="copywright">@2024 CRAFTERS CORP. All Rights Reserved</div>
   `;
-  body.insertAdjacentElement("beforeend", footer);
+  wrapper.insertAdjacentElement("beforeend", footer);
 });

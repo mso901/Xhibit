@@ -299,7 +299,7 @@ const createSectionForm = (section, data = null) => {
 		}
 
 		const details = document.createElement("textarea");
-		details.placeholder = "프로젝트 개요";
+		details.placeholder = "프로젝트 상세설명";
 
 		if (data) {
 			const textVal = data.contentDetail.join("\n");
