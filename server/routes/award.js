@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { User, Award } = require("../models");
 const ObjectId = require("mongoose").Types.ObjectId;
+const loginRequired = require("../middleware/login-required");
 const router = Router();
 
 // 상 조회
@@ -19,7 +20,7 @@ router.get("/:userId", async (req, res, next) => {
 });
 
 // 상 추가
-router.post("/:userId", async (req, res, next) => {
+router.post("/:userId", loginRequired, async (req, res, next) => {
   try {
     const { userId } = req.params; // 유저 아이디 받아온다.
     const { name, agency, awardDate } = req.body; // 프론트에서 받아온 데이터
@@ -40,7 +41,7 @@ router.post("/:userId", async (req, res, next) => {
 });
 
 // 상 수정
-router.patch("/:awardId", async (req, res, next) => {
+router.patch("/:awardId", loginRequired, async (req, res, next) => {
   try {
     const { awardId } = req.params; // 상 아이디 받아온다.
     const { name, agency, awardDate } = req.body; // 프론트에서 받아온 데이터
@@ -66,7 +67,7 @@ router.patch("/:awardId", async (req, res, next) => {
 });
 
 // 상 삭제
-router.delete("/:awardId", async (req, res, next) => {
+router.delete("/:awardId", loginRequired, async (req, res, next) => {
   try {
     const { awardId } = req.params; // 상 아이디 받아온다.
 

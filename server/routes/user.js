@@ -122,7 +122,7 @@ router.post("/logout", (req, res) => {
 });
 
 // 유저 상세 포트폴리오
-router.get("/:userId", loginRequired, async (req, res, next) => {
+router.get("/:userId", async (req, res, next) => {
   try {
     const { userId } = req.params;
     console.log(userId);
