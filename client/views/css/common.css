@@ -11,6 +11,7 @@
 * {
   cursor: default;
   box-sizing: content-box;
+  list-style: none;
 }
 
 body {
@@ -377,7 +378,6 @@ h2 {
   font-size: 1.15vw;
 
   .item {
-    /* font-family: "Pretendard"; */
     font-weight: 600;
     margin: 0.5vw;
     display: flex;
@@ -490,6 +490,17 @@ h2 {
     transition: 0.5s all;
     border-radius: 0.6vw;
   }
+
+  .portfolio-section-item{
+    margin: 0.5vw;
+    padding: 1vw 0;
+    line-height: 2vw;
+    border-top: 1px solid #422613;
+  }
+  .portfolio-section-item:first-child {
+    border-top: none;
+  }
+
 }
 
 /* 모달 스타일 */
