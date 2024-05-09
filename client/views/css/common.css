@@ -282,7 +282,7 @@ h2 {
 
 .my-card-content textarea {
 	resize: none;
-	height: 8vw;
+	height: 9vw;
 	font-size: 1vw;
 	border: none;
 	background-color: inherit;
@@ -627,10 +627,10 @@ input::-ms-clear {
 	display: none;
 }
 
-.loginError-message{
+.loginError-message {
 	display: flex;
 	justify-content: center;
-	color: #D31919;
+	color: #d31919;
 	font-size: 1.05vw;
 }
 

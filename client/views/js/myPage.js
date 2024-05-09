@@ -31,7 +31,7 @@ const createBtns = (form, section, edit = false) => {
 	submitBtn.className = edit ? "btn save hide" : "btn save";
 	submitBtn.innerText = `확인`;
 	submitBtn.setAttribute("type", "submit");
-	submitBtn.setAttribute("update", false);
+	submitBtn.setAttribute("update", edit);
 	btnContainer.appendChild(submitBtn);
 
 	// 수정 버튼
@@ -142,6 +142,7 @@ const createInput = (
 
 	if (name === "proj-link") {
 		input.type = "url";
+		input.required = false;
 	} else {
 		if (name !== "skills") {
 			input.required = true;
@@ -201,6 +202,7 @@ const createSkills = (chipset) => {
 
 	skills.addEventListener("keypress", async function (event) {
 		if (event.key === "Enter") {
+			event.preventDefault();
 			const skill = document.createElement("md-input-chip");
 			skill.className = "skill";
 			skill.label = event.target.value;
@@ -360,9 +362,6 @@ async function handleSubmit(event, form, buttons, section) {
 	// 필요한 정보를 다 입력했으면 submit 버튼을 눌렀을때
 	// 확인 버튼을 숨기고 편집 버튼 보여주기
 	const [submitBtn, editBtn] = buttons.children;
-	if (!submitBtn.update) {
-		submitBtn.update = true;
-	}
 	editBtn.classList.toggle("hide");
 	submitBtn.classList.toggle("hide");
 	toggleInputs(form, true);
@@ -378,6 +377,7 @@ async function handleSubmit(event, form, buttons, section) {
 
 	const formattedDate = getFormattedDate(section, dateInputs);
 	let data = null;
+	console.log("section:", section);
 	if (section === "education") {
 		const schoolName = sectionInput.querySelector(
 			'input[name="school-name"]'
@@ -413,22 +413,62 @@ async function handleSubmit(event, form, buttons, section) {
 			awardDate: formattedDate,
 		};
 		console.log("수상 데이터:", data);
+	} else {
+		const contentTitle = sectionInput.querySelector(
+			'input[name="proj-name"]'
+		).value;
+		const link = sectionInput.querySelector('input[name="proj-link"]').value;
+		const contentDetail = sectionInput.querySelector("textarea").value;
+		const chipset = sectionInput.querySelector(".chipset");
+		const skills = Array.from(chipset.children);
+		const techStack = skills.map(function (element) {
+			return element.label;
+		});
+
+		// techStack.children.forEach((elem) => console.log(elem.value));
+		data = {
+			contentDetail,
+			contentTitle,
+			link,
+			name: contentTitle,
+			periodStart: formattedDate.split(" - ")[0],
+			periodEnd: formattedDate.split(" - ")[1],
+			techStack,
+		};
+		console.log("프로젝트 데이터:", data);
 	}
 
-	console.log(submitBtn.update);
-	if (submitBtn.update == false) {
-		try {
-			const res = formAPI.createNewForm(userId, section, data);
-		} catch (err) {
-			console.log("err:", err);
-		}
+	console.log("data", data);
+	console.log("update", submitBtn.getAttribute("update"));
+
+	if (submitBtn.getAttribute("update") == "false") {
+		formAPI
+			.createNewForm(userId, section, data)
+			.then((res) => {
+				// Get the new form information
+				return formAPI.getFormInfo(userId, section);
+			})
+			.then((newFormId) => {
+				// Log the new form ID
+				console.log("newForms:", newFormId);
+				const idx = newFormId.length - 1;
+				console.log("newFormId:", newFormId[idx]._id);
+				sectionInput.setAttribute("formId", newFormId[idx]._id);
+			})
+			.catch((err) => {
+				// Handle any errors
+				console.log("err:", err);
+			});
+		submitBtn.setAttribute("update", true);
 	} else {
 		let formId = form.getAttribute("formid");
-		try {
-			const res = formAPI.updateForm(section, formId, data);
-		} catch (err) {
+		console.log(formId);
+		formAPI.updateForm(section, formId, data).catch((err) => {
 			console.log("err:", err);
-		}
+		});
+		// const { user, education, award, certificate, project } =
+		// 	formAPI.getInfo(userId);
+		// console.log("fomrInfo:", user);
 	}
 }
 
@@ -490,7 +530,7 @@ const updatePortfolioSections = () => {
 // 원래는 사용자가 쓰는 대로 text area랑 container 맞춰서 늘리려고 했는데
 // 줄어드는것도 따로 설정해줘야 해서 일단 그냥 word limit 설정함
 // 사용자가 입력할때마다 얼마만큼 남았는지 보여주는 함수
-// 영어, 한국어, 글자마다 부피가 달라서 여러번 테스트 해보다가 일단 80으로 설정함
+// 영어, 한국어, 글자마다 부피가 달라서 여러번 테스트 해보다가 일단 100으로 설정함
 let textarea = document.querySelector(".my-card-content textarea");
 
 textarea.addEventListener("input", function () {
@@ -534,12 +574,15 @@ async function callChip() {
 async function loadEachSecInfo(section, update = false) {
 	const params = new URLSearchParams(window.location.search);
 	const userId = params.get("userId");
+	// console.log(params);
+	// console.log(userId);
+	// console.log(window.location.params);
 	const sectionName = section;
 	const sectionContainer = document.querySelector(`.section.${section}`);
 	const getSectionInfo = await formAPI.getFormInfo(userId, section);
 	console.log(section, getSectionInfo);
 	try {
-		if (getSectionInfo) {
+		if (getSectionInfo && getSectionInfo.length > 0) {
 			getSectionInfo.reverse();
 			getSectionInfo.forEach((educationData) => {
 				const newEdu = createSectionForm(sectionName, educationData);
@@ -560,4 +603,41 @@ async function loadSections() {
 	);
 }
 
+function updateProfileTxt() {
+	const params = new URLSearchParams(window.location.search);
+	const userId = params.get("userId");
+	const profileContainer = document.querySelector(".my-card-content");
+	const textBox = profileContainer.querySelector("#profile-text");
+
+	profileContainer.addEventListener("submit", (event) => {
+		event.preventDefault();
+		console.log("profile intro changing...");
+		const textContent = textBox.value;
+
+		console.log(textContent);
+
+		try {
+			const update = formAPI.updateProfile(userId, textContent);
+		} catch (err) {
+			console.log("err", err);
+		}
+	});
+}
+
+// function getUserInfo() {
+// 	const params = new URLSearchParams(window.location.search);
+// 	const userId = params.get("userId");
+// 	console.log(params);
+// 	console.log(userId);
+// 	console.log(window.location.params);
+
+// 	try {
+// 		const userData = formAPI.getUserInfo(userId);
+// 		console.log(userData);
+// 	} catch (err) {
+// 		console.log("err", err);
+// 	}
+// }
 loadSections();
+updateProfileTxt();
+// getUserInfo();
