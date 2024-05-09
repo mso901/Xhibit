@@ -31,7 +31,7 @@ function getUsers() {
               <p></p>
           </div>
           <div class="user_card-bottom">
-              <a href = /otherspage.html?userId=${_id}>자세히보기 ></a>
+              <a href = ./otherspage.html?userId=${_id}>자세히보기 ></a>
           </div>
       </div>
           `
@@ -39,7 +39,7 @@ function getUsers() {
       });
     })
     .catch(() => {
-      window.location.href = "/signin";
+      window.location.href = "./signin.html";
     });
 }
 

@@ -23,7 +23,7 @@ async function getUserPortfolio() {
   // 유저 카드 출력
   myCardDiv.innerHTML = `<div class="my-card-header">
   <img
-    src="../../public/images/img-profile01.png"
+    src="../public/images/img-profile01.png"
     alt="profile_img"
     class="profile_img"
   />

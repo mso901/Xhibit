@@ -26,7 +26,7 @@ router.get("/logout", loginRequired, (req, res) => {
 });
 
 // 메인 페이지 유저 리스트
-router.get("/", loginRequired, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const user = await User.find(
       {},
@@ -125,7 +125,7 @@ router.post("/signup", async (req, res, next) => {
 });
 
 // 유저 상세 포트폴리오
-router.get("/:userId", loginRequired, async (req, res, next) => {
+router.get("/:userId", async (req, res, next) => {
   try {
     const { userId } = req.params;
     console.log(userId);

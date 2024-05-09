@@ -33,7 +33,7 @@ async function onLoginSubmit(e) {
       { withCredentials: true }
     )
     .then(() => {
-      window.location.href = "/main";
+      window.location.href = "./main.html";
     })
     .catch(() => {
       loginErrorMessage.classList.remove("hide"); // 실패 메시지 보임
