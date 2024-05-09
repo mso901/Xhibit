@@ -8,15 +8,10 @@ const baseInstance = await axios.create({
 // 학력 가져오기
 export const getFormInfo = async (userId, section) => {
   try {
-    const BASE_URL = "http://localhost:3000";
-
-    const baseInstance = axios.create({
-      baseURL: BASE_URL, // 기본 URL 설정
-    });
-    const response = await baseInstance.get(`/api/${userId}`);
-    // 유저 상세 정보 전부 선언
-    const { user, education, award, certificate, project } = response.data;
-    return { user, education, award, certificate, project };
+    const response = await baseInstance.get(
+      `${BASE_URL}/api/${section}/${userId}`
+    );
+    return response.data;
   } catch (err) {
     console.error(`${section} 가져오는데 실패`, err);
     throw err;
