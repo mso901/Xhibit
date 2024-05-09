@@ -252,7 +252,6 @@ const createSectionForm = (section, data = null) => {
       date = createDateInput(section, data.licenseDate);
     }
     sectionInput.setAttribute("formId", data._id);
-    console.log(data._id);
   }
 
   const btnContainer = !data
@@ -641,4 +640,3 @@ function updateProfileTxt() {
 // }
 loadSections();
 updateProfileTxt();
-// getUserInfo();

@@ -41,32 +41,31 @@
     <div class="portfolio">
       <div class="my-card">
         <div class="my-card-header">
-          <!-- <img src="../public/images/img-profile01.png" alt="profile_img"
-          class="profile_img" />
-        <div class="my-card-intro">
-          <p class="card-name">김철수</p>
-          <p class="card-email">test@test.com</p>
-        </div> -->
+          <img
+            src="/images/img-profile01.png"
+            alt="profile_img"
+            class="profile_img"
+          />
+          <div class="my-card-intro">
+            <p class="card-name">김철수</p>
+            <p class="card-email">test@test.com</p>
+          </div>
         </div>
-        <div class="my-card-content">
+        <form class="my-card-content">
           <textarea
             id="profile-text"
             placeholder="자기소개를 입력해주세요."
-            maxlength="80"
+            maxlength="99"
           ></textarea>
-          <div class="word-limit">0/80</div>
-        </div>
-        <button class="modified-button">확인</button>
+          <div class="word-limit">0/100</div>
+          <button class="modified-button" type="submit">확인</button>
+        </form>
       </div>
-      <form class="my-card-content">
-        <textarea
-          id="profile-text"
-          placeholder="자기소개를 입력해주세요."
-          maxlength="99"
-        ></textarea>
-        <div class="word-limit">0/100</div>
-        <button class="modified-button" type="submit">확인</button>
-      </form>
+
+      <!-- 포폴 정보 -->
+      <div class="portfolio-info">
+        <div class="resume-content"></div>
+      </div>
     </div>
 
     <!-- 폼 삭제할때 뜨는 모달창 -->
