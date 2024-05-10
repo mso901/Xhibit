@@ -364,8 +364,7 @@ function updatePassword() {
 updatePassword();
 
 // 유저가 새로운 폼을 추가하거나 수정할때 추가/수정되었다고 팝업 메세지 알림 주는 함수
-function showPopupMsg(section, isUpdate, noData = false) {
-	const msgContainer = document.querySelector(".pop-up-msg");
+function showPopupMsg(section, isUpdate) {
 	let delUser = false;
 
 	let sectionName;
@@ -386,10 +385,9 @@ function showPopupMsg(section, isUpdate, noData = false) {
 		delUser = true;
 	}
 
-	let msgToBeDisplayed;
-	// isUpdate이 string value로도 들어오기 때문에 둘 다 체크
-	msgToBeDisplayed = msgContainer.querySelector("#pop-up");
+	const msgToBeDisplayed = document.querySelector("#pop-up");
 
+	// isUpdate이 string value로도 들어오기 때문에 둘 다 체크
 	if (isUpdate === true || isUpdate === "true") {
 		if (delUser) {
 			msgToBeDisplayed.innerText = `${sectionName} 완료되었습니다`;
