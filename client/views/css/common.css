@@ -776,6 +776,7 @@ button:disabled {
   color: rgb(236, 18, 18);
   font-size: calc(0.5rem + 0.3vw);
   padding: 0 2vw;
+  text-align: right;
 }
 
 .logo {

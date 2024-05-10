@@ -421,6 +421,14 @@
         margin-top: 4vw;
         font-size: 2.5vw;
     }
+
+    .emailDuplication-message, .mismatch-message,
+    .strongPassword-message {
+        font-size: calc(0.5rem + 0.8vw);
+        padding: 0 2vw;
+        margin-bottom: 5vw;
+        text-align: right;
+    }
 }
 
 @media (max-width: 768px){
