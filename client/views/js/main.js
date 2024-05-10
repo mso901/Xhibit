@@ -5,7 +5,7 @@ const token = sessionStorage.getItem("token");
 function getUsers() {
   const userCardList = document.querySelector(".user_card-list");
 
-  const BASE_URL = "http://localhost:3000";
+  const BASE_URL = "http://kdt-ai-10-team04.elicecoding.com";
 
   const baseInstance = axios.create({
     baseURL: BASE_URL, // 기본 URL 설정

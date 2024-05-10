@@ -7,7 +7,7 @@ async function getUserPortfolio() {
   let idParams = new URLSearchParams(query);
   let userId = idParams.get("userId");
 
-  const BASE_URL = "http://localhost:3000";
+  const BASE_URL = "http://kdt-ai-10-team04.elicecoding.com";
 
   const baseInstance = axios.create({
     baseURL: BASE_URL, // 기본 URL 설정
@@ -18,7 +18,7 @@ async function getUserPortfolio() {
   const response = await baseInstance.get(`/api/${userId}`);
   // 유저 상세 정보 전부 선언
   const { user, education, award, certificate, project } = response.data;
-  console.log(response.data);
+  // console.log(response.data);
 
   const myCardDiv = document.querySelector(".my-card");
   // 유저 카드 정보 선언
@@ -51,7 +51,7 @@ async function getUserPortfolio() {
   }
   education.forEach((item) => {
     const { school, major, periodStart, periodEnd } = item;
-    console.log(item);
+    // console.log(item);
     portfolioSectionEducation.insertAdjacentHTML(
       "beforeend",
       `
@@ -72,7 +72,7 @@ async function getUserPortfolio() {
   }
   award.forEach((item) => {
     const { name, agency, awardDate } = item;
-    console.log(item);
+    // console.log(item);
     portfolioSectionAward.insertAdjacentHTML(
       "beforeend",
       `
@@ -94,7 +94,7 @@ async function getUserPortfolio() {
   }
   certificate.forEach((item) => {
     const { name, agency, licenseDate } = item;
-    console.log(item);
+    // console.log(item);
     portfolioSectionCertificate.insertAdjacentHTML(
       "beforeend",
       `

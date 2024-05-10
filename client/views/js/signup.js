@@ -33,7 +33,6 @@ function isMatch(password1, password2) {
 
 // 패스워드 유효성 검사
 inputPassword.onkeyup = function () {
-  // console.log(inputPassword.value);
   // 값 입력한 경우
   if (inputPassword.value.length !== 0) {
     if (strongPassword(inputPassword.value)) {
@@ -56,7 +55,6 @@ inputPassword.onkeyup = function () {
 
 // 패스워드 일치 검사
 inputPasswordRetype.onkeyup = function () {
-  // console.log(inputPasswordRetype.value);
   if (inputPasswordRetype.value.length !== 0) {
     if (
       isMatch(inputPassword.value, inputPasswordRetype.value) &&
@@ -116,8 +114,8 @@ const form = document.getElementsByTagName("form")[0];
 
 async function onLoginSubmit(e) {
   e.preventDefault();
-  console.log(inputName, inputEmail, inputPassword);
-  const BASE_URL = "http://kdt-ai-10-team04.elicecoding.com/";
+  // console.log(inputName, inputEmail, inputPassword);
+  const BASE_URL = "http://kdt-ai-10-team04.elicecoding.com";
 
   const baseInstance = await axios.create({
     baseURL: BASE_URL, // 기본 URL 설정
@@ -136,7 +134,8 @@ async function onLoginSubmit(e) {
       emailDuplicationMessage.classList.remove("hide"); // 실패 메시지 보임
       console.log("login error");
     });
-  console.log(response.data.data); // response가 잘 들어왔는지 확인
+  // response가 잘 들어왔는지 확인
+  // console.log(response.data.data);
 }
 
 form.addEventListener("submit", onLoginSubmit);
