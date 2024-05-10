@@ -5,6 +5,7 @@ import {
 	updateForm,
 	updateProfile,
 	verifyAndUpdatePassword,
+	verifyAndDeleteUser,
 } from "./apiService.js";
 
 import {
@@ -208,12 +209,55 @@ function createSection(sectionData) {
 	return section;
 }
 
+function deleteUser() {
+	const params = new URLSearchParams(window.location.search);
+	const userId = params.get("userId");
+
+	const delUser = document.querySelector(".delete-user");
+
+	delUser.onclick = () => {
+		const modal = new bootstrap.Modal(document.getElementById("delete-user"));
+		modal.show();
+
+		let currentPassword;
+		const currPw = document.querySelector("#curr-password");
+
+		const confirmButton = modal._element.querySelector(".btn.btn-primary");
+		confirmButton.addEventListener(
+			"click",
+			function () {
+				currentPassword = currPw.value;
+				verifyAndDeleteUser(userId, currentPassword).catch((err) => {
+					console.log("err:", err);
+					alert("입력하신 비밀번호가 올바르지 않습니다");
+				});
+				currPw.value = "";
+
+				modal.hide();
+				showPopupMsg("회원탈퇴", true);
+			},
+			{ once: true }
+		);
+
+		const closeBtn = modal._element.querySelector(".btn.btn-secondary");
+		closeBtn.addEventListener(
+			"click",
+			() => {
+				modal.hide();
+			},
+			{ once: true }
+		);
+	};
+}
+deleteUser();
+
 function updatePassword() {
 	const params = new URLSearchParams(window.location.search);
 	const userId = params.get("userId");
+
 	const updatepw = document.querySelector(".update-password");
 
-	updatepw.addEventListener("click", () => {
+	updatepw.onclick = () => {
 		const modal = new bootstrap.Modal(document.getElementById("update-pw"));
 		modal.show();
 
@@ -257,31 +301,45 @@ function updatePassword() {
 		};
 
 		const confirmButton = modal._element.querySelector(".btn.btn-primary");
-		confirmButton.addEventListener("click", function () {
-			currPassword = currPw.value;
-			newPassword = newPw.value;
-			confirmNewPassword = confirmNewPw.value;
+		confirmButton.addEventListener(
+			"click",
+			function () {
+				currPassword = currPw.value;
+				newPassword = newPw.value;
+				confirmNewPassword = confirmNewPw.value;
 
-			verifyAndUpdatePassword(userId, currPassword, newPassword).catch(
-				(err) => {
-					console.log("err:", err);
-					alert("입력하신 현재 비밀번호가 올바르지 않습니다");
-				}
-			);
-			currPw.value = "";
-			newPw.value = "";
-			confirmNewPw.value = "";
+				verifyAndUpdatePassword(userId, currPassword, newPassword).catch(
+					(err) => {
+						console.log("err:", err);
+						alert("입력하신 현재 비밀번호가 올바르지 않습니다");
+					}
+				);
+				currPw.value = "";
+				newPw.value = "";
+				confirmNewPw.value = "";
 
-			modal.hide();
-			showPopupMsg("비밀번호", true);
-		});
-	});
+				modal.hide();
+				showPopupMsg("비밀번호", true);
+			},
+			{ once: true }
+		);
+
+		const closeBtn = modal._element.querySelector(".btn.btn-secondary");
+		closeBtn.addEventListener(
+			"click",
+			() => {
+				modal.hide();
+			},
+			{ once: true }
+		);
+	};
 }
 updatePassword();
 
 // 유저가 새로운 폼을 추가하거나 수정할때 추가/수정되었다고 팝업 메세지 알림 주는 함수
-function showPopupMsg(section, isUpdate) {
+function showPopupMsg(section, isUpdate, noData = false) {
 	const msgContainer = document.querySelector(".pop-up-msg");
+	let delUser = false;
 
 	let sectionName;
 	if (section === "education") {
@@ -294,24 +352,36 @@ function showPopupMsg(section, isUpdate) {
 		sectionName = "프로젝트가";
 	} else if (section === "프로필") {
 		sectionName = `${section}이`;
+	} else if (section === "비밀번호") {
+		sectionName = `${section}가`;
 	} else {
 		sectionName = `${section}가`;
+		delUser = true;
 	}
 
 	let msgToBeDisplayed;
 	// isUpdate이 string value로도 들어오기 때문에 둘 다 체크
-	if (isUpdate === true || isUpdate === "true") {
-		msgToBeDisplayed = msgContainer.querySelector("#update");
-		msgToBeDisplayed.innerText = `${sectionName} 수정되었습니다`;
+	if (!noData) {
+		if (isUpdate === true || isUpdate === "true") {
+			msgToBeDisplayed = msgContainer.querySelector("#update");
+			if (delUser) {
+				msgToBeDisplayed.innerText = `${sectionName} 완료되었습니다`;
+			} else {
+				msgToBeDisplayed.innerText = `${sectionName} 수정되었습니다`;
+			}
+		} else {
+			msgToBeDisplayed = msgContainer.querySelector("#create");
+			msgToBeDisplayed.innerText = `${sectionName} 추가되었습니다`;
+		}
+
+		msgToBeDisplayed.classList.add("active");
+		setTimeout(function () {
+			msgToBeDisplayed.classList.remove("active");
+		}, 1000);
 	} else {
 		msgToBeDisplayed = msgContainer.querySelector("#create");
-		msgToBeDisplayed.innerText = `${sectionName} 추가되었습니다`;
+		msgToBeDisplayed.innerText = "찾으시는 회원정보가 존재하지 않습니다";
 	}
-
-	msgToBeDisplayed.classList.add("active");
-	setTimeout(function () {
-		msgToBeDisplayed.classList.remove("active");
-	}, 1000);
 }
 
 // 사용자가 입력 정보를 저장할때 필수 항목 체크하고 정보 백엔드로 보내는 함수
@@ -471,8 +541,10 @@ function loadEachSecInfo(sectionName, sectionInfo) {
 	if (sectionInfo.length > 0) {
 		sectionInfo.reverse();
 		sectionInfo.forEach((data) => {
-			const newForm = createSectionForm(sectionName, data);
-			sectionContainer.appendChild(newForm);
+			if (!data.isDeleted) {
+				const newForm = createSectionForm(sectionName, data);
+				sectionContainer.appendChild(newForm);
+			}
 		});
 
 		// 저장된 정보가 없으면 인풋 폼 생성
@@ -501,7 +573,7 @@ function renderProfile() {
 	});
 }
 
-// 유저 정보 불러와서 프로필 카드에 보여주는 함수
+// 유저 정보 불러와서 화면에 그리는 함수
 async function displayUserInfo() {
 	const params = new URLSearchParams(window.location.search);
 	const userId = params.get("userId");
@@ -510,9 +582,11 @@ async function displayUserInfo() {
 	const { user, education, award, certificate, project } = await getUserInfo(
 		userId
 	);
+	console.log(user);
 
 	// 프로필 업데이트
 	const { email, introduce, name } = user[0];
+
 	const myName = document.querySelector(".card-name");
 	myName.innerText = name;
 	const myEmail = document.querySelector(".card-email");
@@ -532,6 +606,11 @@ async function displayUserInfo() {
 	for (let sectionName in sections) {
 		loadEachSecInfo(sectionName, sections[sectionName]);
 	}
+	// 	if (!isDeleted) {
+	// } else {
+	// 	showPopupMsg("user", false, true);
+	// 	console.log("false");
+	// }
 }
 
 updatePortfolioSections();

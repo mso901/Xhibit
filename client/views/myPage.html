@@ -55,9 +55,8 @@
             <button class="modified-button" type="submit">확인</button>
           </form>
         </div>
-        <button type="button" class="update-password btn">
-          비밀번호 수정
-        </button>
+        <button type="button" class="update-password btn">비밀번호 수정</button>
+        <button type="button" class="delete-user btn">회원 탈퇴</button>
       </div>
 
       <!-- 포폴 정보 -->
@@ -115,8 +114,6 @@
                 비밀번호:</label>
               <input type="text" class="form-control" id="current-password"
                 placeholder="현재 비밀번호 입력" />
-            </div>
-            <div class="mb-3">
               <label for="new-password" class="col-form-label">새 비밀번호:</label>
               <input type="text" class="form-control" id="new-password"
                 placeholder="새 비밀번호 입력" />
@@ -135,6 +132,42 @@
       </div>
     </div>
   </div>
+
+  <!-- 회월 탈퇴 할때 뜨는 모달창 -->
+  <div class="modal fade" id="delete-user" tabindex="-1"
+    aria-labelledby="delUserLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title fs-5" id="delUserModalLabel">
+            회원 탈퇴
+          </h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close">
+            X
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="curr-password" class="col-form-label">현재
+                비밀번호:</label>
+              <input type="text" class="form-control" id="curr-password"
+                placeholder="현재 비밀번호 입력" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+            data-bs-dismiss="modal">
+            닫기
+          </button>
+          <button type="button" class="btn btn-primary">확인</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

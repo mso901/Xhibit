@@ -224,9 +224,19 @@ router.patch(
 // 유저 임시 삭제
 router.post("/softdelete/:userId", async (req, res, next) => {
 	try {
+		const { currentPassword } = req.body;
 		const { userId } = req.params;
 
 		const objectUserId = new ObjectId(userId);
+
+		// 현재 비밀번호가 맞는지 확인
+		const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+		// console.log("비번 확인", passwordMatch);
+		if (!passwordMatch) {
+			return res
+				.status(400)
+				.json({ message: "현재 비밀번호가 일치하지 않습니다." });
+		}
 
 		const delete_user = await User.findOneAndUpdate(
 			{ _id: objectUserId._id },

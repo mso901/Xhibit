@@ -109,3 +109,17 @@ export const verifyAndUpdatePassword = async (
 		throw error;
 	}
 };
+
+// 유저 소프트 삭제
+export const verifyAndDeleteUser = async (userId, currentPassword) => {
+	try {
+		const response = await baseInstance.post(
+			`${BASE_URL}/api/softdelete/${userId}`,
+			{ currentPassword }
+		);
+		return response.data;
+	} catch (error) {
+		console.error(`회원 삭제 실패:`, error);
+		throw error;
+	}
+};
