@@ -877,6 +877,7 @@ input::-ms-clear {
 }
 
 .welcome a {
+  display: flex;
   width: 25vw;
 }
 
