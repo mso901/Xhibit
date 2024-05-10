@@ -90,10 +90,6 @@ p {
 .btn {
   width: auto;
   border: none;
-  /* background-color: #f2edd7; */
-  /* font-size: 1.5vw; */
-  font-weight: 600;
-  /* margin-left: 1rem; */
 }
 
 .intro-btn {
@@ -479,7 +475,7 @@ h2 {
   .date input[name="startYear"],
   .date input[name="endYear"] {
     max-width: 4vw;
-    text-align: center;
+    text-align: left;
   }
 
   .date input[type="number"]::-webkit-inner-spin-button {

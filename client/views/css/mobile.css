@@ -85,6 +85,7 @@
     }
 
     .portfolio{
+        width: 90%;
         flex-direction: column;
         align-items: center;
         margin: 0 5vw;    
@@ -94,8 +95,9 @@
         padding: 0;
         display: flex;
         justify-content: center;
-        margin: 8vw 0;
+        margin: 8vw 5vw;
         font-size: 8vw;
+        text-align: center;
     }
 
     .container{
@@ -197,13 +199,41 @@
     }
 
     .my-card-content{
-        margin: 0 4vw;
-        height: 80%;
+        font-size: 4vw;
+        margin: 1vw 3vw;
+        margin-bottom: 3vw;
+        height: 40vw;
+        padding: 5vw;
+        padding-bottom: 3vw;
+    }
+
+    .others-content{
+        font-size: 4vw;
+        margin: 1vw 3vw;
+        margin-bottom: 3vw;
+        height: 32vw;
         padding: 5vw;
     }
 
     .my-card-intro p{
         margin: 1vw;
+    }
+
+    .my-card-intro{
+        align-items: flex-start;
+        justify-content: center;
+        margin-left: 4vw;
+    }
+
+    .my-card-intro .card-name{
+        width: 48vw;
+        font-size: 7vw;
+        letter-spacing: 1vw;
+    }
+
+    .my-card-intro .card-email{
+        font-size: 3.8vw;        
+        margin-top: 3.5vw;
     }
 
     .my-card-content textarea{
@@ -216,7 +246,7 @@
     }
 
     .modified-button{
-        margin: 4vw;
+        margin-top: 1vw;
         height: 9vw;
         font-size: 4.5vw;
     }
@@ -229,6 +259,7 @@
     .portfolio-info .section{
         width: 100%;
         padding: 0;
+        margin-bottom: 7vw;
     }
 
     .portfolio .resume-content{
@@ -236,8 +267,11 @@
     }
 
     .portfolio-info .title-bar{
-        padding: 7vw 2vw 4vw;
-    }
+        height: max-content;
+        padding-top: 5vw;   
+        padding-left: 2vw;     
+        margin: 0px 3vw;
+    }    
 
     .portfolio-info .title-bar h3{
         font-size: 7vw;
@@ -245,10 +279,22 @@
 
     .portfolio-info .title-bar button{
         font-size: 4.5vw;
+        margin-bottom: 1vw;
+        padding: 1vw 2vw;  
     }
 
-    .portfolio-section .item{
+    .portfolio-info .title-bar button:hover{
+        border-radius: 2vw;  
+    }
+
+    .portfolio-section{
         font-size: 4.5vw;
+        margin: 0 3vw;
+        padding: 2vw 3vw 0;
+    }
+
+    .portfolio-section:last-child{
+        padding-bottom: 4vw;    
     }
 
     .portfolio-section .date{
@@ -257,16 +303,116 @@
 
     .portfolio-section .date input{
         max-width: none;
+        width: 12vw;
     }
 
     .portfolio-section .date input[name="startYear"], .date input[name="endYear"]{
         font-size: 4.5vw;
         max-width: none;
+        width: 16vw;
     }
 
     .portfolio-section .date input[name="endYear"]{
         font-size: 4.5vw;
         max-width: none;
+    }
+
+    .portfolio-section-item{
+        font-size: 4vw;
+    }
+
+    .portfolio-section-item div, ul, li{
+        font-size: 4vw !important;
+        line-height: 6vw;
+    }
+
+    .portfolio-section-item .link{
+        font-size: 5vw !important;
+        padding: 3vw 0 !important;
+        margin-bottom: 2vw !important;
+    }
+
+    .portfolio-section-item .link{
+        font-size: 10vw;
+    }
+    
+    .portfolio-section .buttons{
+        float: inline-end;    
+    }
+
+    .portfolio-section .btn{
+        font-size: 4vw;
+    }
+
+    .portfolio-section .item{
+        display: inline-block;
+    }
+
+    .portfolio-section .item input{
+        display: inline-block;
+    }
+
+    .portfolio-section .input-info{
+        width: auto;
+        margin-right: 0;
+        margin-bottom: 3vw;
+    }
+
+    .nothing-info{
+        padding: 2vw 0;
+    }
+
+    .other-card-intro{
+        align-items: flex-start;
+        justify-content: center;
+        margin-left: 4vw;
+    }
+
+    .other-card-intro .card-name{
+        width: 48vw;
+        font-size: 7vw;
+        letter-spacing: 1vw;
+    }
+
+    .other-card-intro .card-email{
+        font-size: 3.8vw;        
+        margin-top: 3.5vw;
+    }
+
+    .modal-dialog{
+        display: flex;
+        justify-content: center;
+    }
+
+    .modal-body{
+        padding-top: 8.5vw;
+    }
+
+    .modal-content{
+        width: 80vw;
+        height: 50vw;
+    }
+
+    .modal-content p{
+        font-size: 7.5vw !important;
+    }
+    
+    .modal-content .modal-footer{
+        height: 14vw;
+        width: 100%;
+    }
+
+    .portfolio-section-item .techStack{
+        margin-bottom: 2vw;
+        padding: 2vw 3.3vw !important;
+        border-radius: 3vw !important;
+    }
+
+    .modal-content .modal-footer .btn{
+        font-size: 4vw;
+        font-weight: 500;
+        width: 20vw !important;
+        height: 8vw;
     }
 
     .footer {
