@@ -3,6 +3,7 @@ window.addEventListener("DOMContentLoaded", function () {
   const navbar = document.createElement("div");
   // 세션에서 토큰 값 가져온다.
   const token = sessionStorage.getItem("token");
+  const userId = this.sessionStorage.getItem("userId");
 
   navbar.className = "navbar";
   navbar.innerHTML = `
@@ -11,9 +12,9 @@ window.addEventListener("DOMContentLoaded", function () {
     </div>
     <div class="navbar-menu">
         <a href="/main">메인페이지</a>
+        <a href="/mypage">마이페이지</a>
         <a href="/signin">로그인</a>
         <a href="/signup">회원가입</a>
-        <a href="/mypage">마이페이지</a>
     </div>
     `;
 
@@ -23,20 +24,21 @@ window.addEventListener("DOMContentLoaded", function () {
   const myPageLink = document.querySelector('.navbar-menu a[href="/mypage"]');
   const signUpLink = document.querySelector('.navbar-menu a[href="/signup"]');
 
-  function getUserIdFromUrl() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("userId");
-  }
+  // function getUserIdFromUrl() {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   return urlParams.get("userId");
+  // }
 
   async function logout() {
+    sessionStorage.removeItem("userId");
     sessionStorage.removeItem("token");
   }
 
   function updateLoginText() {
-    const userId = getUserIdFromUrl();
+    // const userId = getUserIdFromUrl();
 
     if (token) {
-      mainLink.setAttribute("href", `/main?userId=${userId}`);
+      mainLink.setAttribute("href", `/main`);
       loginLink.textContent = "로그아웃";
       loginLink.setAttribute("href", "/signin");
       loginLink.addEventListener("click", logout);

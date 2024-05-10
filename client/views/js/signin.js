@@ -32,11 +32,11 @@ async function onLoginSubmit(e) {
       { withCredentials: true }
     )
     .then((res) => {
+      const userId = res.data.user._id;
       const { token } = res.data;
       sessionStorage.setItem("token", token);
-      // axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      const userId = res.data.user._id;
-      window.location.href = `/main?userId=${userId}`;
+      sessionStorage.setItem("userId", userId);
+      window.location.href = `/main`;
     })
     .catch(() => {
       loginErrorMessage.classList.remove("hide"); // 실패 메시지 보임

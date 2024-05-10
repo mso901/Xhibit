@@ -1,5 +1,6 @@
 // 토큰 세션에서 가져온다.
 const token = sessionStorage.getItem("token");
+const userIdEqual = sessionStorage.getItem("userId");
 
 // 포폴값 받아오는 함수
 async function getUserPortfolio() {
@@ -18,7 +19,7 @@ async function getUserPortfolio() {
   const response = await baseInstance.get(`/api/${userId}`);
   // 유저 상세 정보 전부 선언
   const { user, education, award, certificate, project } = response.data;
-  // console.log(response.data);
+  console.log(response.data);
 
   const myCardDiv = document.querySelector(".my-card");
   // 유저 카드 정보 선언
@@ -42,6 +43,16 @@ async function getUserPortfolio() {
 <div class="my-card-content others-content">
   ${introduce}
 </div>`;
+
+  // otherspPage에서의 userId와 세션 userId가 같다면 마이페이지로 가는 버튼 생성
+  if (userId === userIdEqual) {
+    const myPageButton = document.querySelector(".mypage-button");
+    myPageButton.innerHTML = `
+    <a href="/myPage?userId=${userId}">
+      <button class= "save-btn">마이페이지</button>
+    </a>`;
+  }
+
   // 학력 섹션
   const portfolioSectionEducation = document.querySelector(
     ".portfolio-section.education"
@@ -144,7 +155,7 @@ async function getUserPortfolio() {
       `
       <div class="portfolio-section-item">
         <div class = "name">
-          <a class = "link ${linkClass}" href="${hrefValue}">${name} ${linkBtn}</a>
+          <a class = "link ${linkClass}" href="${hrefValue}" target="_blank">${name} ${linkBtn}</a>
           <div class = "proj-duration">
             <div class = "period-start">${periodStart}</div> ~ <div class = "period-end">${periodEnd}</div>
           </div>

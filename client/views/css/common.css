@@ -30,7 +30,7 @@ p {
   margin: 0;
 }
 
-#wrap{
+#wrap {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -68,6 +68,7 @@ p {
   text-decoration: none;
   font-size: calc(0.1rem + 0.9vw);
   border-bottom: 2px solid transparent;
+  cursor: pointer;
 }
 
 .navbar-menu :hover {
@@ -210,10 +211,10 @@ p {
 }
 
 h2 {
-	padding-left: 37vw;
-	padding-top: 3vw;
-	padding-bottom: 2vw;
-	font-size: 2.5vw;
+  padding-left: 37vw;
+  padding-top: 3vw;
+  padding-bottom: 2vw;
+  font-size: 2.5vw;
   font-weight: 100;
 }
 
@@ -274,13 +275,13 @@ h2 {
   margin-right: 0.3vw;
 }
 
-.nothing-info{
+.nothing-info {
   padding-top: 3vw;
   display: flex;
   justify-content: center;
 }
 
-.others-content{
+.others-content {
   height: 13vw;
   font-size: 1vw;
 }
@@ -289,7 +290,7 @@ h2 {
   display: flex;
 }
 
-.other-card-intro{
+.other-card-intro {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -298,7 +299,7 @@ h2 {
   margin: 1.8vw 0 2vw 1vw;
 }
 
-.other-card-intro .card-name{
+.other-card-intro .card-name {
   width: 10vw;
   font-size: calc(0.1rem + 1.8vw);
   letter-spacing: 0.4vw;
@@ -373,7 +374,7 @@ h2 {
     width: 55vw;
   }
 
-  .section:last-child{
+  .section:last-child {
     margin-bottom: 10vw;
   }
 
@@ -432,10 +433,10 @@ h2 {
     justify-content: space-between;
   }
 
-	.input-info {
-		flex-grow: 2;
+  .input-info {
+    flex-grow: 2;
     margin-right: 1.5vw;
-	}
+  }
 
   .item input {
     background: none;
@@ -506,18 +507,17 @@ h2 {
     overflow: auto;
   }
 
-	.buttons{
+  .buttons {
     display: flex;
     align-items: flex-start;
-		margin: 0.25vw 0;
-		background: none;
-	}
+    margin: 0.25vw 0;
+    background: none;
+  }
 
-
-	.btn {
-		font-size: 1vw;
-		background: none;
-	}
+  .btn {
+    font-size: 1vw;
+    background: none;
+  }
 
   .hide {
     visibility: hidden;
@@ -557,24 +557,24 @@ h2 {
     border-radius: 0.6vw;
   }
 
-  .portfolio-section-item{
+  .portfolio-section-item {
     margin: 0.5vw;
     padding: 1vw 0;
     line-height: 2.3vw;
     border-top: 1px solid #422613;
   }
 
-  .portfolio-section-item a{
+  .portfolio-section-item a {
     display: flex;
   }
 
-  .portfolio-section-item a:hover{
+  .portfolio-section-item a:hover {
     color: #d8b21b;
     text-decoration: underline;
     cursor: pointer;
   }
 
-  .portfolio-section-item ul{
+  .portfolio-section-item ul {
     margin: 0;
     padding: 0;
   }
@@ -588,7 +588,8 @@ h2 {
     margin-bottom: 0;
   }
 
-  .portfolio-section-item .period-start, .period-end {
+  .portfolio-section-item .period-start,
+  .period-end {
     display: inline-block;
   }
 
@@ -609,9 +610,9 @@ h2 {
     display: inline-block;
     margin-top: 0.5vw;
     margin-right: 0.3vw;
-    padding: 0.1vw 0.8vw;    
+    padding: 0.1vw 0.8vw;
     background-color: #fff9e3;
-    border-radius: 0.5vw;  
+    border-radius: 0.5vw;
   }
 }
 
@@ -771,7 +772,8 @@ button:disabled {
   background-color: #cecece;
 }
 
-.emailDuplication-message, .mismatch-message,
+.emailDuplication-message,
+.mismatch-message,
 .strongPassword-message {
   color: rgb(236, 18, 18);
   font-size: calc(0.5rem + 0.3vw);
@@ -850,13 +852,13 @@ input::-ms-clear {
 /* footer */
 
 .footer {
-	height: 6vw;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: flex-start;
-	padding: 1rem 10vw;
-	background-color: #392619;
+  height: 6vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem 10vw;
+  background-color: #392619;
 }
 
 .footer-logo {
@@ -937,4 +939,11 @@ input::-ms-clear {
 
 .welcome-btn p {
   font-family: "Jalnan";
+}
+
+.my-card-mark {
+  position: absolute;
+  width: 1em;
+  height: 1rem;
+  background-color: #392619;
 }
