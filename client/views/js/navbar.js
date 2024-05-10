@@ -1,6 +1,8 @@
 window.addEventListener("DOMContentLoaded", function () {
   const wrapper = document.getElementById("wrap");
   const navbar = document.createElement("div");
+  // 세션에서 토큰 값 가져온다.
+  const token = sessionStorage.getItem("token");
 
   navbar.className = "navbar";
   navbar.innerHTML = `
@@ -8,14 +10,15 @@ window.addEventListener("DOMContentLoaded", function () {
         <img src="/images/logo2.png" />
     </div>
     <div class="navbar-menu">
-        <a href="">서비스소개</a>
+        <a href="/main">메인페이지</a>
         <a href="/signin">로그인</a>
         <a href="/signup">회원가입</a>
         <a href="/mypage">마이페이지</a>
     </div>
     `;
 
-    wrapper.insertBefore(navbar, wrapper.firstChild);
+  wrapper.insertBefore(navbar, wrapper.firstChild);
+  const mainLink = document.querySelector('.navbar-menu a[href="/main"]');
   const loginLink = document.querySelector('.navbar-menu a[href="/signin"]');
   const myPageLink = document.querySelector('.navbar-menu a[href="/mypage"]');
   const signUpLink = document.querySelector('.navbar-menu a[href="/signup"]');
@@ -26,18 +29,14 @@ window.addEventListener("DOMContentLoaded", function () {
   }
 
   async function logout() {
-    const BASE_URL = "http://localhost:3000";
-
-    const baseInstance = await axios.create({
-      baseURL: BASE_URL, // 기본 URL 설정
-    });
-    await baseInstance.post("/api/logout");
+    sessionStorage.removeItem("token");
   }
 
   function updateLoginText() {
     const userId = getUserIdFromUrl();
 
-    if (userId) {
+    if (token) {
+      mainLink.setAttribute("href", `/main?userId=${userId}`);
       loginLink.textContent = "로그아웃";
       loginLink.setAttribute("href", "/signin");
       loginLink.addEventListener("click", logout);

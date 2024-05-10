@@ -11,8 +11,7 @@ const router = express.Router();
 // 유저 로그인
 router.post("/signin", async (req, res, next) => {
   try {
-
-    // local로 등록한 인증과정 실행
+    // 아까 local로 등록한 인증과정 실행
     passport.authenticate("local", (passportError, user, info) => {
       // 인증이 실패했거나 유저 데이터가 없다면 에러 발생
       if (passportError || !user) {
@@ -29,27 +28,30 @@ router.post("/signin", async (req, res, next) => {
 
         // 클라이언트에게 JWT생성 후 반환
         const token = jwt.sign(
-          { _id: user.id, name: user.name },
+          { _id: user.id, name: user.name }, //맞는지 확인할려고 name까지 넣음 , elice시크릿 키 같은 경우 .dev 사용해야될듯
           "elice",
           {
             expiresIn: "24h",
           }
         );
-        console.log("토큰", token);
-        res.cookie("jwt", token, {
-          path: "/",
-          // 쿠키가 적용되는 경로 지정, 기본값 '/'이며 모든 경로에 쿠키 사용 가능
-          httpOnly: true,
-          // 기본값 false, true인경우 클라이언트에서 document.cookie로 접근 X (보안 관련)
-          secure: true,
-          // 기본값 false, true인경우 HTTPS에서만 쿠키를 사용가능하게 만든다.
-          sameSite: "none",
-          // strict는 동일 출처에서만, lax는 쿠키가 일부 상황에서 다른 출처로 전송 가능,
-          // none는 모든 경우 허용(sameSite)
-          maxAge: 60 * 60 * 1000, // 쿠키 유효기간 이 경우는 1시간
-        }); // 쿠키 전송
+        // ====================================쿠키보내지 않고 sessionStroage사용 테스트
+        // console.log("토큰", token);
+        // res.cookie("jwt", token, {
+        //   path: "/",
+        //   // 쿠키가 적용되는 경로 지정, 기본값 '/'이며 모든 경로에 쿠키 사용 가능
+        //   httpOnly: true,
+        //   // 기본값 false, true인경우 클라이언트에서 document.cookie로 접근 X (보안 관련)
+        //   secure: true,
+        //   // 기본값 false, true인경우 HTTPS에서만 쿠키를 사용가능하게 만든다.
+        //   sameSite: "none",
+        //   // strict는 동일 출처에서만, lax는 쿠키가 일부 상황에서 다른 출처로 전송 가능,
+        //   // none는 모든 경우 허용(sameSite)
+        //   maxAge: 60 * 60 * 1000, // 쿠키 유효기간 이 경우는 1시간
+        // }); // 쿠키 전송
+        // res.setHeader("Authorization", token); // 헤더 설정
 
         res.status(200).json({ token, user });
+        // res.status(200).end();
       });
     })(req, res);
   } catch (error) {
@@ -83,30 +85,29 @@ router.post("/signup", async (req, res, next) => {
       password: hashedPassword,
     });
     res.json(user);
-
   } catch (error) {
     console.error(error);
     next(error);
   }
 });
 
-//유저 로그아웃
-router.post("/logout", (req, res) => {
-  try {
-    res.clearCookie("jwt", {
-      path: "/",
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-    });
-    res.send("success");
-  } catch (error) {
-    console.error(error);
-  }
-});
+// //유저 로그아웃 - 세션 방식으로 변경해서 사용하지 않는다.
+// router.post("/logout", (req, res) => {
+//   try {
+//     res.clearCookie("jwt", {
+//       path: "/",
+//       httpOnly: true,
+//       secure: true,
+//       sameSite: "none",
+//     });
+//     res.send("success");
+//   } catch (error) {
+//     console.error(error);
+//   }
+// });
 
 // 메인 페이지 유저 리스트
-router.get("/", loginRequired, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const user = await User.find(
       {},
@@ -115,7 +116,6 @@ router.get("/", loginRequired, async (req, res, next) => {
 
     console.log(user);
     res.json(user);
-
   } catch (error) {
     console.error(error);
     next(error);
@@ -139,7 +139,6 @@ router.get("/:userId", async (req, res, next) => {
     const project = await Project.find({ user: objectUserId }).lean();
 
     res.json({ user, education, award, certificate, project });
-
   } catch (error) {
     console.error(error);
     next(error);
@@ -176,7 +175,6 @@ router.patch("/changepassword/:userId", async (req, res, next) => {
     );
 
     res.status(200).json({ message: "비밀번호가 성공적으로 변경되었습니다." });
-
   } catch (error) {
     console.error(error);
     next(error);

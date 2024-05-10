@@ -1,5 +1,7 @@
-// 리스트 시작
+// 세션에서 토큰 가져온다.
+const token = sessionStorage.getItem("token");
 
+// 리스트 시작
 function getUsers() {
   const userCardList = document.querySelector(".user_card-list");
 
@@ -7,6 +9,9 @@ function getUsers() {
 
   const baseInstance = axios.create({
     baseURL: BASE_URL, // 기본 URL 설정
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
   baseInstance
     .get("/api", {})
@@ -44,8 +49,3 @@ function getUsers() {
 }
 
 getUsers();
-
-{
-  /* <a href = "localhost:8080/otherspage/${_id}">자세히보기 ></a> */
-}
-// 일단 주석처리

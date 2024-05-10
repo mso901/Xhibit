@@ -1,15 +1,22 @@
 const jwt = require("jsonwebtoken");
 
-// 사용자 인증 미들웨어
 function jwtAuthenticationMiddleware(req, res, next) {
-  let authCookie = req.cookies["jwt"];
-  console.log("쿠키인증", authCookie);
-  if (!authCookie) {
-    return res.sendStatus(401);
-  }
+  // console.log("헤더체크", req);
+  const token = req.headers["authorization"]?.split(" ")[1] ?? null;
+  // console.log("인증토큰", token);
 
-  // JWT 토큰의 유효성을 검사
-  jwt.verify(authCookie, "elice", (err, user) => {
+  if (!token) {
+    res
+      .status(401)
+      .json({ error: "로그인이 안되어있습니다. 로그인을 해주세요. " });
+  }
+  // let authCookie = req.cookies["jwt"];
+  // console.log("쿠키인증", authCookie);
+  // if (!authCookie) {
+  //   return res.sendStatus(401);
+  // }
+
+  jwt.verify(token, "elice", (err, user) => {
     if (err) return res.sendStatus(403);
     next();
   });

@@ -33,12 +33,15 @@ async function onLoginSubmit(e) {
       { withCredentials: true }
     )
     .then((res) => {
+      const { token } = res.data;
+      sessionStorage.setItem("token", token);
+      // axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       const userId = res.data.user._id;
-      console.log(userId);
       window.location.href = `/main?userId=${userId}`;
     })
     .catch(() => {
       loginErrorMessage.classList.remove("hide"); // 실패 메시지 보임
+      console.log(err);
       console.log("login error");
     });
 }

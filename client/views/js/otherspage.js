@@ -1,3 +1,6 @@
+// 토큰 세션에서 가져온다.
+const token = sessionStorage.getItem("token");
+
 // 포폴값 받아오는 함수
 async function getUserPortfolio() {
   let query = window.location.search;
@@ -8,6 +11,9 @@ async function getUserPortfolio() {
 
   const baseInstance = axios.create({
     baseURL: BASE_URL, // 기본 URL 설정
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
   const response = await baseInstance.get(`/api/${userId}`);
   // 유저 상세 정보 전부 선언
@@ -132,7 +138,7 @@ async function getUserPortfolio() {
     }
     const hrefValue = link ? link : "#n";
     const linkClass = link ? "" : "disabled-link";
-    const linkBtn = link ? ">" : ""
+    const linkBtn = link ? ">" : "";
     portfolioSectionProject.insertAdjacentHTML(
       "beforeend",
       `
