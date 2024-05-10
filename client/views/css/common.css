@@ -757,23 +757,21 @@ h2 {
 			.btn.btn-default {
 				background-color: inherit;
 			}
-		}
 
-		input {
-			width: -webkit-fill-available;
-			height: 4vw;
-			background: inherit;
-			border: none;
-		}
+			input {
+				width: -webkit-fill-available;
+				height: 4vw;
+				background: inherit;
+				border: none;
+				margin-bottom: 0;
+			}
 
-		input:active,
-		.input:focus {
-			border: none;
-			outline: none;
-		}
-
-		#curr-password {
-			margin-bottom: 1vw;
+			input:active,
+			.input:focus {
+				border: none;
+				outline: none;
+				box-shadow: none;
+			}
 		}
 	}
 
