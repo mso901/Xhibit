@@ -388,27 +388,22 @@ function showPopupMsg(section, isUpdate, noData = false) {
 
 	let msgToBeDisplayed;
 	// isUpdate이 string value로도 들어오기 때문에 둘 다 체크
-	if (!noData) {
-		if (isUpdate === true || isUpdate === "true") {
-			msgToBeDisplayed = msgContainer.querySelector("#update");
-			if (delUser) {
-				msgToBeDisplayed.innerText = `${sectionName} 완료되었습니다`;
-			} else {
-				msgToBeDisplayed.innerText = `${sectionName} 수정되었습니다`;
-			}
-		} else {
-			msgToBeDisplayed = msgContainer.querySelector("#create");
-			msgToBeDisplayed.innerText = `${sectionName} 추가되었습니다`;
-		}
+	msgToBeDisplayed = msgContainer.querySelector("#pop-up");
 
-		msgToBeDisplayed.classList.add("active");
-		setTimeout(function () {
-			msgToBeDisplayed.classList.remove("active");
-		}, 1000);
+	if (isUpdate === true || isUpdate === "true") {
+		if (delUser) {
+			msgToBeDisplayed.innerText = `${sectionName} 완료되었습니다`;
+		} else {
+			msgToBeDisplayed.innerText = `${sectionName} 수정되었습니다`;
+		}
 	} else {
-		msgToBeDisplayed = msgContainer.querySelector("#create");
-		msgToBeDisplayed.innerText = "찾으시는 회원정보가 존재하지 않습니다";
+		msgToBeDisplayed.innerText = `${sectionName} 추가되었습니다`;
 	}
+
+	msgToBeDisplayed.classList.add("active");
+	setTimeout(function () {
+		msgToBeDisplayed.classList.remove("active");
+	}, 1000);
 }
 
 // 사용자가 입력 정보를 저장할때 필수 항목 체크하고 정보 백엔드로 보내는 함수
