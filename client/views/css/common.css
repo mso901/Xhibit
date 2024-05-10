@@ -225,6 +225,7 @@ h2 {
 .my-card,
 .update-password,
 .delete-user {
+  display: flex;
   padding: 1vw;
   margin-left: 10vw;
   background-color: #ffeca8;
