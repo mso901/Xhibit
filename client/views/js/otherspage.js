@@ -54,128 +54,169 @@ async function getUserPortfolio() {
     myCardDiv.appendChild(myPageButton);
   }
 
+  // 유저가 가져온 섹션 전부 isDelete가 true 인지 체크 하는 함수
+  function allDeleteCheck(section) {
+    //true면 isDeleted가 하나라도 false인경우이다.
+    const check = section.some((item) => !item.isDeleted);
+    return check;
+  }
+
   // 학력 섹션
   const portfolioSectionEducation = document.querySelector(
     ".portfolio-section.education"
   );
-  if (education.length === 0) {
+
+  const checkEducatioin = allDeleteCheck(education);
+  if (education.length === 0 || !checkEducatioin) {
     portfolioSectionEducation.innerHTML = `<div class="nothing-info">정보가 없습니다.</div>`;
+  } else {
+    education.forEach((item) => {
+      const { school, major, periodStart, periodEnd, isDeleted } = item;
+      // console.log(item);
+      portfolioSectionEducation.insertAdjacentHTML(
+        "beforeend",
+        `
+        ${
+          isDeleted
+            ? ``
+            : `
+            <div class="portfolio-section-item">
+              <div class="period-start">${periodStart}</div> ~{" "}
+              <div class="period-start">${periodEnd}</div>
+              <div class="name">${school}</div>
+              <div class="major">${major}</div>
+            </div>
+          `
+        }
+        `
+      );
+    });
   }
-  education.forEach((item) => {
-    const { school, major, periodStart, periodEnd } = item;
-    // console.log(item);
-    portfolioSectionEducation.insertAdjacentHTML(
-      "beforeend",
-      `
-      <div class="portfolio-section-item">
-        <div class= "period-start">${periodStart}</div> ~ <div class= "period-start">${periodEnd}</div>
-        <div class= "name">${school}</div>
-        <div class= "major">${major}</div>
-      </div>
-      `
-    );
-  });
+
   // 수상이력
   const portfolioSectionAward = document.querySelector(
     ".portfolio-section.award"
   );
-  if (award.length === 0) {
+
+  const checkaward = allDeleteCheck(award);
+  if (award.length === 0 || !checkaward) {
     portfolioSectionAward.innerHTML = `<div class="nothing-info">정보가 없습니다.</div>`;
-  }
-  award.forEach((item) => {
-    const { name, agency, awardDate } = item;
-    // console.log(item);
-    portfolioSectionAward.insertAdjacentHTML(
-      "beforeend",
-      `
-      <div class="portfolio-section-item">
+  } else {
+    award.forEach((item) => {
+      const { name, agency, awardDate, isDeleted } = item;
+      // console.log(item);
+      portfolioSectionAward.insertAdjacentHTML(
+        "beforeend",
+        `${
+          isDeleted
+            ? ``
+            : `      <div class="portfolio-section-item">
         <div class= "awardDate">${awardDate}</div>
         <div class= "name">${name}</div>
         <div class= "agency">${agency}</div>
-      </div>
-      `
-    );
-  });
+      </div>`
+        }
+        `
+      );
+    });
+  }
+
   //자격증
   const portfolioSectionCertificate = document.querySelector(
     ".portfolio-section.certificate"
   );
 
-  if (certificate.length === 0) {
+  const checkCertificate = allDeleteCheck(certificate);
+  if (certificate.length === 0 || !checkCertificate) {
     portfolioSectionCertificate.innerHTML = `<div class="nothing-info">정보가 없습니다.</div>`;
-  }
-  certificate.forEach((item) => {
-    const { name, agency, licenseDate } = item;
-    // console.log(item);
-    portfolioSectionCertificate.insertAdjacentHTML(
-      "beforeend",
-      `
-      <div class="portfolio-section-item">
+  } else {
+    certificate.forEach((item) => {
+      const { name, agency, licenseDate, isDeleted } = item;
+      // console.log(item);
+      portfolioSectionCertificate.insertAdjacentHTML(
+        "beforeend",
+        `${
+          isDeleted
+            ? ``
+            : `      <div class="portfolio-section-item">
         <div class= "period-start">${licenseDate}</div>
         <div class= "name">${name}</div>
         <div class= "major">${agency}</div>
-      </div>
-      `
-    );
-  });
+      </div>`
+        }
+        `
+      );
+    });
+  }
+
   // 프로젝트
   const portfolioSectionProject = document.querySelector(
     ".portfolio-section.project"
   );
-  if (project.length === 0) {
-    portfolioSectionProject.innerHTML = `<div class="nothing-info">정보가 없습니다.</div>`;
-  }
-  project.forEach((item) => {
-    const {
-      name,
-      link,
-      contentTitle,
-      contentDetail,
-      periodStart,
-      periodEnd,
-      techStack,
-    } = item;
 
-    function detailList(contentDetail) {
-      let list = contentDetail?.map((item) => {
-        return `<li class = "contentDetail">${item}</li>`;
-      });
-      return list.join(" "); //중간중간 쉼표 존재해서 조인 쉼표를 공백으로 제거하고 배열 벗겨서 리턴
-    }
-    function techStackList(techStack) {
-      let list = techStack?.map((item) => {
-        return `<div class = "techStack">${item}</div>`;
-      });
-      return list.join(" "); //중간중간 쉼표 존재해서 조인 쉼표를 공백으로 제거하고 배열 벗겨서 리턴
-    }
-    const hrefValue = link ? link : "#n";
-    const linkClass = link ? "" : "disabled-link";
-    const linkBtn = link ? ">" : "";
-    portfolioSectionProject.insertAdjacentHTML(
-      "beforeend",
-      `
-      <div class="portfolio-section-item">
-        <div class = "name">
-          <a class = "link ${linkClass}" href="${hrefValue}" target="_blank">${name} ${linkBtn}</a>
-          <div class = "proj-duration">
-            <div class = "period-start">${periodStart}</div> ~ <div class = "period-end">${periodEnd}</div>
-          </div>
-        </div>
-        <ul class = "content-title">${contentTitle}</ul>
+  const checkProject = allDeleteCheck(project);
+  if (project.length === 0 || !checkProject) {
+    portfolioSectionProject.innerHTML = `<div class="nothing-info">정보가 없습니다.</div>`;
+  } else {
+    project.forEach((item) => {
+      const {
+        name,
+        link,
+        contentTitle,
+        contentDetail,
+        periodStart,
+        periodEnd,
+        techStack,
+        isDeleted,
+      } = item;
+
+      function detailList(contentDetail) {
+        let list = contentDetail?.map((item) => {
+          return `<li class = "contentDetail">${item}</li>`;
+        });
+        return list.join(" "); //중간중간 쉼표 존재해서 조인 쉼표를 공백으로 제거하고 배열 벗겨서 리턴
+      }
+      function techStackList(techStack) {
+        let list = techStack?.map((item) => {
+          return `<div class = "techStack">${item}</div>`;
+        });
+        return list.join(" "); //중간중간 쉼표 존재해서 조인 쉼표를 공백으로 제거하고 배열 벗겨서 리턴
+      }
+      const hrefValue = link ? link : "#n";
+      const linkClass = link ? "" : "disabled-link";
+      const linkBtn = link ? ">" : "";
+      portfolioSectionProject.insertAdjacentHTML(
+        "beforeend",
+        `
         ${
-          contentDetail !== ""
-            ? detailList(contentDetail)
-            : "<p>프로젝트 상세설명이 없습니다!</p>"
+          // 만약에 isDeleted가 하나라도 false라면 데이터가 있기때문에 삼항연산자로 검증 후
+          // 출력한다 그리고 isDeleted가 전부 true라면 정보가 없다고 표시한다.
+          isDeleted
+            ? ``
+            : `<div class="portfolio-section-item">
+            <div class = "name">
+              <a class = "link ${linkClass}" href="${hrefValue}" target="_blank">${name} ${linkBtn}</a>
+              <div class = "proj-duration">
+                <div class = "period-start">${periodStart}</div> ~ <div class = "period-end">${periodEnd}</div>
+              </div>
+            </div>
+            <ul class = "content-title">${contentTitle}</ul>
+            ${
+              contentDetail !== ""
+                ? detailList(contentDetail)
+                : "<p>프로젝트 상세설명이 없습니다!</p>"
+            }
+            ${
+              techStack !== ""
+                ? techStackList(techStack)
+                : "<p>기술스텍이 없습니다!</p>"
+            }
+          </div>`
         }
-        ${
-          techStack !== ""
-            ? techStackList(techStack)
-            : "<p>기술스텍이 없습니다!</p>"
-        }
-      </div>
-      `
-    );
-  });
+        `
+      );
+    });
+  }
 }
 
 getUserPortfolio();

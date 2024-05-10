@@ -7,6 +7,8 @@ const inputPassword = document.querySelector("#password");
 // 로그인 실패 메세지
 const loginErrorMessage = document.querySelector(".loginError-message");
 
+const resignErrorMessage = document.querySelector(".resignError-message");
+
 // 폼 sumbit 버튼
 const submitButton = document.querySelector(".form-control-submit-button");
 
@@ -38,8 +40,15 @@ async function onLoginSubmit(e) {
       sessionStorage.setItem("userId", userId);
       window.location.href = `/main`;
     })
-    .catch(() => {
-      loginErrorMessage.classList.remove("hide"); // 실패 메시지 보임
+    .catch((err) => {
+      if (err.response.status === 409) {
+        resignErrorMessage.classList.remove("hide"); // 탈퇴회원 시 실패 메시지
+        loginErrorMessage.classList.add("hide"); // 실패 메시지 보임
+      }
+      if (err.response.status === 400) {
+        loginErrorMessage.classList.remove("hide"); // 실패 메시지 보임
+        resignErrorMessage.classList.add("hide"); // 탈퇴회원 시 실패 메시지
+      }
       console.log(err);
     });
 }
