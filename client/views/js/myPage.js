@@ -1,6 +1,12 @@
-import * as formAPI from "./formAPI.js";
 import {
-	createSection,
+	getUserInfo,
+	getFormInfo,
+	createNewForm,
+	updateForm,
+	updateProfile,
+} from "./apiService.js";
+
+import {
 	createBtns,
 	createInput,
 	createDateInput,
@@ -31,7 +37,7 @@ function getFormattedDate(section, dateInputs) {
 
 // 학력, 상, 자격증, 플젝
 // 각 섹션의 인풋 폼 만들어 주는 함수
-const createSectionForm = (section, data = null) => {
+function createSectionForm(section, data = null) {
 	const sectionContainer = document.createElement("div");
 	sectionContainer.className = `portfolio-section ${section}`;
 
@@ -172,7 +178,32 @@ const createSectionForm = (section, data = null) => {
 		handleSubmit(event, sectionInput, btnContainer, section)
 	);
 	return sectionContainer;
-};
+}
+
+// 박스랑 제목, 추가 버튼 그려주는 함수
+function createSection(sectionData) {
+	const section = document.createElement("div");
+	section.className = "section";
+	section.classList.add(sectionData.className);
+
+	const header = document.createElement("div");
+	header.className = "title-bar";
+
+	const title = document.createElement("h3");
+	title.innerText = sectionData.title;
+	header.appendChild(title);
+
+	const addNewItemBtn = document.createElement("button");
+	addNewItemBtn.innerText = "+ 추가";
+	addNewItemBtn.addEventListener("click", async () => {
+		const newForm = createSectionForm(sectionData.className);
+		section.insertBefore(newForm, section.children[1]);
+	});
+	header.appendChild(addNewItemBtn);
+	section.appendChild(header);
+
+	return section;
+}
 
 // 사용자가 입력 정보를 저장할때 필수 항목 체크하고 정보 백엔드로 보내는 함수
 async function handleSubmit(event, form, buttons, section) {
@@ -274,10 +305,9 @@ async function handleSubmit(event, form, buttons, section) {
 
 	// 처음 섭밋하는 거면 post로 보내줌
 	if (submitBtn.getAttribute("update") == "false") {
-		formAPI
-			.createNewForm(userId, section, data)
+		createNewForm(userId, section, data)
 			.then((res) => {
-				return formAPI.getFormInfo(userId, section);
+				return getFormInfo(userId, section);
 			})
 			.then((newForm) => {
 				// attribute로 폼 아이디 바로 업데이트 해주기
@@ -296,21 +326,21 @@ async function handleSubmit(event, form, buttons, section) {
 	} else {
 		// 들고 온 정보에서 폼 아이디 받아서 patch로 보내줌
 		let formId = form.getAttribute("formid");
-		formAPI.updateForm(section, formId, data).catch((err) => {
+		updateForm(section, formId, data).catch((err) => {
 			console.log("err:", err);
 		});
 	}
 }
 
 // 각 섹션 토대를 업데이트 해주는 함수 (박스, 제목, 추가 버튼)
-const updatePortfolioSections = () => {
+function updatePortfolioSections() {
 	const portfolio = document.querySelector(".resume-content");
 
 	portfolioSection.forEach((section) => {
 		const newSection = createSection(section);
 		portfolio.appendChild(newSection);
 	});
-};
+}
 
 //프로필 자기소개 부분 인풋
 // 사용자가 입력할때마다 얼마만큼 남았는지 보여주는 함수
@@ -352,30 +382,24 @@ function displayProfileTxt() {
 		event.preventDefault();
 		const textContent = textBox.value;
 
-		try {
-			const update = formAPI.updateProfile(userId, textContent);
-		} catch (err) {
-			console.log("err", err);
-		}
+		updateProfile(userId, textContent).catch((err) => {
+			console.log("err:", err);
+		});
 	});
 }
 
 // 유저 정보 불러와서 프로필 카드에 보여주는 함수
-async function getUserInfo() {
+async function displayUserInfo() {
 	const params = new URLSearchParams(window.location.search);
 	const userId = params.get("userId");
 
-	const BASE_URL = "http://localhost:3000";
-	const baseInstance = axios.create({
-		baseURL: BASE_URL, // 기본 URL 설정
-	});
-	const response = await baseInstance.get(`/api/${userId}`);
-
 	// 내 상세 정보 가져오기
-	const { user, education, award, certificate, project } = response.data;
-	console.log(user[0]);
-	const { email, introduce, name } = user[0];
+	const { user, education, award, certificate, project } = await getUserInfo(
+		userId
+	);
 
+	// 프로필 업데이트
+	const { email, introduce, name } = user[0];
 	const myName = document.querySelector(".card-name");
 	myName.innerText = name;
 	const myEmail = document.querySelector(".card-email");
@@ -398,4 +422,4 @@ async function getUserInfo() {
 }
 
 updatePortfolioSections();
-getUserInfo();
+displayUserInfo();

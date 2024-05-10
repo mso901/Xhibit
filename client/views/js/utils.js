@@ -1,13 +1,14 @@
+import { deleteForm } from "./apiService.js";
 // 수정 버튼 누를때만 수정이 가능하게 만들도록 제어하는 함수
-export const toggleInputs = (form, disable) => {
+export function toggleInputs(form, disable) {
 	const inputs = form.querySelectorAll("input");
 	inputs.forEach((input) => (input.disabled = disable));
 	const textareas = form.querySelectorAll("textarea");
 	textareas.forEach((input) => (input.disabled = disable));
-};
+}
 
 // 버튼들 만들어 주는 함수
-export const createBtns = (givenForm, section, edit = false) => {
+export function createBtns(givenForm, section, edit = false) {
 	const params = new URLSearchParams(window.location.search);
 	const userId = params.get("userId");
 
@@ -53,8 +54,7 @@ export const createBtns = (givenForm, section, edit = false) => {
 				const form = deleteBtn.closest(".portfolio-section");
 				const formId = givenForm.getAttribute("formid");
 				form.remove();
-				formAPI
-					.deleteForm(section, formId)
+				deleteForm(section, formId)
 					.then(() => {
 						console.log("폼을 삭제합니다");
 					})
@@ -80,17 +80,17 @@ export const createBtns = (givenForm, section, edit = false) => {
 
 	btnContainer.appendChild(deleteBtn);
 	return btnContainer;
-};
+}
 
 // 인풋 타입 만들어주는 함수
-export const createInput = (
+export function createInput(
 	name,
 	placeholder,
 	isSaved = false,
 	value = null,
 	maxLength = 100,
 	isDate = false
-) => {
+) {
 	const input = document.createElement("input");
 	input.name = name;
 
@@ -143,7 +143,7 @@ export const createInput = (
 		}
 	}
 	return input;
-};
+}
 
 // 날짜 부분 인풋만들어주는 함수
 export function createDateInput(section, startDate = null, endDate = null) {
@@ -220,7 +220,7 @@ export function createDateInput(section, startDate = null, endDate = null) {
 }
 
 // 사용자가 프로젝트 섹션에 스킬 추가 할때 칩 만들어서 업데이트 해주는 함수
-export const createSkills = (chipset) => {
+export function createSkills(chipset) {
 	const skills = createInput("skills", "스킬 태그를 추가해주세요");
 
 	// 스킬 인풋에 테크 스택 입력하고 엔터 누르면 칩 생성
@@ -238,10 +238,10 @@ export const createSkills = (chipset) => {
 	});
 
 	return skills;
-};
+}
 
 // 엘리먼트 기다려주는 함수
-export const waitForElement = (selector) => {
+export function waitForElement(selector) {
 	return new Promise((resolve) => {
 		const element = document.querySelector(selector);
 		if (element) {
@@ -257,7 +257,7 @@ export const waitForElement = (selector) => {
 			observer.observe(document.body, { childList: true, subtree: true });
 		}
 	});
-};
+}
 
 // 스킬 부분 칩 스타일 설정해주는 함수
 // shadowroot이 있어서 그 아래 숨겨져 있는 element들 받아와서 바꿔줘야 하는데
@@ -289,28 +289,3 @@ export async function callChip() {
 		}
 	});
 }
-
-// 박스랑 제목, 추가 버튼 그려주는 함수
-export const createSection = (sectionData) => {
-	const section = document.createElement("div");
-	section.className = "section";
-	section.classList.add(sectionData.className);
-
-	const header = document.createElement("div");
-	header.className = "title-bar";
-
-	const title = document.createElement("h3");
-	title.innerText = sectionData.title;
-	header.appendChild(title);
-
-	const addNewItemBtn = document.createElement("button");
-	addNewItemBtn.innerText = "+ 추가";
-	addNewItemBtn.addEventListener("click", async () => {
-		const newForm = createSectionForm(sectionData.className);
-		section.insertBefore(newForm, section.children[1]);
-	});
-	header.appendChild(addNewItemBtn);
-	section.appendChild(header);
-
-	return section;
-};
