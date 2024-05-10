@@ -10,7 +10,7 @@
 
 <br />
 
-## :Xhibit: 서비스 링크
+## Xhibit 서비스 링크
 
 > http://kdt-ai-10-team04.elicecoding.com/
 
@@ -54,9 +54,9 @@ https://www.figma.com/file/euv3OvywqneMy36YhP8pRy/Elice_Project1?type=design&nod
 
 |                                                         |                                                         |
 | ------------------------------------------------------- | ------------------------------------------------------- |
-| ![image](./crafters/signup.png)                         | ![image](./crafters/signupError.png)                    |
+| ![image](./crafters/signUp.png)                         | ![image](./crafters/signUpError.png)                    |
 | 회원가입 페이지                                         | 회원가입 유효성 검사1                                   |
-| ![image](./crafters/signupError2.png)                   | ![image](./crafters/signupError3.png)                   |
+| ![image](./crafters/signUpError2.png)                   | ![image](./crafters/signUpError3.png)                   |
 | 회원가입 유효성 검사2                                   | 회원가입 유효성 검사3                                   |
 | ![image](./crafters/main.png)                           | ![image](./crafters/mycard2.png)                        |
 | 메인페이지                                              | 메인페이지에서 본인이 등록한 포트폴리오 카드 확인       |
@@ -88,15 +88,11 @@ https://www.figma.com/file/euv3OvywqneMy36YhP8pRy/Elice_Project1?type=design&nod
 | 이름   | 담당 업무    |
 | ------ | ------------ |
 | 민선옥 | 팀장/백엔드  |
-| ------ | -----------  |
 | 강민규 | 조원/백엔드  |
-| ------ | ----------   |
 | 고나은 | 조원/프론트  |
-| ------ | ----------   |
 | 구 현  | 조원/프론트  |
-| ------ | ------------ |
 | 임도헌 | 조원/풀스택  |
-| ------ | -----------  |
+
 
 <br />
 
