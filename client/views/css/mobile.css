@@ -441,6 +441,19 @@
     margin-bottom: 5vw;
     text-align: right;
   }
+  .save-btn {
+    font-size: 4vw;
+    margin-bottom: 2vw;
+  }
+
+  .my-card-mark {
+    margin-left: 70vw;
+    margin-top: -3vw;
+  }
+
+  .my-card-mark img {
+    width: 10vw;
+  }
 }
 
 @media (max-width: 768px) {

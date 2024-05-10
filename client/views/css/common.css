@@ -963,6 +963,8 @@ input::-ms-clear {
 
 .my-card-mark {
   position: absolute;
+  margin-top: -0.4vw;
+  margin-left: 16vw;
 }
 
 .my-card-mark img {
