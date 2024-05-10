@@ -24,19 +24,12 @@ window.addEventListener("DOMContentLoaded", function () {
   const myPageLink = document.querySelector('.navbar-menu a[href="/mypage"]');
   const signUpLink = document.querySelector('.navbar-menu a[href="/signup"]');
 
-  // function getUserIdFromUrl() {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   return urlParams.get("userId");
-  // }
-
   async function logout() {
     sessionStorage.removeItem("userId");
     sessionStorage.removeItem("token");
   }
 
   function updateLoginText() {
-    // const userId = getUserIdFromUrl();
-
     if (token) {
       mainLink.setAttribute("href", `/main`);
       loginLink.textContent = "로그아웃";

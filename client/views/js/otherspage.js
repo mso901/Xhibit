@@ -8,7 +8,7 @@ async function getUserPortfolio() {
   let idParams = new URLSearchParams(query);
   let userId = idParams.get("userId");
 
-  const BASE_URL = "http://kdt-ai-10-team04.elicecoding.com";
+  const BASE_URL = "http://localhost:3000";
 
   const baseInstance = axios.create({
     baseURL: BASE_URL, // 기본 URL 설정
@@ -26,7 +26,7 @@ async function getUserPortfolio() {
   const { name, email, introduce } = user[0];
   // 유저 포트폴리오 제목
   const userPortfolioName = document.querySelector(".user-portfolio-name");
-  userPortfolioName.innerHTML = `<h2>${name}님의<br/>포트폴리오</h2>`;
+  userPortfolioName.innerHTML = `<h2>${name}님의 포트폴리오</h2>`;
   // 유저 카드 출력
   myCardDiv.innerHTML = `<div class="other-card-header">
   <img

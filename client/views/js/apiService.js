@@ -2,7 +2,7 @@
 const token = sessionStorage.getItem("token");
 
 // 베이스 url 설정
-const BASE_URL = "http://kdt-ai-10-team04.elicecoding.com";
+const BASE_URL = "http://localhost:3000";
 
 const baseInstance = axios.create({
   baseURL: BASE_URL, // 기본 URL 설정
@@ -68,8 +68,8 @@ export const updateForm = async (section, formId, formData) => {
 // 폼 지우기
 export const deleteForm = async (section, formId) => {
   try {
-    const response = await baseInstance.delete(
-      `${BASE_URL}/api/${section}/${formId}`
+    const response = await baseInstance.post(
+      `${BASE_URL}/api/${section}/softdelete/${formId}`
     );
     return response.data;
   } catch (err) {
