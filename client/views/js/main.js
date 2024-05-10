@@ -18,33 +18,19 @@ function getUsers() {
     .get("/api", {})
     .then((res) => {
       const users = res.data;
-      // console.log(users);
+      console.log(users);
       users.forEach(async (user) => {
-        const { _id, name, email, introduce } = user;
+        const { _id, name, email, introduce, isDeleted } = user;
         userCardList.insertAdjacentHTML(
           "beforeend",
           `
           ${
-            userId === _id // 만약 로그인한 유저와 같다면 메인에서 볼때 자기 카드를 표시해준다.
+            isDeleted
+              ? ``
+              : userId === _id // 만약 로그인한 유저와 같다면 메인에서 볼때 자기 카드를 표시해준다.
               ? `<div class="user_card">
-          <div>
-              <div class="my-card-mark"></div>
-              <img src="/images/img-profile01.png" alt="profile_img" class="profile_img">
-          </div>
-          <div class="user_card-intro">
-              <p class="card-name">${name}</p>
-              <p class="card-email">${email}</p>
-          </div>
-          <div class="user_card-content">
-              ${introduce}
-              <p></p>
-          </div>
-          <div class="user_card-bottom">
-              <a href = /otherspage?userId=${_id}>자세히보기 ></a>
-          </div>
-      </div>`
-              : `<div class="user_card">
       <div>
+          <div class="my-card-mark"></div>
           <img src="/images/img-profile01.png" alt="profile_img" class="profile_img">
       </div>
       <div class="user_card-intro">
@@ -59,6 +45,22 @@ function getUsers() {
           <a href = /otherspage?userId=${_id}>자세히보기 ></a>
       </div>
   </div>`
+              : `<div class="user_card">
+  <div>
+      <img src="/images/img-profile01.png" alt="profile_img" class="profile_img">
+  </div>
+  <div class="user_card-intro">
+      <p class="card-name">${name}</p>
+      <p class="card-email">${email}</p>
+  </div>
+  <div class="user_card-content">
+      ${introduce}
+      <p></p>
+  </div>
+  <div class="user_card-bottom">
+      <a href = /otherspage?userId=${_id}>자세히보기 ></a>
+  </div>
+</div>`
           }
           `
         );

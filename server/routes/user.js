@@ -111,7 +111,7 @@ router.get("/", async (req, res, next) => {
   try {
     const user = await User.find(
       {},
-      { email: 1, name: 1, introduce: 1 }
+      { email: 1, name: 1, introduce: 1, isDeleted: 1 }
     ).lean();
 
     // console.log(user);
