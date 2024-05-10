@@ -26,7 +26,7 @@ async function getUserPortfolio() {
   const { name, email, introduce } = user[0];
   // 유저 포트폴리오 제목
   const userPortfolioName = document.querySelector(".user-portfolio-name");
-  userPortfolioName.innerHTML = `<h2>${name}님의<br/>포트폴리오</h2>`;
+  userPortfolioName.innerHTML = `<h2>${name}님의 포트폴리오</h2>`;
   // 유저 카드 출력
   myCardDiv.innerHTML = `<div class="other-card-header">
   <img
