@@ -97,28 +97,48 @@
   <div class="modal fade" id="update-pw" tabindex="-1"
     aria-labelledby="updatePasswordLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
+      <div class="modal-content update-pw">
         <div class="modal-header">
           <h3 class="modal-title fs-5" id="updatePwModalLabel">
             비밀번호 변경
           </h3>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close">
-            X
-          </button>
         </div>
         <div class="modal-body">
           <form>
-            <div class="mb-3">
+            <div class="mb-3 pw-container">
               <label for="current-password" class="col-form-label">현재
                 비밀번호:</label>
-              <input type="text" class="form-control" id="current-password"
-                placeholder="현재 비밀번호 입력" />
+              <div class="input-container">
+                <input type="password" class="form-control"
+                  id="current-password" placeholder="현재 비밀번호 입력" />
+                <span class="input-group-btn">
+                  <button class="btn btn-default reveal"
+                    type="button">Show</button>
+                </span>
+              </div>
               <label for="new-password" class="col-form-label">새 비밀번호:</label>
-              <input type="text" class="form-control" id="new-password"
-                placeholder="새 비밀번호 입력" />
-              <input type="text" class="form-control" id="confirm-new-password"
-                placeholder="새 비밀번호 확인" />
+              <div class="input-container">
+                <input type="password" class="form-control" id="new-password"
+                  placeholder="새 비밀번호 입력" />
+                <span class="input-group-btn">
+                  <button class="btn btn-default reveal"
+                    type="button">Show</button>
+                </span>
+              </div>
+              <div class="strongPassword-message hide">
+                8글자 이상, 영문, 숫자, 특수문자(@$!%*#?&)를 사용하세요
+              </div>
+              <div class="input-container">
+                <input type="password" class="form-control"
+                  id="confirm-new-password" placeholder="새 비밀번호 확인" />
+                <span class="input-group-btn">
+                  <button class="btn btn-default reveal"
+                    type="button">Show</button>
+                </span>
+              </div>
+              <div class="mismatch-message hide">
+                비밀번호가 일치하지 않습니다.
+              </div>
             </div>
           </form>
         </div>
@@ -137,23 +157,23 @@
   <div class="modal fade" id="delete-user" tabindex="-1"
     aria-labelledby="delUserLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
+      <div class="modal-content del-user">
         <div class="modal-header">
           <h3 class="modal-title fs-5" id="delUserModalLabel">
             회원 탈퇴
           </h3>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close">
-            X
-          </button>
         </div>
         <div class="modal-body">
           <form>
-            <div class="mb-3">
-              <label for="curr-password" class="col-form-label">현재
-                비밀번호:</label>
-              <input type="text" class="form-control" id="curr-password"
-                placeholder="현재 비밀번호 입력" />
+            <div class="mb-3 pw-container">
+              <div class="input-container">
+                <input type="password" class="form-control"
+                  id="current-password" placeholder="현재 비밀번호 입력" />
+                <span class="input-group-btn">
+                  <button class="btn btn-default reveal"
+                    type="button">Show</button>
+                </span>
+              </div>
             </div>
           </form>
         </div>

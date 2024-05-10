@@ -219,6 +219,20 @@ function deleteUser() {
 		const modal = new bootstrap.Modal(document.getElementById("delete-user"));
 		modal.show();
 
+		const input = modal._element.querySelector(".input-container");
+		const showBtn = input.querySelector("button");
+		showBtn.onclick = () => {
+			if (showBtn.innerText === "Show") {
+				showBtn.innerText = "Hide";
+				const i = showBtn.parentElement.parentElement.querySelector("input");
+				i.setAttribute("type", "text");
+			} else {
+				showBtn.innerText = "Show";
+				const i = showBtn.parentElement.parentElement.querySelector("input");
+				i.setAttribute("type", "password");
+			}
+		};
+
 		let currentPassword;
 		const currPw = document.querySelector("#curr-password");
 
@@ -251,6 +265,7 @@ function deleteUser() {
 }
 deleteUser();
 
+// 비밀번호 업데이트 해주는 함수
 function updatePassword() {
 	const params = new URLSearchParams(window.location.search);
 	const userId = params.get("userId");
@@ -261,26 +276,41 @@ function updatePassword() {
 		const modal = new bootstrap.Modal(document.getElementById("update-pw"));
 		modal.show();
 
+		const inputs = modal._element.querySelectorAll(".input-container");
+		inputs.forEach((input) => {
+			const showBtn = input.querySelector("button");
+			showBtn.onclick = () => {
+				if (showBtn.innerText === "Show") {
+					showBtn.innerText = "Hide";
+					const i = showBtn.parentElement.parentElement.querySelector("input");
+					i.setAttribute("type", "text");
+				} else {
+					showBtn.innerText = "Show";
+					const i = showBtn.parentElement.parentElement.querySelector("input");
+					i.setAttribute("type", "password");
+				}
+			};
+		});
+
 		const currPw = document.querySelector("#current-password");
 		const newPw = document.querySelector("#new-password");
 		const confirmNewPw = document.querySelector("#confirm-new-password");
 
 		let currPassword, newPassword, confirmNewPassword;
-
-		// currPw.onkeyup = function () {
-		// 	currPassword = currPw.value;
-		// };
+		// 실패 메시지 정보 가져오기 (비밀번호 불일치)
+		const mismatchMessage = document.querySelector(".mismatch-message");
+		// 실패 메시지 정보 가져오기 (8글자 이상, 영문, 숫자, 특수문자 미사용)
+		const strongPasswordMessage = document.querySelector(
+			".strongPassword-message"
+		);
 
 		newPw.onkeyup = function () {
 			if (newPw.value.length !== 0) {
 				if (isStrongPassword(newPw.value)) {
-					console.log("패스워드 strong");
+					strongPasswordMessage.classList.add("hide"); //실패 메시지 숨김
 				} else {
-					console.log("비밀번호가 strong 하지 않습니다!");
+					strongPasswordMessage.classList.remove("hide");
 				}
-				// } else {
-				// 	alert("8글자 이상, 영문, 숫자, 특수문자(@$!%*#?&)를 사용하세요");
-				// }
 			}
 		};
 
@@ -290,13 +320,10 @@ function updatePassword() {
 					passwordsMatch(newPw.value, confirmNewPw.value) &&
 					isStrongPassword(newPw.value)
 				) {
-					console.log("비번이 일치합니다! ");
+					mismatchMessage.classList.add("hide");
 				} else {
-					console.log("비밀번호가 일치하지 않습니다!");
+					mismatchMessage.classList.remove("hide");
 				}
-				// else {
-				// 	alert("비밀번호가 일치하지 않습니다!");
-				// }
 			}
 		};
 
@@ -606,11 +633,6 @@ async function displayUserInfo() {
 	for (let sectionName in sections) {
 		loadEachSecInfo(sectionName, sections[sectionName]);
 	}
-	// 	if (!isDeleted) {
-	// } else {
-	// 	showPopupMsg("user", false, true);
-	// 	console.log("false");
-	// }
 }
 
 updatePortfolioSections();

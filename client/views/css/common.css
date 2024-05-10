@@ -237,15 +237,18 @@ h2 {
 	margin-top: 2vw;
 }
 
-.update-password:hover {
+.update-password:hover,
+.delete-user:hover {
 	background-color: #fff9e3;
 	transition: 0.5s all;
 	border-radius: 0.6vw;
 	cursor: pointer;
 }
 
-.update-password:focus {
+.update-password:focus,
+.delete-user:hover {
 	outline: none;
+	border: none;
 }
 
 .my-card {
@@ -725,6 +728,57 @@ h2 {
 		}
 
 		#btn-confirm {
+			background-color: #422613;
+		}
+	}
+}
+
+/* ------비번 업데이트, 회원 탈퇴 모달------ */
+.del-user,
+.update-pw {
+	background-color: #f2edd7;
+
+	.modal-header {
+		border-color: #42261354;
+	}
+
+	.modal-body {
+		padding-top: 1vw;
+		padding-bottom: 0;
+	}
+
+	.pw-container {
+		.input-container {
+			display: flex;
+			border: #392619 0.25px solid;
+			border-radius: 0.5vw;
+			align-items: center;
+
+			.btn.btn-default {
+				background-color: inherit;
+			}
+		}
+
+		input {
+			width: -webkit-fill-available;
+			height: 4vw;
+			background: inherit;
+			border: none;
+		}
+
+		input:active,
+		.input:focus {
+			border: none;
+			outline: none;
+		}
+
+		#curr-password {
+			margin-bottom: 1vw;
+		}
+	}
+
+	.modal-footer {
+		.btn.btn-primary {
 			background-color: #422613;
 		}
 	}
