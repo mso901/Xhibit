@@ -278,6 +278,12 @@ h2 {
   margin-right: 0.3vw;
 }
 
+.nothing-info{
+  padding-top: 3vw;
+  display: flex;
+  justify-content: center;
+}
+
 .others-content{
   height: 13vw;
   font-size: 1vw;
@@ -436,7 +442,6 @@ h2 {
 	}
 
   .item input {
-    font-weight: 450;
     background: none;
     border: none;
     padding: 0.5vw;
@@ -462,13 +467,13 @@ h2 {
     display: flex;
     align-items: center;
     font-size: 1vw;
-    margin-left: -0.5vw;
   }
 
   .date input {
     max-width: 3vw;
     text-align: center;
     -webkit-appearance: none;
+    padding: 0.3vw;
   }
 
   .date input[name="startYear"],
@@ -495,6 +500,8 @@ h2 {
   }
 
 	.buttons{
+    display: flex;
+    align-items: flex-start;
 		margin: 0.25vw 0;
 		background: none;
 	}
@@ -510,8 +517,8 @@ h2 {
   }
 
   .chipset {
+    display: inline-block;
     margin: 0.5vw 0;
-    gap: 0.7vw;
   }
 
   .skill {
@@ -520,6 +527,8 @@ h2 {
     border-radius: 0.6vw;
     flex-grow: 0;
     text-align: center;
+    margin-bottom: 0.3vw;
+    margin-right: 0.3vw;
   }
 
   .item input:focus,
@@ -574,9 +583,22 @@ h2 {
     display: inline-block;
   }
 
+  .portfolio-section-item .link {
+    font-size: 1.5vw;
+    margin-bottom: 0.3vw;
+    border-bottom: 1px solid #0000002e;
+    padding-bottom: 0.5vw;
+  }
+
+  .portfolio-section-item .disabled-link:hover {
+    color: #000;
+    cursor: default;
+    text-decoration: none;
+  }
+
   .portfolio-section-item .techStack {
     display: inline-block;
-    margin-top: 0.8vw;
+    margin-top: 0.5vw;
     margin-right: 0.3vw;
     padding: 0.1vw 0.8vw;    
     background-color: #fff9e3;

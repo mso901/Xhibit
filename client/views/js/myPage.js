@@ -329,8 +329,8 @@ const createSectionForm = (section, data = null) => {
 		}
 
 		inputInfo.appendChild(projName);
-		inputInfo.appendChild(date);
 		inputInfo.appendChild(link);
+		inputInfo.appendChild(date);
 		inputInfo.appendChild(contentTitle);
 		inputInfo.appendChild(details);
 		inputInfo.appendChild(skills);

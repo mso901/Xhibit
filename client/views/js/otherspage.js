@@ -130,14 +130,19 @@ async function getUserPortfolio() {
       });
       return list.join(" "); //중간중간 쉼표 존재해서 조인 쉼표를 공백으로 제거하고 배열 벗겨서 리턴
     }
-
+    const hrefValue = link ? link : "#n";
+    const linkClass = link ? "" : "disabled-link";
+    const linkBtn = link ? ">" : ""
     portfolioSectionProject.insertAdjacentHTML(
       "beforeend",
       `
       <div class="portfolio-section-item">
-        <div class = "name">${name}</div>
-        <div class = "period-start">${periodStart}</div> ~ <div class = "period-end">${periodEnd}</div>
-        <a class = "link" href="${link}">${link}</a>
+        <div class = "name">
+          <a class = "link ${linkClass}" href="${hrefValue}">${name} ${linkBtn}</a>
+          <div class = "proj-duration">
+            <div class = "period-start">${periodStart}</div> ~ <div class = "period-end">${periodEnd}</div>
+          </div>
+        </div>
         <ul class = "content-title">${contentTitle}</ul>
         ${
           contentDetail !== ""
