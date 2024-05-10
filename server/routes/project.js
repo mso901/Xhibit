@@ -13,7 +13,6 @@ router.get("/:userId", async (req, res, next) => {
 
     const get_project = await Project.find({ user: objectUserId }).lean();
     res.json(get_project);
-
   } catch (error) {
     console.error(error);
     next(error);
@@ -48,7 +47,6 @@ router.post("/:userId", loginRequired, async (req, res, next) => {
       periodEnd,
     });
     res.json(add_project);
-
   } catch (error) {
     console.error(error);
     next(error);
@@ -70,7 +68,7 @@ router.patch("/:projectId", loginRequired, async (req, res, next) => {
     } = req.body;
 
     const project = await Project.findById(projectId);
-    console.log(project);
+    // console.log(project);
 
     const update_project = await Project.updateOne(
       { _id: project._id },
@@ -103,7 +101,6 @@ router.delete("/:projectId", loginRequired, async (req, res, next) => {
       _id: project._id,
     });
     res.json(delete_project);
-
   } catch (error) {
     console.error(error);
     next(error);

@@ -12,7 +12,6 @@ router.get("/:userId", async (req, res, next) => {
 
     const get_education = await Education.find({ user: objectUserId }).lean();
     res.json(get_education);
-
   } catch (error) {
     console.error(error);
     next(error);
@@ -35,7 +34,6 @@ router.post("/:userId", loginRequired, async (req, res, next) => {
       periodEnd,
     });
     res.json(add_education);
-
   } catch (error) {
     console.error(error);
     next(error);
@@ -62,7 +60,6 @@ router.patch("/:educationId", loginRequired, async (req, res, next) => {
       }
     );
     res.json(update_education);
-
   } catch (error) {
     console.error(error);
     next(error);
@@ -75,12 +72,11 @@ router.delete("/:educationId", loginRequired, async (req, res, next) => {
     const { educationId } = req.params;
 
     const education = await Education.findById(educationId);
-    console.log(education);
+    // console.log(education);
     const delete_education = await Education.deleteOne({
       _id: education._id,
     });
     res.json(delete_education);
-
   } catch (error) {
     console.error(error);
     next(error);
