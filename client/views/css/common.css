@@ -664,7 +664,7 @@ h2 {
 #update {
 	opacity: 0;
 	position: fixed;
-	top: 50px;
+	bottom: -100px;
 	left: 50%;
 	transform: translate(-50%, 0);
 	padding: 10px 50px;
@@ -678,7 +678,7 @@ h2 {
 #create.active,
 #update.active {
 	opacity: 100%;
-	top: 50px;
+	bottom: 50px;
 }
 
 /* 모달 스타일 */
