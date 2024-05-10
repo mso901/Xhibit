@@ -49,8 +49,9 @@ async function getUserPortfolio() {
     const myPageButton = document.querySelector(".mypage-button");
     myPageButton.innerHTML = `
     <a href="/myPage?userId=${userId}">
-      <button class= "save-btn">마이페이지</button>
+      <button class= "save-btn">마이페이지 ≫</button>
     </a>`;
+    myCardDiv.appendChild(myPageButton);
   }
 
   // 학력 섹션

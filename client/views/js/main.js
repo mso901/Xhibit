@@ -28,9 +28,12 @@ function getUsers() {
             isDeleted
               ? ``
               : userId === _id // 만약 로그인한 유저와 같다면 메인에서 볼때 자기 카드를 표시해준다.
-              ? `<div class="user_card">
-      <div>
-          <div class="my-card-mark"></div>
+              ? `
+      <div class="user_card">
+        <div>
+          <div class="my-card-mark">
+            <img src="/images/clip.png" alt="mycard-mark">
+          </div>
           <img src="/images/img-profile01.png" alt="profile_img" class="profile_img">
       </div>
       <div class="user_card-intro">

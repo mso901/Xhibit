@@ -310,6 +310,25 @@ h2 {
   letter-spacing: 0.1vw;
 }
 
+.mypage-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.save-btn {
+  border: none;
+  font-family: "Pretendard";
+  font-size: 1vw;
+  background: none;
+  cursor: pointer;
+  letter-spacing: 0.05vw;
+  font-weight: 300;
+}
+
+.save-btn:hover {
+  text-decoration: underline;
+}
+
 .my-card-content {
   font-size: 1.25vw;
   padding: 1vw;
@@ -321,6 +340,7 @@ h2 {
   flex-direction: column;
   justify-content: space-between;
   overflow: auto;
+  line-height: 2vw;
 }
 
 .my-card-content textarea {
@@ -943,7 +963,8 @@ input::-ms-clear {
 
 .my-card-mark {
   position: absolute;
-  width: 1em;
-  height: 1rem;
-  background-color: #392619;
+}
+
+.my-card-mark img {
+  width: 3vw;
 }

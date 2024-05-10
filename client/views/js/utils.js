@@ -9,9 +9,6 @@ export function toggleInputs(form, disable) {
 
 // 버튼들 만들어 주는 함수
 export function createBtns(givenForm, section, edit = false) {
-  const params = new URLSearchParams(window.location.search);
-  const userId = params.get("userId");
-
   const btnContainer = document.createElement("div");
   btnContainer.className = "buttons";
 
@@ -43,7 +40,7 @@ export function createBtns(givenForm, section, edit = false) {
   // 삭제 버튼 기능 추가
   deleteBtn.addEventListener("click", () => {
     // 정말 삭제할지 확인하는 모달창
-    const modal = new bootstrap.Modal(document.getElementById("exampleModal"));
+    const modal = new bootstrap.Modal(document.getElementById("deleteForm"));
     modal.show();
 
     // 사용자가 확인하면 해당 폼 삭제
@@ -278,7 +275,7 @@ export async function callChip() {
   label.style.fontFamily = "jalnan";
   label.style.fontSize = "1.2vw";
 
-  button.forEach((btn, i) => {
+  button.forEach((btn) => {
     const touch = btn.querySelector(".touch");
     touch.remove();
 
@@ -288,4 +285,16 @@ export async function callChip() {
       closeBtn.style.width = "1vw";
     }
   });
+}
+
+// 보안성 높이기위한 패스워드 체크
+export function isStrongPassword(str) {
+  return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
+    str
+  );
+}
+
+// 패스워드 재확인
+export function passwordsMatch(password1, password2) {
+  return password1 === password2;
 }
