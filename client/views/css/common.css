@@ -441,6 +441,7 @@ h2 {
     background: none;
     border: none;
     padding: 0.5vw;
+    margin-bottom: 0.1vw;
     display: flex;
     width: 100%;
   }
@@ -463,6 +464,7 @@ h2 {
     display: flex;
     align-items: center;
     font-size: 1vw;
+    margin-left: 0.2vw;
   }
 
   .date input {
@@ -472,10 +474,19 @@ h2 {
     padding: 0.3vw;
   }
 
+  .date input::placeholder {
+    text-align: center;
+    letter-spacing: 0.2vw;
+  }
+
   .date input[name="startYear"],
   .date input[name="endYear"] {
     max-width: 4vw;
     text-align: left;
+  }
+
+  .date input[name="endYear"] {
+    margin-left: 0.2vw;
   }
 
   .date input[type="number"]::-webkit-inner-spin-button {
@@ -513,7 +524,6 @@ h2 {
   }
 
   .chipset {
-    display: inline-block;
     margin: 0.5vw 0;
   }
 
@@ -527,6 +537,9 @@ h2 {
     margin-right: 0.3vw;
   }
 
+  .label {
+    font-size: 4vw;
+  }
   .item input:focus,
   .btn:active,
   .btn:focus,

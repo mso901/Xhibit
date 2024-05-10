@@ -283,10 +283,6 @@
         padding: 1vw 2vw;  
     }
 
-    .portfolio-info .title-bar button:hover{
-        border-radius: 2vw;  
-    }
-
     .portfolio-section{
         font-size: 4.5vw;
         margin: 0 3vw;
@@ -302,19 +298,17 @@
     }
 
     .portfolio-section .date input{
-        max-width: none;
-        width: 12vw;
+        max-width: 12vw;
     }
 
     .portfolio-section .date input[name="startYear"], .date input[name="endYear"]{
         font-size: 4.5vw;
-        max-width: none;
-        width: 16vw;
+        max-width: 16vw;
     }
 
     .portfolio-section .date input[name="endYear"]{
         font-size: 4.5vw;
-        max-width: none;
+        max-width: 16vw;
     }
 
     .portfolio-section-item{
@@ -350,12 +344,14 @@
 
     .portfolio-section .item input{
         display: inline-block;
+        padding: 0.1vw;
+        margin-bottom: 1vw;
     }
 
     .portfolio-section .input-info{
         width: auto;
         margin-right: 0;
-        margin-bottom: 3vw;
+        margin-bottom: 2vw;
     }
 
     .nothing-info{
