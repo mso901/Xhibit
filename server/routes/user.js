@@ -221,4 +221,22 @@ router.patch(
   }
 );
 
+// 유저 임시 삭제
+router.post("/softdelete/:userId", async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+
+    const objectUserId = new ObjectId(userId);
+
+    const delete_user = await User.findOneAndUpdate(
+      { _id: objectUserId._id },
+      { isDeleted: true }
+    );
+    res.json(delete_user);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 module.exports = router;
