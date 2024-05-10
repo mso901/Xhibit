@@ -92,14 +92,15 @@ router.patch("/:projectId", loginRequired, async (req, res, next) => {
 });
 
 // 학력 삭제
-router.delete("/:projectId", loginRequired, async (req, res, next) => {
+router.post("/softdelete/:projectId", loginRequired, async (req, res, next) => {
   try {
     const { projectId } = req.params;
     const project = await Project.findById(projectId);
 
-    const delete_project = await Project.deleteOne({
-      _id: project._id,
-    });
+    const delete_project = await Project.findOneAndUpdate(
+      { _id: project._id },
+      { isDeleted: true }
+    );
     res.json(delete_project);
   } catch (error) {
     console.error(error);

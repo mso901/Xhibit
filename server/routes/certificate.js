@@ -14,7 +14,6 @@ router.get("/:userId", async (req, res, next) => {
       user: objectUserId,
     }).lean();
     res.json(get_certificate);
-
   } catch (error) {
     console.error(error);
     next(error);
@@ -35,7 +34,6 @@ router.post("/:userId", loginRequired, async (req, res, next) => {
       licenseDate,
     });
     res.json(add_certificate);
-
   } catch (error) {
     console.error(error);
     next(error);
@@ -61,7 +59,6 @@ router.patch("/:certificateId", loginRequired, async (req, res, next) => {
       }
     );
     res.json(update_certificate);
-
   } catch (error) {
     console.error(error);
     next(error);
@@ -69,21 +66,25 @@ router.patch("/:certificateId", loginRequired, async (req, res, next) => {
 });
 
 // 자격증 삭제
-router.delete("/:certificateId", loginRequired, async (req, res, next) => {
-  try {
-    const { certificateId } = req.params;
+router.post(
+  "/softdelete/:certificateId",
+  loginRequired,
+  async (req, res, next) => {
+    try {
+      const { certificateId } = req.params;
 
-    const certificate = await Certificate.findById(certificateId);
+      const certificate = await Certificate.findById(certificateId);
 
-    const delete_certificate = await Certificate.deleteOne({
-      _id: certificate._id,
-    });
-    res.json(delete_certificate);
-
-  } catch (error) {
-    console.error(error);
-    next(error);
+      const delete_certificate = await Certificate.findOneAndUpdate(
+        { _id: certificate._id },
+        { isDeleted: true }
+      );
+      res.json(delete_certificate);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
   }
-});
+);
 
 module.exports = router;

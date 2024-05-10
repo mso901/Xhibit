@@ -17,6 +17,8 @@ const AwardSchema = new Schema(
     awardDate: {
       type: String,
     },
+    // 소프트 삭제를 위한 isDeleted 필드 추가
+    isDeleted: { type: Boolean, default: false },
   },
   {
     timestamps: true,

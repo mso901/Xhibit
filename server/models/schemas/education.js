@@ -23,6 +23,8 @@ const EducationSchema = new Schema(
       type: String,
       required: true,
     },
+    // 소프트 삭제를 위한 isDeleted 필드 추가
+    isDeleted: { type: Boolean, default: false },
   },
   {
     timestamps: true,

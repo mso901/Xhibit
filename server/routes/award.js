@@ -12,7 +12,6 @@ router.get("/:userId", async (req, res, next) => {
 
     const get_award = await Award.find({ user: objectUserId }).lean();
     res.json(get_award);
-
   } catch (error) {
     console.error(error);
     next(error);
@@ -34,7 +33,6 @@ router.post("/:userId", loginRequired, async (req, res, next) => {
       awardDate,
     });
     res.json(add_award);
-
   } catch (error) {
     console.error(error);
     next(error);
@@ -60,7 +58,6 @@ router.patch("/:awardId", loginRequired, async (req, res, next) => {
       }
     );
     res.json(update_award);
-
   } catch (error) {
     console.error(error);
     next(error);
@@ -68,20 +65,21 @@ router.patch("/:awardId", loginRequired, async (req, res, next) => {
 });
 
 // 상 삭제
-router.delete("/:awardId", loginRequired, async (req, res, next) => {
+router.post("/softdelete/:awardId", loginRequired, async (req, res, next) => {
   try {
     const { awardId } = req.params;
 
     const award = await Award.findById(awardId);
 
-    const delete_award = await Award.deleteOne({ _id: award._id });
+    const delete_award = await Award.findOneAndUpdate(
+      { _id: award._id },
+      { isDeleted: true }
+    );
     res.json(delete_award);
-
   } catch (error) {
     console.error(error);
     next(error);
   }
 });
-
 
 module.exports = router;

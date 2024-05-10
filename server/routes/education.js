@@ -67,20 +67,25 @@ router.patch("/:educationId", loginRequired, async (req, res, next) => {
 });
 
 // 학력 삭제
-router.delete("/:educationId", loginRequired, async (req, res, next) => {
-  try {
-    const { educationId } = req.params;
+router.post(
+  "/softdelete/:educationId",
+  loginRequired,
+  async (req, res, next) => {
+    try {
+      const { educationId } = req.params;
 
-    const education = await Education.findById(educationId);
-    // console.log(education);
-    const delete_education = await Education.deleteOne({
-      _id: education._id,
-    });
-    res.json(delete_education);
-  } catch (error) {
-    console.error(error);
-    next(error);
+      const education = await Education.findById(educationId);
+      // console.log(education);
+      const delete_education = await Education.findOneAndUpdate(
+        { _id: education._id },
+        { isDeleted: true }
+      );
+      res.json(delete_education);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
   }
-});
+);
 
 module.exports = router;
