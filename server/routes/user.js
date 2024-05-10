@@ -228,6 +228,7 @@ router.post("/softdelete/:userId", async (req, res, next) => {
     const { userId } = req.params;
 
     const objectUserId = new ObjectId(userId);
+    const user = await User.findById(userId);
 
     // 현재 비밀번호가 맞는지 확인
     const passwordMatch = await bcrypt.compare(currentPassword, user.password);
