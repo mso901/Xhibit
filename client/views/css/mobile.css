@@ -1,0 +1,463 @@
+@media (max-width: 480px) {
+  .loginError-message {
+    margin-top: 8vw;
+    font-size: 3.7vw;
+  }
+
+  .sign-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo-div {
+    margin: 10vw 0;
+  }
+
+  .logo-div img {
+    width: 50vw;
+  }
+
+  .welcome .title {
+    font-size: 6vw;
+  }
+
+  .welcome .content p img {
+    width: 35vw;
+  }
+
+  .welcome .content p {
+    font-size: 4.5vw;
+  }
+
+  .welcome a {
+    width: 50vw;
+  }
+
+  .welcome-btn {
+    width: 100%;
+    height: 12vw;
+    margin: 0;
+    margin-top: 10vw;
+    padding: 1.5vw 4vw;
+    border-radius: 50vw;
+    font-size: 3.8vw;
+    letter-spacing: 0.3vw;
+  }
+
+  .welcome-btn img {
+    width: 5vw;
+  }
+
+  .form-title {
+    font-size: 7vw;
+  }
+
+  .form-container {
+    width: 100%;
+    padding: 5.5vw 5vw;
+  }
+
+  .form-control-input {
+    height: auto;
+    padding: 4vw;
+    margin-bottom: 4vw;
+  }
+
+  .password-and-signup {
+    margin-right: 1vw;
+    font-size: 3.5vw;
+  }
+
+  .form-control-submit-button {
+    margin-top: 8vw;
+    height: auto;
+    padding: 3vw;
+    font-size: 5vw;
+  }
+
+  .form-group i {
+    left: 72vw;
+    bottom: 7.9vw;
+  }
+
+  .portfolio {
+    width: 90%;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 5vw;
+  }
+
+  h2 {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin: 8vw 5vw;
+    font-size: 8vw;
+    text-align: center;
+  }
+
+  .container {
+    margin: 0 5vw;
+  }
+
+  .navbar {
+    height: 15vw;
+  }
+
+  .navbar-logo img {
+    width: 20vw;
+  }
+
+  .navbar a {
+    font-size: 3.3vw;
+  }
+
+  .main-title {
+    margin: 5vw;
+    text-align: center;
+    font-size: 5vw;
+  }
+
+  .main-title .title {
+    margin: 2vw;
+    text-align: center;
+    font-size: 9vw;
+  }
+
+  .main-title .content {
+    width: 68vw;
+  }
+
+  .user_card-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .user_card {
+    width: 100%;
+    height: auto;
+    grid-template-rows: 0.8fr 1.5fr 0.1fr;
+    margin-bottom: 5vw;
+    border-radius: 3vw;
+  }
+
+  .user_card .profile_img {
+    width: 25vw;
+    height: 25vw;
+    margin: 3vw 2vw 3vw 5vw;
+    border-radius: 50vw;
+  }
+
+  .user_card-intro {
+    align-items: flex-start;
+    justify-content: center;
+    margin-left: 4vw;
+  }
+
+  .user_card-intro p {
+    margin-top: 3.5vw;
+  }
+
+  .user_card .card-name {
+    width: 48vw;
+    font-size: 7vw;
+    letter-spacing: 1vw;
+  }
+
+  .user_card .card-email {
+    font-size: 3.8vw;
+  }
+
+  .user_card-content {
+    margin: 0 4vw;
+    height: 80%;
+    font-size: 4.5vw;
+    padding: 5vw;
+    line-height: 6.5vw;
+  }
+
+  .user_card-content p {
+    line-height: normal;
+  }
+
+  .user_card-bottom a {
+    font-size: 4vw;
+    margin: 1.2vw 3.8vw 2vw 0;
+  }
+
+  .my-card {
+    width: 100%;
+    height: auto;
+    margin-bottom: 5vw;
+    margin-left: 0;
+  }
+
+  .my-card-intro {
+    margin-left: 5vw;
+    justify-content: center;
+  }
+
+  .my-card .profile_img {
+    width: 25vw;
+    height: 25vw;
+    margin: 3vw 2vw 3vw 5vw;
+    border-radius: 50vw;
+  }
+
+  .my-card-content {
+    font-size: 4vw;
+    margin: 1vw 3vw;
+    margin-bottom: 3vw;
+    height: 40vw;
+    padding: 5vw;
+    padding-bottom: 3vw;
+  }
+
+  .others-content {
+    font-size: 4vw;
+    margin: 1vw 3vw;
+    margin-bottom: 3vw;
+    height: 32vw;
+    padding: 5vw;
+  }
+
+  .my-card-intro p {
+    margin: 1vw;
+  }
+
+  .my-card-intro {
+    align-items: flex-start;
+    justify-content: center;
+    margin-left: 4vw;
+  }
+
+  .my-card-intro .card-name {
+    width: 48vw;
+    font-size: 7vw;
+    letter-spacing: 1vw;
+  }
+
+  .my-card-intro .card-email {
+    font-size: 3.8vw;
+    margin-top: 3.5vw;
+  }
+
+  .my-card-content textarea {
+    font-size: 4.5vw;
+    height: 30vw;
+  }
+
+  .word-limit {
+    font-size: 3vw;
+  }
+
+  .modified-button {
+    margin-top: 1vw;
+    height: 9vw;
+    font-size: 4.5vw;
+  }
+
+  .portfolio-info {
+    width: 100%;
+    padding-left: 0;
+  }
+
+  .portfolio-info .section {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 7vw;
+  }
+
+  .portfolio .resume-content {
+    width: 100%;
+  }
+
+  .portfolio-info .title-bar {
+    height: max-content;
+    padding-top: 5vw;
+    padding-left: 2vw;
+    margin: 0px 3vw;
+  }
+
+  .portfolio-info .title-bar h3 {
+    font-size: 7vw;
+  }
+
+  .portfolio-info .title-bar button {
+    font-size: 4.5vw;
+    margin-bottom: 1vw;
+    padding: 1vw 2vw;
+  }
+
+  .portfolio-section {
+    font-size: 4.5vw;
+    margin: 0 3vw;
+    padding: 2vw 3vw 0;
+  }
+
+  .portfolio-section:last-child {
+    padding-bottom: 4vw;
+  }
+
+  .portfolio-section .date {
+    font-size: 4.5vw;
+  }
+
+  .portfolio-section .date input {
+    max-width: 12vw;
+  }
+
+  .portfolio-section .date input[name="startYear"],
+  .date input[name="endYear"] {
+    font-size: 4.5vw;
+    max-width: 16vw;
+  }
+
+  .portfolio-section .date input[name="endYear"] {
+    font-size: 4.5vw;
+    max-width: 16vw;
+  }
+
+  .portfolio-section-item {
+    font-size: 4vw;
+  }
+
+  .portfolio-section-item div,
+  ul,
+  li {
+    font-size: 4vw !important;
+    line-height: 6vw;
+  }
+
+  .portfolio-section-item .link {
+    font-size: 5vw !important;
+    padding: 3vw 0 !important;
+    margin-bottom: 2vw !important;
+  }
+
+  .portfolio-section-item .link {
+    font-size: 10vw;
+  }
+
+  .portfolio-section .buttons {
+    float: inline-end;
+  }
+
+  .portfolio-section .btn {
+    font-size: 4vw;
+  }
+
+  .portfolio-section .item {
+    display: inline-block;
+  }
+
+  .portfolio-section .item input {
+    display: inline-block;
+    padding: 0.1vw;
+    margin-bottom: 1vw;
+  }
+
+  .portfolio-section .input-info {
+    width: auto;
+    margin-right: 0;
+    margin-bottom: 2vw;
+  }
+
+  .nothing-info {
+    padding: 2vw 0;
+  }
+
+  .other-card-intro {
+    align-items: flex-start;
+    justify-content: center;
+    margin-left: 4vw;
+  }
+
+  .other-card-intro .card-name {
+    width: 48vw;
+    font-size: 7vw;
+    letter-spacing: 1vw;
+  }
+
+  .other-card-intro .card-email {
+    font-size: 3.8vw;
+    margin-top: 3.5vw;
+  }
+
+  .modal-dialog {
+    display: flex;
+    justify-content: center;
+  }
+
+  .modal-body {
+    padding-top: 8.5vw;
+  }
+
+  .modal-content {
+    width: 80vw;
+    height: 50vw;
+  }
+
+  .modal-content p {
+    font-size: 7.5vw !important;
+  }
+
+  .modal-content .modal-footer {
+    height: 14vw;
+    width: 100%;
+  }
+
+  .portfolio-section-item .techStack {
+    margin-bottom: 2vw;
+    padding: 2vw 3.3vw !important;
+    border-radius: 3vw !important;
+  }
+
+  .modal-content .modal-footer .btn {
+    font-size: 4vw;
+    font-weight: 500;
+    width: 20vw !important;
+    height: 8vw;
+  }
+
+  .footer {
+    height: 15vw;
+  }
+  .footer-logo img {
+    width: 30vw;
+  }
+  .footer .copywright {
+    margin-top: 4vw;
+    font-size: 2.5vw;
+  }
+
+  .emailDuplication-message,
+  .mismatch-message,
+  .strongPassword-message {
+    font-size: calc(0.5rem + 0.8vw);
+    padding: 0 2vw;
+    margin-bottom: 5vw;
+    text-align: right;
+  }
+  .save-btn {
+    font-size: 4vw;
+    margin-bottom: 2vw;
+  }
+
+  .my-card-mark {
+    margin-left: 70vw;
+    margin-top: -3vw;
+  }
+
+  .my-card-mark img {
+    width: 10vw;
+  }
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 1280px) {
+}
