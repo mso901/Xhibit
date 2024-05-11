@@ -1,6 +1,6 @@
 # team04
 
-# Xhibix
+# Xhibit
 
 <div align='center'>
 
