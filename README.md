@@ -88,7 +88,6 @@ https://www.figma.com/file/euv3OvywqneMy36YhP8pRy/Elice_Project1?type=design&nod
 | 이름   | 담당 업무    |
 | ------ | ------------ |
 | 민선옥 | 팀장/백엔드  |
-| 강민규 | 조원/백엔드  |
 | 고나은 | 조원/프론트  |
 | 구 현  | 조원/프론트  |
 | 임도헌 | 조원/풀스택  |
